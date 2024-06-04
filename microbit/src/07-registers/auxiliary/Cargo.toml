@@ -1,0 +1,20 @@
+[package]
+authors = [
+    "Jorge Aparicio <jorge@japaric.io>",
+    "Wink Saville <wink@saville.com",
+    "Henk Oordt <hd@oordt.dev>",
+]
+edition = "2018"
+name = "aux7"
+version = "0.2.0"
+
+[dependencies]
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.3"
+
+microbit-v2 = "0.14.0"
+panic_rtt = "0.3.0"
+
+[dependencies.nrf52833-hal]
+version = "0.18.0"
+features = ["rt"]
