@@ -23,6 +23,7 @@
     - [NOP](09-clocks-and-timers/nop.md)
 - [Registers](07-registers/README.md)
     - [RTRM](07-registers/rtrm.md)
+    - [(mis)Optimization](07-registers/optimization.md)
 - [Serial communication](06-serial-communication/README.md)
     - [\*nix tooling](06-serial-communication/nix-tooling.md)
     - [Windows tooling](06-serial-communication/windows-tooling.md)
