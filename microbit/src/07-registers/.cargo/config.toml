@@ -1,5 +1,5 @@
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-runner = "probe-rs run --chip nRF52833_xxAA --catch-reset --catch-hardfault --allow-erase-all"
+runner = "rust-gdb -x embed.gdb"
 
 rustflags = [
   "-C", "link-arg=-Tlink.x",
