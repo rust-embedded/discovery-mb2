@@ -3,17 +3,19 @@
 #![deny(warnings)]
 #![no_std]
 
-use panic_rtt as _; // panic handler
+use panic_rtt_target as _; // panic handler
 
 pub use cortex_m_rt::entry;
 
 
 use microbit::hal::{self,pac};
 pub use pac::{p0, p1};
+pub use rtt_target::rprintln;
 
 
 #[inline(never)]
 pub fn init() -> (&'static p0::RegisterBlock, &'static p1::RegisterBlock) {
+    rtt_target::rtt_init_print!();
     let device_periphs = pac::Peripherals::take().unwrap();
     
     // `display_pins!` initializes the display pins as outputs in push-pull mode

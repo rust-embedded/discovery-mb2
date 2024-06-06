@@ -13,7 +13,8 @@ cortex-m = "0.7.7"
 cortex-m-rt = "0.7.3"
 
 microbit-v2 = "0.14.0"
-panic_rtt = "0.3.0"
+rtt-target = { version =  "0.3.1", features = ["cortex-m"] }
+panic-rtt-target = { version =  "0.1.2", features = ["cortex-m"] }
 
 [dependencies.nrf52833-hal]
 version = "0.18.0"
