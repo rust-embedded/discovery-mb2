@@ -25,6 +25,7 @@
     - [RTRM](07-registers/rtrm.md)
     - [(mis)Optimization](07-registers/optimization.md)
     - [`0xBAAAAAAD` address](07-registers/bad-address.md)
+    - [Spooky action at a distance](07-registers/spooky-action-at-a-distance.md)
 - [Serial communication](06-serial-communication/README.md)
     - [\*nix tooling](06-serial-communication/nix-tooling.md)
     - [Windows tooling](06-serial-communication/windows-tooling.md)
