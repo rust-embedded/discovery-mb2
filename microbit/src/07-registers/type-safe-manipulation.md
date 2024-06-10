@@ -30,31 +30,8 @@ and that prevent the modification of the reserved parts of the register.
 
 The best way to get familiar with this API is to port our running example to it.
 
-``` rust
-#![no_main]
-#![no_std]
-
-#[allow(unused_imports)]
-use aux7::entry;
-
-#[entry]
-fn main() -> ! {
-    let (p0, _p1) = aux7::init();
-
-    // Turn on the top row
-    p0.out.modify(|_r, w| w.pin21().set_bit());
-
-    // Turn on the bottom row
-    p0.out.modify(|_r, w| w.pin19().set_bit());
-
-    // Turn off the top row
-    p0.out.modify(|_r, w| w.pin21().clear_bit());
-
-    // Turn off the bottom row
-    p0.out.modify(|_r, w| w.pin19().clear_bit());
-
-    loop {}
-}
+```rust
+{{#include src/bin/type-safe.rs}}
 ```
 
 First thing you notice: There are no magic addresses involved. Instead we use a more human friendly
@@ -348,12 +325,12 @@ did!
 
 [LTO]: https://en.wikipedia.org/wiki/Interprocedural_optimization
 
-Use `cargo objdump` to grab the assembler code to `pac.dump`:
+Use `cargo objdump` to grab the assembler code to `release.type-safe.dump`:
 ``` console
-cargo objdump -q --release -- --disassemble --no-show-raw-insn > pac.dump
+cargo objdump -q --release --bin type-safe -- --disassemble --no-show-raw-insn  > release.type-safe.dump
 ```
 
-Then search for `main` in `pac.dump`
+Then search for `main` in `release.type-safe.dump`
 ```
 00000158 <main>:
      158:      	push	{r7, lr}
