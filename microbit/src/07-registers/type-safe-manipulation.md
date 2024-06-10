@@ -2,7 +2,7 @@
 
 One of the registers of `P0`, the `IN` register, is documented as a read-only register.
 
-> 6.8.2.4 IN
+> 6.8.2.4 IN - Pages 145 and 146
 
 Note that in the 'Access' column of the table, only the 'R' is given for this register.
 We are not supposed to write to this register or Bad Stuff May Happen.
