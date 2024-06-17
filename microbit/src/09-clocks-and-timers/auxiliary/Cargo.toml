@@ -1,0 +1,13 @@
+[package]
+authors = ["Jorge Aparicio <jorge@japaric.io>", "Henk Oordt <hd@oordt.dev>"]
+edition = "2018"
+name = "aux9"
+version = "0.1.0"
+
+[dependencies]
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.3"
+
+microbit-v2 = "0.14.0"
+rtt-target = { version =  "0.3.1", features = ["cortex-m"] }
+panic-rtt-target = { version =  "0.1.2", features = ["cortex-m"] }
