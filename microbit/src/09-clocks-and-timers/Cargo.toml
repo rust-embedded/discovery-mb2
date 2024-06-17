@@ -3,6 +3,7 @@ authors = ["Jorge Aparicio <jorge@japaric.io>", "Henk Oordt <hd@oordt.dev>"]
 edition = "2018"
 name = "clocks-and-timers"
 version = "0.1.0"
+default-run = "clocks-and-timers"
 
 [dependencies]
 aux9 = { path = "auxiliary" }
