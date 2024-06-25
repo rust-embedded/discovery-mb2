@@ -92,3 +92,19 @@ uphold that code of conduct.
 
 [CoC]: CODE_OF_CONDUCT.md
 [team]: https://github.com/rust-embedded/wg#the-resources-team
+
+## Translations
+
+We are extremely grateful to those who have provided
+translations of this book: more are welcome.
+
+Note that these translations are of the older versions
+referenced above, and may not be monitored for accuracy or
+currency.
+
+* [Japanese](https://tomoyuki-nakabayashi.github.io/discovery/)
+  ([repository](https://github.com/tomoyuki-nakabayashi/discovery))
+* [Chinese](https://jzow.github.io/discovery/)
+  ([repository](https://github.com/jzow/discovery))
+* [Portuguese (Brazilian)](https://allyssan.github.io/discovery/)
+  ([repository](https://github.com/allyssan/discovery))
