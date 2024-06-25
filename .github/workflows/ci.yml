@@ -25,11 +25,7 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
-          target: thumbv6m-none-eabi
-      - run: rustup target add thumbv7em-none-eabihf
-      - name: Build chapter micro:bit v1
-        working-directory: mdbook/src/${{ matrix.chapter }}
-        run: cargo build --features v1 --target thumbv6m-none-eabi --target-dir ../target
+          target: thumbv7em-none-eabihf
       - name: Build chapter micro:bit v2
         working-directory: mdbook/src/${{ matrix.chapter }}
         run: cargo build --features v2 --target thumbv7em-none-eabihf --target-dir ../target
@@ -43,11 +39,7 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
-          target: thumbv6m-none-eabi
-      - run: rustup target add thumbv7em-none-eabihf
-      - name: Build docs for micro:bit v1
-        run: cargo doc --features v1 --target thumbv6m-none-eabi --target-dir ../target
-        working-directory: mdbook
+          target: thumbv7em-none-eabihf
       - name: Build docs for micro:bit v2
         run: cargo doc --features v2 --target thumbv7em-none-eabihf --target-dir ../target
         working-directory: mdbook
@@ -62,7 +54,6 @@ jobs:
           profile: minimal
           toolchain: stable
           target: thumbv7em-none-eabihf
-      - run: rustup target add thumbv6m-none-eabi
 
       - name: Install Python dependencies
         run: |
