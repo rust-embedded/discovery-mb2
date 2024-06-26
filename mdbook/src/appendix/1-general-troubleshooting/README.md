@@ -44,17 +44,12 @@ To learn more, run the command again with --verbose.
 
 #### Cause
 
-You forgot to install the proper target for your microcontroller (`thumbv7em-none-eabihf` for v2
-and `thumbv6m-none-eabi` for v1).
+You forgot to install the proper target for your microcontroller `thumbv7em-none-eabihf`.
 
 #### Fix
 
 Install the proper target.
 
 ``` console
-# micro:bit v2
 $ rustup target add thumbv7em-none-eabihf
-
-# micro:bit v1
-$ rustup target add thumbv6m-none-eabi
 ```

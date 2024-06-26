@@ -101,30 +101,12 @@ Debugging Xtensa targets over SWD is not supported. For these targets, JTAG is t
 
 ```
 
-Next up you will have to modify `Embed.toml` in the `src/03-setup` directory of the
-book's source code. In the `default.general` section you will find two commented out
-chip variants:
-
-```toml
-[default.general]
-# chip = "nrf52833_xxAA" # uncomment this line for micro:bit V2
-# chip = "nrf51822_xxAA" # uncomment this line for micro:bit V1
-```
-
-If you are working with the micro:bit v2 board uncomment the first, for the v1
-uncomment the second line.
-
 Next run one of these commands:
 
 ```
 $ # make sure you are in src/03-setup of the books source code
-$ # If you are working with micro:bit v2
 $ rustup target add thumbv7em-none-eabihf
 $ cargo embed --target thumbv7em-none-eabihf
-
-$ # If you are working with micro:bit v1
-$ rustup target add thumbv6m-none-eabi
-$ cargo embed --target thumbv6m-none-eabi
 ```
 
 If everything works correctly cargo-embed should first compile the small example program

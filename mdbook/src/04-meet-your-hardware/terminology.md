@@ -37,10 +37,8 @@ does actually have a [BSP] so we are going to use that on top of our
 HAL as well.
 
 [nrF52]: https://crates.io/crates/nrf52833-pac
-[nrF51]: https://crates.io/crates/nrf51
 [nrF52-hal]: https://crates.io/crates/nrf52833-hal
-[nrF51-hal]: https://crates.io/crates/nrf51-hal
-[BSP]: https://crates.io/crates/microbit
+[BSP]: https://crates.io/crates/microbit-v2
 
 ## Unifying the layers
 

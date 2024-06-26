@@ -16,11 +16,7 @@ Since `cargo-embed` is blocking our current shell we can simply open a new one a
 directory. Once we are there we first have to open the binary in gdb like this:
 
 ```shell
-# For micro:bit v2
 $ gdb target/thumbv7em-none-eabihf/debug/led-roulette
-
-# For micro:bit v1
-$ gdb target/thumbv6m-none-eabi/debug/led-roulette
 ```
 
 > **NOTE**: Depending on which GDB you installed you will have to use a different command to launch it,

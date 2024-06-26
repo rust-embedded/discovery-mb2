@@ -15,6 +15,7 @@ const PIXEL1_THRESHOLD: i32 = 200;
 const PIXEL2_THRESHOLD: i32 = 600;
 const CALIBRATION_INCREMENT: i32 = 200;
 
+#[allow(unused)]
 #[derive(Debug)]
 pub struct Calibration {
     center: Measurement,

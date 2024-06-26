@@ -1,7 +1,7 @@
 # Light it up
 ## embedded-hal
 
-In this chapter we are going to make one of the many LEDs on the back of the micro:bit light up since this is
+In this chapter we are going to make one of the many LEDs on the micro:bit light up since this is
 basically the "Hello World" of embedded programming. In order to get this task done we will use one of the traits
 provided by `embedded-hal`, specifically the [`OutputPin`] trait which allows us to turn a pin on or off.
 
@@ -13,18 +13,14 @@ On the back of the micro:bit you can see a 5x5 square of LEDs, usually called an
 used so that instead of having to use 25 separate pins to drive every single one of the LEDs, we can just use 10 (5+5) pins in
 order to control which column and which row of our matrix lights up.
 
-> **NOTE** that the micro:bit v1 team implemented this a little differently. Their [schematic page] says
-> that it is actually implemented as a 3x9 matrix but a few columns simply remain unused.
-
 Usually in order to determine which specific pins we have to control in
 order to light a specific LED up we would now have to read the
-[micro:bit v2 schematic] or the [micro:bit v1 schematic] respectively.
+[micro:bit v2 schematic].
 Luckily for us though we can use the aforementioned micro:bit BSP
 which abstracts all of this nicely away from us.
 
 [schematic page]: https://tech.microbit.org/hardware/schematic/
 [micro:bit v2 schematic]: https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.00/MicroBit_V2.0.0_S_schematic.PDF
-[micro:bit v1 schematic]: https://github.com/bbcmicrobit/hardware/blob/master/V1.5/SCH_BBC-Microbit_V1.5.PDF
 
 ## Actually lighting it up!
 
