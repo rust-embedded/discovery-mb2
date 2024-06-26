@@ -30,5 +30,3 @@ If you happen to be interested in a more in detail description of the board you
 can checkout the [micro:bit website](https://tech.microbit.org/hardware/).
 
 Since the MCU is so important, let's take a closer look at the one sitting on our board.
-Note that only one of the following two sections applies to your board, depending on whether
-you are working with a micro:bit v2 or v1.

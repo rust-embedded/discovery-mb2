@@ -9,7 +9,7 @@ use panic_rtt_target as _;
 #[entry]
 fn main() -> ! {
     rtt_init_print!();
-    let board = microbit::Board::take().unwrap();
+    let _board = microbit::Board::take().unwrap();
 
     loop {}
 }

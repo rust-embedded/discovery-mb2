@@ -82,8 +82,9 @@ falling edge (`hi_to_lo`). We store a reference to our `GPIOTE` peripheral in th
 interrupts, allowing them to be propagated by the hardware, and call `unpend` to clear any interrupts with pending
 status (which may have been generated prior to the interrupts being unmasked).
 
-Next, we write the code that handles the interrupt. We use the `interrupt` macro provided by `microbit::pac` (in the
-case of the v2, it is re-exported from the `nrf52833_hal` crate). We define a function with the same name as the
+Next, we write the code that handles the interrupt. We use
+the `interrupt` macro re-exported from the `nrf52833_hal`
+crate. We define a function with the same name as the
 interrupt we want to handle (you can see them all [here](https://docs.rs/nrf52833-hal/latest/nrf52833_hal/pac/enum.Interrupt.html)) and annotate it with `#[interrupt]`.
 
 ```rust
@@ -164,7 +165,7 @@ use crate::control::{init_buttons, get_turn};
 #[entry]
 fn main() -> ! {
     rtt_init_print!();
-    let mut board = Board::take().unwrap();
+    let board = Board::take().unwrap();
     let mut timer = Timer::new(board.TIMER0);
     let mut rng = Rng::new(board.RNG);
     let mut game = Game::new(rng.random_u32());

@@ -8,18 +8,18 @@ current flows through a circuit. By enabling or disabling electrical current to
 flow through a specific pin, an LED attached to that pin (via the traces) can
 be turned on and off.
 
-Each manufacturer uses a different part numbering scheme, but many will allow
-you to determine information about a component simply by looking at the part
-number. Looking at our MCU's part number (`N52833 QIAAA0 2024AL`, you probably cannot
-see it with your bare eye, but it is on the chip), the `n` at the
-front hints to us that this is a part manufactured by [Nordic Semiconductor].
-Looking up the part number on their website we quickly find the [product page].
-There we learn that our chip's main marketing point is that it is a
-"Bluetooth Low Energy and 2.4 GHz SoC" (SoC being short for "System on a Chip"),
-which explains the RF in the product name since RF is short for radio frequency.
-If we search through the documentation of the chip linked on the [product page]
-for a bit we find the [product specification] which contains chapter 10 "Ordering Information"
-dedicated to explaining the weird chip naming. Here we learn that:
+Each manufacturer uses a different part numbering scheme, but many will allow you to
+determine information about a component simply by looking at the part number. Looking at our
+MCU's part number we find `N52833 QIAAA0 2024AL`: you probably cannot see it with your bare
+eye, but it is on the chip. (If you have a later revision of MB2, your number may vary
+somewhat. This not an issue. The `N52833` part should be there, though.) The `N` at the
+front hints to us that this is a part manufactured by [Nordic Semiconductor].  Looking up
+the part number on their website we quickly find the [product page].  There we learn that
+our chip's main marketing point is that it is a "Bluetooth Low Energy and 2.4 GHz SoC" (SoC
+being short for "System on a Chip"), which explains the RF in the product name since RF is
+short for radio frequency.  If we search through the documentation of the chip linked on the
+[product page] for a bit we find the [product specification] which contains chapter 10
+"Ordering Information" dedicated to explaining the weird chip naming. Here we learn that:
 
 [aQFN73]: https://en.wikipedia.org/wiki/Flat_no-leads_package
 [Nordic Semiconductor]: https://www.nordicsemi.com/

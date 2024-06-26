@@ -9,13 +9,6 @@ use cortex_m_rt::entry;
 use rtt_target::{rtt_init_print, rprintln};
 use panic_rtt_target as _;
 
-#[cfg(feature = "v1")]
-use microbit::{
-    hal::twi,
-    pac::twi0::frequency::FREQUENCY_A,
-};
-
-#[cfg(feature = "v2")]
 use microbit::{
     hal::twim,
     pac::twim0::frequency::FREQUENCY_A,
@@ -36,10 +29,6 @@ fn main() -> ! {
     rtt_init_print!();
     let board = microbit::Board::take().unwrap();
 
-    #[cfg(feature = "v1")]
-    let i2c = { twi::Twi::new(board.TWI0, board.i2c.into(), FREQUENCY_A::K100) };
-
-    #[cfg(feature = "v2")]
     let i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
 
     let mut countdown = Timer::new(board.TIMER0);

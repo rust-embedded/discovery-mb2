@@ -47,12 +47,9 @@ to the one from the UART chapter.
 We pass the peripheral as well as the pins that are used to communicate with the chip to the constructor; and then the frequency we wish the bus to operate on, in this case 100 kHz (`K100`).
 
 ## Testing it
-As always you have to modify `Embed.toml` to fit your MCU and can then use:
-```console
-# For micro:bit v2
-$ cargo embed --features v2 --target thumbv7em-none-eabihf
+As usual
 
-# For micro:bit v1
-$ cargo embed --features v1 --target thumbv6m-none-eabi
+```console
+$ cargo embed --target thumbv7em-none-eabihf
 ```
 in order to test our little example program.

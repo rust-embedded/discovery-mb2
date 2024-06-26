@@ -47,11 +47,11 @@ Note that we changed our panic implementation from `panic_halt` to
 RTT lines from `Cargo.toml` and comment the `panic-halt` one out,
 since Rust only allows one panic implementation at a time.
 
-In order to actually see the prints we have to change `Embed.toml` like this:
+In order to actually see the prints we have to change
+`Embed.toml` to turn off `gdb` and `halt_afterwards` and turn on `rtt`, like this:
 ```
 [default.general]
-# chip = "nrf52833_xxAA" # uncomment this line for micro:bit V2
-# chip = "nrf51822_xxAA" # uncomment this line for micro:bit V1
+chip = "nrf52833_xxAA"
 
 [default.reset]
 halt_afterwards = false
