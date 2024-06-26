@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = [
   "mdbook/src/03-setup",
   "mdbook/src/05-led-roulette",

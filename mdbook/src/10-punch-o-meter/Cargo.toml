@@ -2,7 +2,7 @@
 name = "punch-o-meter"
 version = "0.1.0"
 authors = ["Henrik Böving <hargonix@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 microbit-v2 = "0.12.0"

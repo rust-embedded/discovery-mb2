@@ -2,7 +2,7 @@
 name = "snake-game"
 version = "0.1.0"
 authors = ["Alan Bunbury <dev@bunburya.eu>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 microbit-v2 = "0.13.0"

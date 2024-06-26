@@ -1,6 +1,6 @@
 [package]
 authors = ["Henrik Böving <hargonix@gmail.com>"]
-edition = "2018"
+edition = "2021"
 name = "i2c"
 version = "0.1.0"
 
