@@ -4,16 +4,28 @@ use core::fmt::Debug;
 use embedded_hal::i2c::I2c;
 use embedded_hal::delay::DelayNs;
 use libm::{fabsf, sqrtf};
-use lsm303agr::interface::I2cInterface;
-use lsm303agr::mode::MagContinuous;
-use lsm303agr::Lsm303agr;
-use lsm303agr::Measurement;
+
+use lsm303agr::{interface::I2cInterface, mode::MagContinuous, Lsm303agr};
+
 use microbit::display::blocking::Display;
 
 const PERIMETER_POINTS: usize = 25;
 const PIXEL1_THRESHOLD: i32 = 200;
 const PIXEL2_THRESHOLD: i32 = 600;
 const CALIBRATION_INCREMENT: i32 = 200;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Measurement {
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
+}
+
+impl Measurement {
+    pub fn new((x, y, z): (i32, i32, i32)) -> Self {
+        Self { x, y, z }
+    }
+}
 
 #[allow(unused)]
 #[derive(Debug)]
@@ -37,7 +49,7 @@ impl Default for Calibration {
     }
 }
 
-pub fn calc_calibration<I, T, E>(
+pub fn calc_calibration<I, T>(
     sensor: &mut Lsm303agr<I2cInterface<I>, MagContinuous>,
     display: &mut Display,
     timer: &mut T,
@@ -45,21 +57,19 @@ pub fn calc_calibration<I, T, E>(
 where
     T: DelayNs,
     I: I2c,
-    E: Debug,
 {
     let data = get_data(sensor, display, timer);
-    return calibrate(&data);
+    calibrate(&data)
 }
 
-fn get_data<I, T, E>(
+fn get_data<I, T>(
     sensor: &mut Lsm303agr<I2cInterface<I>, MagContinuous>,
     display: &mut Display,
     timer: &mut T,
-) -> [Measurement; 25]
+) -> [Measurement; PERIMETER_POINTS]
 where
     T: DelayNs,
     I: I2c,
-    E: Debug,
 {
     let mut leds = [
         [0, 0, 0, 0, 0],
@@ -73,10 +83,11 @@ where
     let mut samples = 0;
 
     while samples < PERIMETER_POINTS {
-        while !sensor.accel_status().unwrap().xyz_new_data {}
-        let accel_data = sensor.accel_data().unwrap();
-        let x = accel_data.x;
-        let y = accel_data.y;
+        while !sensor.accel_status().unwrap().xyz_new_data() {
+            timer.delay_us(10u32);
+        }
+        let (x, y, _) = sensor.acceleration().unwrap().xyz_mg();
+
         if x < -PIXEL2_THRESHOLD {
             cursor.1 = 0;
         } else if x < -PIXEL1_THRESHOLD {
@@ -106,14 +117,19 @@ where
 
         if leds[cursor.0][cursor.1] != 1 {
             leds[cursor.0][cursor.1] = 1;
-            while !sensor.mag_status().unwrap().xyz_new_data {}
-            let mag_data = measurement_to_enu(sensor.mag_data().unwrap());
+            while !sensor.mag_status().unwrap().xyz_new_data() {
+                timer.delay_us(10u32);
+            }
+            let measurement = Measurement::new(
+                sensor.magnetic_field().unwrap().xyz_nt()
+            );
+            let mag_data = measurement_to_enu(measurement);
             data[samples] = mag_data;
             samples += 1;
         }
         display.show(timer, leds, 200);
     }
-    return data;
+    data
 }
 
 fn difference_square(a: Measurement, b: Measurement) -> f32 {
@@ -153,9 +169,10 @@ fn calibrate(data: &[Measurement]) -> Calibration {
         center.z += point.z;
     }
 
-    center.x = center.x / data.len() as i32;
-    center.y = center.y / data.len() as i32;
-    center.z = center.z / data.len() as i32;
+    let ndata = data.len() as i32;
+    center.x /= ndata;
+    center.y /= ndata;
+    center.z /= ndata;
 
     let mut current = center;
     let mut score = measure_score(current, data);
