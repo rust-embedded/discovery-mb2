@@ -15,3 +15,7 @@ rtt-target = "0.5.0"
 [dependencies.cortex-m]
 version = "0.7.7"
 features = ["inline-asm", "critical-section-single-core"]
+
+[dependencies.serial-setup]
+version = "0.1.0"
+path = "../serial-setup"

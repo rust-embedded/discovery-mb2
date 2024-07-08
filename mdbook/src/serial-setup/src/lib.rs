@@ -1,3 +1,5 @@
+#![no_std]
+
 use core::fmt;
 use embedded_io::{Read, Write};
 use microbit::hal::uarte::{self, Instance, Uarte, UarteRx, UarteTx};

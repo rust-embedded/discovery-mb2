@@ -7,7 +7,7 @@ members = [
   "mdbook/src/08-i2c",
   "mdbook/src/09-led-compass",
   "mdbook/src/10-punch-o-meter",
-  "mdbook/src/11-snake-game",
+  "mdbook/src/11-snake-game", "mdbook/src/serial-setup",
 ]
 
 [profile.release]

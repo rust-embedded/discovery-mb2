@@ -11,7 +11,6 @@ use microbit::{
     hal::uarte::{Baudrate, Parity},
 };
 
-mod serial_setup;
 use serial_setup::UartePort;
 
 #[entry]
