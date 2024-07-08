@@ -5,13 +5,10 @@ authors = ["Alan Bunbury <dev@bunburya.eu>"]
 edition = "2021"
 
 [dependencies]
-microbit-v2 = "0.13.0"
-cortex-m = "0.7.3"
-cortex-m-rt = "0.7.0"
-rtt-target = { version = "0.3.1", features = ["cortex-m"] }
-panic-rtt-target = { version = "0.1.2", features = ["cortex-m"] }
-lsm303agr = "0.2.2"
-nb = "1.0.0"
-libm = "0.2.1"
+microbit-v2 = "0.15.0"
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.3"
+rtt-target = "0.5.0"
+panic-rtt-target = "0.1.3"
 heapless = "0.8.0"
-tiny-led-matrix = "1.0.1"
+tiny-led-matrix = "1.0.2"

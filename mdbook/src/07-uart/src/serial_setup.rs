@@ -1,17 +1,17 @@
 use core::fmt;
-use embedded_hal::blocking::serial as bserial;
-use embedded_hal::serial;
-use microbit::hal::uarte::{Error, Instance, Uarte, UarteRx, UarteTx};
+use embedded_io::{Read, Write};
+use microbit::hal::uarte::{self, Instance, Uarte, UarteRx, UarteTx};
 
 static mut TX_BUF: [u8; 1] = [0; 1];
 static mut RX_BUF: [u8; 1] = [0; 1];
 
+#[allow(unused)]
 pub struct UartePort<T: Instance>(UarteTx<T>, UarteRx<T>);
 
 impl<T: Instance> UartePort<T> {
     pub fn new(serial: Uarte<T>) -> UartePort<T> {
         // XXX Fix me: Need to use `split()` in a safe way if possible.
-        // This may require an API change in the `microbit` crate.
+        // This may require an API change in the `nrf-hal` crate.
         #[allow(static_mut_refs)]
         let (tx, rx) = serial
             .split(unsafe { &mut TX_BUF }, unsafe { &mut RX_BUF })
@@ -26,24 +26,20 @@ impl<T: Instance> fmt::Write for UartePort<T> {
     }
 }
 
-impl<T: Instance> serial::Write<u8> for UartePort<T> {
-    type Error = Error;
-
-    fn write(&mut self, b: u8) -> nb::Result<(), Self::Error> {
-        self.0.write(b)
+impl<T: Instance> UartePort<T> {
+    pub fn write(&mut self, b: u8) -> Result<(), uarte::Error> {
+        self.0.write(&[b])?;
+        Ok(())
     }
 
-    fn flush(&mut self) -> nb::Result<(), Self::Error> {
+    pub fn flush(&mut self) -> Result<(), uarte::Error> {
         self.0.flush()
     }
-}
 
-impl<T: Instance> bserial::write::Default<u8> for UartePort<T> {}
-
-impl<T: Instance> serial::Read<u8> for UartePort<T> {
-    type Error = Error;
-
-    fn read(&mut self) -> nb::Result<u8, Self::Error> {
-        self.1.read()
+    #[allow(unused)]
+    pub fn read(&mut self) -> Result<u8, uarte::Error> {
+        let mut buf = [0u8; 1];
+        self.1.read(&mut buf)?;
+        Ok(buf[0])
     }
 }

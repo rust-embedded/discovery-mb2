@@ -1,12 +1,12 @@
 #![no_main]
 #![no_std]
 
+use cortex_m::asm::wfi;
 use cortex_m_rt::entry;
-use rtt_target::rtt_init_print;
 use panic_rtt_target as _;
+use rtt_target::rtt_init_print;
 
 use microbit::{
-    hal::prelude::*,
     hal::uarte,
     hal::uarte::{Baudrate, Parity},
 };
@@ -29,8 +29,10 @@ fn main() -> ! {
         UartePort::new(serial)
     };
 
-    nb::block!(serial.write(b'X')).unwrap();
-    nb::block!(serial.flush()).unwrap();
+    serial.write(b'X').unwrap();
+    serial.flush().unwrap();
 
-    loop {}
+    loop {
+        wfi();
+    }
 }
