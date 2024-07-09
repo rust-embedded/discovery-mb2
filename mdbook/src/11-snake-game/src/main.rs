@@ -6,9 +6,10 @@ mod control;
 mod display;
 
 use cortex_m_rt::entry;
+use embedded_hal::delay::DelayNs;
 use microbit::{
     Board,
-    hal::{prelude::*, Rng, Timer},
+    hal::{Rng, Timer},
     display::nonblocking::{BitImage, GreyscaleImage}
 };
 use rtt_target::rtt_init_print;

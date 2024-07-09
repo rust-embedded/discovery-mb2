@@ -5,6 +5,7 @@ mod game;
 mod control;
 
 use cortex_m_rt::entry;
+use embedded_hal::delay::DelayNs;
 use microbit::{
     Board,
     hal::{prelude::*, Rng, Timer},

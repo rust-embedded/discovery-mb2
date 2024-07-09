@@ -327,6 +327,7 @@ impl Game {
     pub(crate) fn score_matrix(&self) -> [[u8; 5]; 5] {
         let mut values = [[0u8; 5]; 5];
         let full_rows = (self.score as usize) / 5;
+        #[allow(clippy::needless_range_loop)]
         for r in 0..full_rows {
             values[r] = [1; 5];
         }
