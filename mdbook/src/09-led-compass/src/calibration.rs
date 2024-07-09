@@ -81,6 +81,7 @@ where
     let mut cursor = (2, 2);
     let mut data = [Measurement { x: 0, y: 0, z: 0 }; PERIMETER_POINTS];
     let mut samples = 0;
+    let mut blink_state = true;
 
     while samples < PERIMETER_POINTS {
         while !sensor.accel_status().unwrap().xyz_new_data() {
@@ -127,7 +128,13 @@ where
             data[samples] = mag_data;
             samples += 1;
         }
+        let save_cursor = leds[cursor.0][cursor.1];
+        if blink_state {
+            leds[cursor.0][cursor.1] = 1 - leds[cursor.0][cursor.1];
+        }
         display.show(timer, leds, 200);
+        blink_state = !blink_state;
+        leds[cursor.0][cursor.1] = save_cursor;
     }
     data
 }
