@@ -6,7 +6,7 @@ Here's mine, it's probably one of the simplest (but of course not most
 beautiful) way to generate the required matrix:
 
 ``` rust
-{{#include examples/my-solution.rs}}
+{{#include src/main.rs}}
 ```
 
 One more thing! Check that your solution also works when compiled in "release" mode:
