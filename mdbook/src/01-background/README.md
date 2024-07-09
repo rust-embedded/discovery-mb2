@@ -55,10 +55,24 @@ wrong!
 
 ## When should I *not* use a microcontroller?
 
-Where heavy computations are involved. To keep their power consumption low, microcontrollers have
-very limited computational resources available to them. For example, some microcontrollers don't
-even have hardware support for floating point operations. On those devices, performing a simple
-addition of single precision numbers can take hundreds of CPU cycles.
+Microcontrollers are often not great at heavy computational work. To keep their cost and power
+consumption low, microcontrollers have limited computational resources available to them.
+
+Microcontrollers can typically execute fewer instructions per second than "big" processors. The
+slowest parts might run at "only" a few million instructions per second. In addition, the amount of
+work per instruction is typically lower. Microcontroller parts are typically "32 bit", but "16 bit"
+parts are not uncommon: this may mean more instructions to work with typical Rust datatypes. Most
+microcontrollers have no or little "cache", meaning instructions can run only as fast as main memory
+can be accessed.
+
+Some microcontrollers don't have hardware support for floating point operations. On those
+devices, performing a simple addition of single precision numbers can take hundreds of CPU cycles.
+
+Finally, microcontrollers typically come with limited memory. Memory sizes may be as small as 16KB
+for program instructions and 4KB for data, making programming for these systems quite challenging.
+While the internal memory size per unit cost and power consumption is constantly increasing, the
+processor we will work with still has "only" 512KB for program instructions and 256KB for data — far
+less than that of a "real computer".
 
 ## Why use Rust and not C?
 
@@ -73,10 +87,11 @@ testing".
 
 Or why should I prefer C over Rust?
 
-The C ecosystem is way more mature. Off the shelf solutions for several problems already exist. If
-you need to control a time sensitive process, you can grab one of the existing commercial Real Time
+The C ecosystem is more mature. Off-the-shelf solutions for several problems already exist. If you
+need to control a time sensitive process, you can grab one of the existing commercial Real Time
 Operating Systems (RTOS) out there and solve your problem. There are no commercial, production-grade
-RTOSes in Rust yet so you would have to either create one yourself or try one of the ones that are
-in development. You can find a list of those in the [Awesome Embedded Rust] repository.
+RTOSes in Rust (as of this writing) so you would have to either create one yourself or try one of
+the ones that are in development. You can find a list of those in the [Awesome Embedded Rust]
+repository.
 
 [Awesome Embedded Rust]: https://github.com/rust-embedded/awesome-embedded-rust#real-time-operating-system-rtos
