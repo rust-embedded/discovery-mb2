@@ -1,29 +1,31 @@
-# \*nix tooling
+# Linux USB←→serial tooling
+
+The micro:bit's USB emulated serial device shows up in Linux when youconnect the MB2 to a Linux USB
+port.
 
 ## Connecting the micro:bit board
 
-If you connect the micro:bit board to your computer you
-should see a new TTY device appear in `/dev`.
+If you connect the micro:bit board to your computer you should see a new TTY device appear in
+`/dev`.
 
 ``` console
-$ # Linux
-$ dmesg | tail | grep -i tty
+$ sudo dmesg -T | tail | grep -i tty
 [63712.446286] cdc_acm 1-1.7:1.1: ttyACM0: USB ACM device
 ```
 
-This is the USB <-> Serial device. On Linux, it's named `tty*` (usually
-`ttyACM*` or `ttyUSB*`).
-On Mac OS `ls /dev/cu.usbmodem*` will show the serial device.
+This is the USB←→serial device. On Linux, it's named `tty` (for "TeleTYpe", believe it or not).  It
+should show up as `ttyACM0`, or maybe `ttyUSB0`. If other "ACM" devices are plugged in, the number
+will be higher.  (On Mac OS `ls /dev/cu.usbmodem*` will show the serial device.)
 
-But what exactly is `ttyACM0`? It's a file of course!
-Everything is a file in \*nix:
+But what exactly is `ttyACM0`? It's a file of course!  Everything is a file in Unix:
 
 ```
 $ ls -l /dev/ttyACM0
-crw-rw----. 1 root plugdev 166, 0 Jan 21 11:56 /dev/ttyACM0
+crw-rw----+ 1 root plugdev 166, 0 Jan 21 11:56 /dev/ttyACM0
 ```
 
-You can send out data by simply writing to this file:
+Note that you will need to be either running as `root` (not advised) or a member of the group
+`plugdev` to read and write this device. You can then send out data by simply writing to this file:
 
 ``` console
 $ echo 'Hello, world!' > /dev/ttyACM0
@@ -50,22 +52,22 @@ pu rtscts No
 pu xonxoff No
 ```
 
-> **NOTE** Make sure this file ends in a newline! Otherwise, `minicom` will fail to read it.
+> **NOTE** Make sure this file ends in a newline! Otherwise, `minicom` will fail to read the last
+> line.
 
 That file should be straightforward to read (except for the last two lines), but nonetheless let's
 go over it line by line:
 
 - `pu baudrate 115200`. Sets baud rate to 115200 bps.
 - `pu bits 8`. 8 bits per frame.
-- `pu parity N`. No parity check.
+- `pu parity N`. No "parity check bit", which would be used for error detection.
 - `pu stopbits 1`. 1 stop bit.
-- `pu rtscts No`. No hardware control flow.
-- `pu xonxoff No`. No software control flow.
+- `pu rtscts No`. No hardware flow control.
+- `pu xonxoff No`. No software flow control.
 
-Once that's in place, we can launch `minicom`.
+Once that's in place, we can launch `minicom` on our ACM device, for example:
 
 ``` console
-$ # NOTE you may need to use a different device here
 $ minicom -D /dev/ttyACM0 -b 115200
 ```
 
@@ -82,8 +84,8 @@ on top of the micro:bit though, you will notice that it blinks whenever you type
 
 ## `minicom` commands
 
-`minicom` exposes commands via keyboard shortcuts. On Linux, the shortcuts start with `Ctrl+A`. On
-Mac, the shortcuts start with the `Meta` key. Some useful commands below:
+`minicom` exposes commands via keyboard shortcuts. On Linux, the shortcuts start with `Ctrl+A`. (On
+Mac, the shortcuts start with the `Meta` key.) Some useful commands below:
 
 - `Ctrl+A` + `Z`. Minicom Command Summary
 - `Ctrl+A` + `C`. Clear the screen
