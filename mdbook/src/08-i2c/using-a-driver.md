@@ -17,73 +17,21 @@ just have to adapt it to our chip:
 
 [`lsm303agr`]: https://crates.io/crates/lsm303agr
 
-Here's the Raspberry Pi Linux sample code.
+Take a look at the linked page for the Raspberry Pi Linux sample code.
 
-```rust
-use linux_embedded_hal::I2cdev;
-use lsm303agr::{AccelOutputDataRate, Lsm303agr};
-
-fn main() {
-    let dev = I2cdev::new("/dev/i2c-1").unwrap();
-    let mut sensor = Lsm303agr::new_with_i2c(dev);
-    sensor.init().unwrap();
-    sensor.set_accel_odr(AccelOutputDataRate::Hz50).unwrap();
-    loop {
-        if sensor.accel_status().unwrap().xyz_new_data {
-            let data = sensor.accel_data().unwrap();
-            println!("Acceleration: x {} y {} z {}", data.x, data.y, data.z);
-        }
-    }
-}
-```
-
-Because we already know how to create an instance of an object that implements
-the [`embedded_hal::blocking::i2c`] traits from the [previous page](read-a-single-register.md), this is quite trivial:
+Because we already know how to create an instance of an object that implements the
+[`embedded_hal::blocking::i2c`] traits from the [previous page](read-a-single-register.md), adapting
+the sample code is straightforward (`examples/show-accel.rs`):
 
 [`embedded_hal::blocking::i2c`]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/blocking/i2c/index.html
 
 ```rust
-#![deny(unsafe_code)]
-#![no_main]
-#![no_std]
-
-use cortex_m_rt::entry;
-use rtt_target::{rtt_init_print, rprintln};
-use panic_rtt_target as _;
-
-use microbit::{
-    hal::twim,
-    pac::twim0::frequency::FREQUENCY_A,
-};
-
-use lsm303agr::{
-    AccelOutputDataRate, Lsm303agr,
-};
-
-#[entry]
-fn main() -> ! {
-    rtt_init_print!();
-    let board = microbit::Board::take().unwrap();
-
-    let i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
-
-    // Code from documentation
-    let mut sensor = Lsm303agr::new_with_i2c(i2c);
-    sensor.init().unwrap();
-    sensor.set_accel_odr(AccelOutputDataRate::Hz50).unwrap();
-    loop {
-        if sensor.accel_status().unwrap().xyz_new_data {
-            let data = sensor.accel_data().unwrap();
-            // RTT instead of normal print
-            rprintln!("Acceleration: x {} y {} z {}", data.x, data.y, data.z);
-        }
-    }
-}
+{{#include examples/show-accel.rs}}
 ```
 
 Just like the last snippet you should just be able to try this out like this:
 ```console
-$ cargo embed --target thumbv7em-none-eabihf
+$ cargo embed --example show-accel
 ```
 
 Furthermore if you (physically) move around your micro:bit a little you should see the

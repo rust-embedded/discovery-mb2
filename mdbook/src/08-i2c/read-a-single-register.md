@@ -31,24 +31,24 @@ for backward compatibility with older devices.
 
 Now if we put the documentation of the [`twi(m)` module] from the `microbit` crate
 together with all the other information we have gathered so far we'll end up with this
-piece of code to read out and print the two device IDs:
+piece of code to read out and print the two device IDs (`examples/chip-id.rs`):
 
 [`twi(m)` module]: https://docs.rs/microbit-v2/0.11.0/microbit/hal/twim/index.html
 
 ``` rust
-{{#include src/main.rs}}
+{{#include examples/chip-id.rs}}
 ```
 
 Apart from the initialization, this piece of code should be straight forward if you understood the
 I2C protocol as described before. The initialization here works similarly to the one from the UART
 chapter.  We pass the peripheral as well as the pins that are used to communicate with the chip to
-the constructor; and then the frequency we wish the bus to operate on, in this case 100 kHz
-(`K100`).
+the constructor; and then the frequency we wish the bus to operate on, in this case 100 kHz (`K100`,
+since identifiers can't start with a digit).
 
 ## Testing it
 As usual
 
 ```console
-$ cargo embed
+$ cargo embed --example chip-id
 ```
 in order to test our little example program.

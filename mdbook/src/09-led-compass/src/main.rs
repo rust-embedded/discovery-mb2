@@ -30,8 +30,16 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_mag_mode_and_odr(&mut timer0, MagMode::HighResolution, MagOutputDataRate::Hz10).unwrap();
-    sensor.set_accel_mode_and_odr(&mut timer0, AccelMode::HighResolution, AccelOutputDataRate::Hz10).unwrap();
+    sensor.set_mag_mode_and_odr(
+        &mut timer0,
+        MagMode::HighResolution,
+        MagOutputDataRate::Hz10,
+    ).unwrap();
+    sensor.set_accel_mode_and_odr(
+        &mut timer0,
+        AccelMode::HighResolution,
+        AccelOutputDataRate::Hz10,
+    ).unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
 
     let calibration = calc_calibration(&mut sensor, &mut display, &mut timer0);
