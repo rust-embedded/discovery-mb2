@@ -1,12 +1,11 @@
 # Nordic nRF52833 (the "nRF52", micro:bit v2)
 
 Our MCU has 73 tiny metal **pins** sitting right underneath it (it's a so called [aQFN73] chip).
-These pins are connected to **traces**, the little "roads" that act as the wires connecting components
-together on the board. The MCU can dynamically alter the electrical properties
-of the pins. This works similar to a light switch altering how electrical
-current flows through a circuit. By enabling or disabling electrical current to
-flow through a specific pin, an LED attached to that pin (via the traces) can
-be turned on and off.
+These pins are connected to **traces**, the little "roads" that act as the wires connecting
+components together on the board. The MCU can dynamically alter the electrical properties of the
+pins. This works similarly to a light switch, altering how electrical current flows through a
+circuit. By enabling or disabling electrical current to flow through a specific pin, an LED attached
+to that pin (via the traces) can be turned on and off.
 
 Each manufacturer uses a different part numbering scheme, but many will allow you to
 determine information about a component simply by looking at the part number. Looking at our
@@ -34,8 +33,8 @@ short for radio frequency.  If we search through the documentation of the chip l
 - The `A0` is the build code, indicating the hardware version (`A`) as well as the product configuration (`0`)
 - The `2024AL` is a tracking code, hence it might differ on your chip
 
-The product specification does of course contain a lot more useful information about
-the chip, for example that it is based on an ARM® Cortex™-M4 32-bit processor.
+The product specification does of course contain a lot more useful information about the chip: for
+example, that the chip is an ARM® Cortex™-M4 32-bit processor.
 
 
 ## Arm? Cortex-M4?
