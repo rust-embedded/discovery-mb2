@@ -1,8 +1,8 @@
 # LSM303AGR
 
-Both of the motion sensors on the micro:bit, the magnetometer and the accelerometer, are packaged in a single
-component: the LSM303AGR integrated circuit. These two sensors can be accessed via an I2C bus. Each
-sensor behaves like an I2C target and has a *different* address.
+Both of the motion sensors on the micro:bit, the magnetometer and the accelerometer, are packaged in
+a single component: the LSM303AGR integrated circuit. These two sensors can be accessed via an I2C
+bus. Each sensor behaves like an I2C target and has a *different* address.
 
 Each sensor has its own memory where it stores the results of sensing its environment. Our
 interaction with these sensors will mainly involve reading their memory.

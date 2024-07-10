@@ -23,14 +23,12 @@ fn main() -> ! {
 
     let mut i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
 
-    let mut acc = [0];
-    let mut mag = [0];
+    let mut acc = [0u8];
+    let mut mag = [0u8];
 
     // First write the address + register onto the bus, then read the chip's responses
-    i2c.write_read(ACCELEROMETER_ADDR, &[ACCELEROMETER_ID_REG], &mut acc)
-        .unwrap();
-    i2c.write_read(MAGNETOMETER_ADDR, &[MAGNETOMETER_ID_REG], &mut mag)
-        .unwrap();
+    i2c.write_read(ACCELEROMETER_ADDR, &[ACCELEROMETER_ID_REG], &mut acc).unwrap();
+    i2c.write_read(MAGNETOMETER_ADDR, &[MAGNETOMETER_ID_REG], &mut mag).unwrap();
 
     rprintln!("The accelerometer chip's id is: {:#b}", acc[0]);
     rprintln!("The magnetometer chip's id is: {:#b}", mag[0]);

@@ -3,12 +3,12 @@
 The I2C protocol is more elaborate than the serial communication protocol because it has to support
 communication between several devices. Let's see how it works using examples:
 
-## Controller -> Target
+## Controller → Target
 
 If the Controller wants to send data to the Target:
 
 <p align="center">
-  <img class="white_bg" height=360 title="I2C bus" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg">
+  <img class="white_bg" height=360 title="I2C bus" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg" />
 </p>
 
 1. Controller: Broadcast START
@@ -22,12 +22,12 @@ If the Controller wants to send data to the Target:
 > **NOTE** The target address could have been 10 bits instead of 7 bits long. Nothing else would have
 > changed.
 
-## Controller <- Target
+## Controller ← Target
 
 If the controller wants to read data from the target:
 
 <p align="center">
-<img class="white_bg" height=360 title="I2C bus" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg">
+<img class="white_bg" height=360 title="I2C bus" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg" />
 </p>
 
 1. C: Broadcast START
@@ -38,5 +38,5 @@ If the controller wants to read data from the target:
 6. Repeat steps 4 and 5 zero or more times
 7. C: Broadcast STOP OR (broadcast RESTART and go back to (2))
 
-> **NOTE** The target address could have been 10 bits instead of 7 bits long. Nothing else would have
-> changed.
+> **NOTE** The target address could have been 10 bits instead of 7 bits long. Nothing else would
+> have changed.
