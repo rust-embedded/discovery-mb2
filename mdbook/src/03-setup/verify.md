@@ -2,65 +2,17 @@
 
 Let's verify that all the tools were installed correctly.
 
-## Linux only
-
-### Verify permissions
-
-Connect the micro:bit to your computer using a USB cable.
-
-The micro:bit should now appear as a USB device (file) in `/dev/bus/usb`. Let's find out how it got
-enumerated:
-
-``` console
-$ lsusb | grep -i "NXP ARM mbed"
-Bus 001 Device 065: ID 0d28:0204 NXP ARM mbed
-$ # ^^^        ^^^
-```
-
-In my case, the micro:bit got connected to the bus #1 and got enumerated as the device #65. This means the
-file `/dev/bus/usb/001/065` *is* the micro:bit. Let's check the file permissions:
-
-``` console
-$ ls -l /dev/bus/usb/001/065
-crw-rw-r--+ 1 nobody nobody 189, 64 Sep  5 14:27 /dev/bus/usb/001/065
-```
-
-The permissions should be `crw-rw-r--+`, note the `+` at the end, then see your access rights by running the following command.
-
-``` console
-$ getfacl /dev/bus/usb/001/065
-getfacl: Removing leadin '/' from absolute path names
-# file: dev/bus/usb/001/065
-# owner: nobody
-# group: nobody
-user::rw-
-user:<YOUR-USER-NAME>:rw-
-group::rw-
-mask::rw-
-other::r-
-```
-
-You should see your username in the list above with the `rw-` permissions, if not ... then check your [udev
-rules] and try re-loading them with:
-
-[udev rules]: linux.md#udev-rules
-
-``` console
-$ sudo udevadm control --reload
-$ sudo udevadm trigger
-```
-
-# All
-
 ## Verifying cargo-embed
+
 First, connect the micro:bit to your Computer using a USB cable.
 
-At least an orange LED right next to the USB port of the micro:bit should light up.
-Furthermore, if you have never flashed another program on to your micro:bit, the default
-program the micro:bit ships with should start blinking the red LEDs on its back, you
-can ignore them.
+At least an orange LED right next to the USB port of the micro:bit should light up.  Furthermore, if
+you have never flashed another program on to your micro:bit, the default program the micro:bit ships
+with should start blinking the red LEDs on its back: you can ignore them, or you can play with the
+demo app.
 
-Now let's see if probe-rs, and by extensions cargo-embed can see your micro:bit, you can do this by running the following command.
+Now let's see if probe-rs, and by extensions cargo-embed can see your micro:bit. You can do this by
+running the following command:
 
 ``` console
 $ probe-rs list
@@ -98,13 +50,11 @@ Debug Port: DPv1, DP Designer: ARM Ltd
 
 Debugging RISC-V targets over SWD is not supported. For these targets, JTAG is the only supported protocol. RISC-V specific information cannot be printed.
 Debugging Xtensa targets over SWD is not supported. For these targets, JTAG is the only supported protocol. Xtensa specific information cannot be printed.
-
 ```
 
-Next run one of these commands:
+Next, make sure you are in `src/03-setup` of this book's source code. Then run these commands:
 
 ```
-$ # make sure you are in src/03-setup of the books source code
 $ rustup target add thumbv7em-none-eabihf
 $ cargo embed --target thumbv7em-none-eabihf
 ```

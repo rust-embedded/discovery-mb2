@@ -12,7 +12,7 @@ $ arm-none-eabi-gcc -v
 gcc version 5.4.1 20160919 (release) (..)
 ```
 
-[gcc]: https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
+[gcc]: https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
 
 ## PuTTY
 
