@@ -1,33 +1,26 @@
-# Solution 2
-
-Here's my solution (in `examples/atan-compass.rs`):
-
-``` rust
 #![deny(unsafe_code)]
 #![no_main]
 #![no_std]
 
 use cortex_m_rt::entry;
+use embedded_hal::delay::DelayNs;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
-
-mod calibration;
-use crate::calibration::calc_calibration;
-use crate::calibration::calibrated_measurement;
-
-mod led;
-use crate::led::Direction;
-use crate::led::direction_to_led;
 
 // You'll find this useful ;-)
 use core::f32::consts::PI;
 use libm::atan2f;
 
-use microbit::{display::blocking::Display, hal::Timer};
+use microbit::{
+    display::blocking::Display,
+    hal::{Timer, twim},
+    pac::twim0::frequency::FREQUENCY_A,
+};
 
-use microbit::{hal::twim, pac::twim0::frequency::FREQUENCY_A};
+use lsm303agr::{AccelMode, AccelOutputDataRate, Lsm303agr, MagMode, MagOutputDataRate};
 
-use lsm303agr::{AccelOutputDataRate, Lsm303agr, MagOutputDataRate};
+use led_compass::calibration::{Measurement, calc_calibration, calibrated_measurement};
+use led_compass::led::{Direction, direction_to_led};
 
 #[entry]
 fn main() -> ! {
@@ -36,22 +29,35 @@ fn main() -> ! {
 
     let i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
 
-    let mut timer = Timer::new(board.TIMER0);
+    let mut timer0 = Timer::new(board.TIMER0);
     let mut display = Display::new(board.display_pins);
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_mag_odr(MagOutputDataRate::Hz10).unwrap();
-    sensor.set_accel_odr(AccelOutputDataRate::Hz10).unwrap();
+    sensor.set_mag_mode_and_odr(
+        &mut timer0,
+        MagMode::HighResolution,
+        MagOutputDataRate::Hz10,
+    ).unwrap();
+    sensor.set_accel_mode_and_odr(
+        &mut timer0,
+        AccelMode::HighResolution,
+        AccelOutputDataRate::Hz10,
+    ).unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
 
-    let calibration = calc_calibration(&mut sensor, &mut display, &mut timer);
+    let calibration = calc_calibration(&mut sensor, &mut display, &mut timer0);
     rprintln!("Calibration: {:?}", calibration);
     rprintln!("Calibration done, entering busy loop");
     loop {
-        while !sensor.mag_status().unwrap().xyz_new_data {}
-        let mut data = sensor.mag_data().unwrap();
+        while !sensor.mag_status().unwrap().xyz_new_data() {
+            timer0.delay_ms(1u32);
+        }
+        let mut data = Measurement::new(
+            sensor.magnetic_field().unwrap().xyz_nt()
+        );
         data = calibrated_measurement(data, &calibration);
+
 
         // use libm's atan2f since this isn't in core yet
         let theta = atan2f(data.y as f32, data.x as f32);
@@ -77,7 +83,6 @@ fn main() -> ! {
             Direction::West
         };
 
-        display.show(&mut timer, direction_to_led(dir), 100);
+        display.show(&mut timer0, direction_to_led(dir), 100);
     }
 }
-```
