@@ -16,13 +16,7 @@ Here's what the punch-o-meter must do:
 
 Give it a try and let me know how hard you can punch `;-)`.
 
-> **NOTE** There are two additional APIs that should be useful for this task we haven't discussed yet.
-> First the [`set_accel_scale`] one which you need to measure high g values.
-> Secondly the [`Countdown`] trait from `embedded_hal`. If you decide to use this to keep your measurement
-> intervals you will have to pattern match on the [`nb::Result`] type instead of using the `block!` macro
-  we have seen in previous chapters.
-
-
-[`set_accel_scale`]: https://docs.rs/lsm303agr/0.2.2/lsm303agr/struct.Lsm303agr.html#method.set_accel_scale
-[`Countdown`]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/timer/trait.CountDown.html
-[`nb::Result`]: https://docs.rs/nb/1.0.0/nb/type.Result.html
+> **NOTE** There is an additional API that should be useful for this task that we haven't
+> discussed yet: the [`set_accel_scale`] one which you need to measure high g values.
+> 
+> [`set_accel_scale`]: https://docs.rs/lsm303agr/1.1.0/lsm303agr/struct.Lsm303agr.html#method.set_accel_scale

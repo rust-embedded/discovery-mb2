@@ -8,17 +8,21 @@ Magnetic fields have both a magnitude, measured in Gauss or Teslas, and a *direc
 magnetometer on the micro:bit measures both the magnitude and the direction of an external magnetic
 field, but it reports back the *decomposition* of said field along *its axes*.
 
-The magnetometer has three axes associated to it. When the board is held flat with the LEDs facing
-uupward and the logo facing forward, the X and Y axes span the plane that is the floor.  The X axis
-points to the top (logo) edge of the board. The Y axis points to the left edge. The Z axis points
-"into the floor", so downwards: "upside down" since the chip is mounted on the back. This is a
-"right-handed" coordinate system. It's all a bit confusing, since the reported field strengths are
-differences from the magnetic field vector.
+The magnetometer has three axes associated with it. When the board is held flat with the LEDs facing
+uupward and the logo facing forward, the X and Y axes span the plane that is the floor. The X axis
+points to the left edge of the board. The Y axis points to the bottom (card connector) edge of the
+board.  The Z axis points "into the floor", so downwards: "upside down" since the chip is mounted on
+the back. This is a "right-handed" coordinate system. It's all a bit confusing, since the reported
+field strengths are components of the magnetic field vector.
 
-You should already be able to write a program that continuously prints the magnetometer
-data on the RTT console from the [I2C chapter](../08-i2c/index.md). After you wrote that
-program, locate where north is at your current location. Then line up your micro:bit with
-that direction and observe how the sensor's measurements look.
+<p align="center">
+<img title="MB2 Axes" src="../assets/mb2-axes.jpg" width="500" />
+</p>
+
+You should already be able to write a program that continuously prints the magnetometer data on the
+RTT console from the [I2C chapter](../08-i2c/index.md). After you write that program, locate where
+north is at your current location. Then line up your micro:bit with that direction and observe how
+the sensor's X and Y measurements look.
 
 Now rotate the board 90 degrees while keeping it parallel to the ground. What X, Y and Z values do
 you see this time? Then rotate it 90 degrees again. What values do you see?
