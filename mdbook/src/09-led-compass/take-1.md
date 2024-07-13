@@ -6,7 +6,7 @@ For starters, we'd only care about the X and Y components of the magnetic field 
 look at a compass you always hold it in horizontal position and thus the compass is in the XY plane.
 
 <p align="center">
-<img class="white_bg" title="Quadrants" src="../assets/quadrants.png" width="500" />
+<img class="white_bg" title="Quadrants" src="../assets/quadrants.jpg" width="500" />
 </p>
 
 If we only looked at the signs of the X and Y components we could determine to which quadrant the
