@@ -15,8 +15,8 @@ do the 4 quadrants represent. In order to figure this out we can just rotate the
 observe how the quadrant changes whenever we point in another direction.
 
 After experimenting a bit we can find out that if we point the micro:bit in e.g. north-east
-direction, both the X and the Y component are always positive. Based on this information you should
-be able to figure out which direction the other quadrants represent.
+direction, both the X and the Y component are always negative (quadrant III). Based on this
+information you should be able to figure out which direction the other quadrants represent.
 
 Once you figured out the relation between quadrant and direction you should be able to complete the
 template in `templates/take_1.rs` to make the compass arrow point in the correct direction.

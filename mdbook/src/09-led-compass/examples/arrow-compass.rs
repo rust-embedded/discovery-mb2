@@ -55,13 +55,13 @@ fn main() -> ! {
 
         let dir = match (data.x > 0, data.y > 0) {
             // Quadrant I
-            (true, true) => Direction::NorthEast,
+            (true, true) => Direction::SouthWest,
             // Quadrant II
-            (false, true) => Direction::NorthWest,
+            (false, true) => Direction::SouthEast,
             // Quadrant III
-            (false, false) => Direction::SouthWest,
+            (false, false) => Direction::NorthEast,
             // Quadrant IV
-            (true, false) => Direction::SouthEast,
+            (true, false) => Direction::NorthWest,
         };
 
         // use the led module to turn the direction into an LED arrow
