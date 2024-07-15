@@ -27,12 +27,11 @@ impl Measurement {
     }
 }
 
-#[allow(unused)]
 #[derive(Debug)]
 pub struct Calibration {
     center: Measurement,
     scale: Measurement,
-    radius: u32,
+    _radius: u32,
 }
 
 impl Default for Calibration {
@@ -44,7 +43,7 @@ impl Default for Calibration {
                 y: 1024,
                 z: 1024,
             },
-            radius: 0,
+            _radius: 0,
         }
     }
 }
@@ -90,13 +89,13 @@ where
         let (x, y, _) = sensor.acceleration().unwrap().xyz_mg();
 
         if x < -PIXEL2_THRESHOLD {
-            cursor.1 = 0;
-        } else if x < -PIXEL1_THRESHOLD {
-            cursor.1 = 1;
-        } else if x > PIXEL2_THRESHOLD {
             cursor.1 = 4;
-        } else if x > PIXEL1_THRESHOLD {
+        } else if x < -PIXEL1_THRESHOLD {
             cursor.1 = 3;
+        } else if x > PIXEL2_THRESHOLD {
+            cursor.1 = 0;
+        } else if x > PIXEL1_THRESHOLD {
+            cursor.1 = 1;
         } else {
             cursor.1 = 2;
         }
@@ -124,8 +123,7 @@ where
             let measurement = Measurement::new(
                 sensor.magnetic_field().unwrap().xyz_nt()
             );
-            let mag_data = measurement_to_enu(measurement);
-            data[samples] = mag_data;
+            data[samples] = measurement;
             samples += 1;
         }
         let save_cursor = leds[cursor.0][cursor.1];
@@ -214,11 +212,11 @@ fn calibrate(data: &[Measurement]) -> Calibration {
 }
 
 fn spherify(center: Measurement, data: &[Measurement]) -> Calibration {
-    let mut radius = 0;
+    let mut _radius = 0;
     for point in data {
         let d = sqrtf(difference_square(center, *point)) as u32;
-        if d > radius {
-            radius = d;
+        if d > _radius {
+            _radius = d;
         }
     }
 
@@ -229,7 +227,7 @@ fn spherify(center: Measurement, data: &[Measurement]) -> Calibration {
 
     for point in data {
         let d = sqrtf(difference_square(center, *point));
-        let s = (radius as f32 / d) - 1.0;
+        let s = (_radius as f32 / d) - 1.0;
         scale = scale.max(s);
 
         let dx = point.x - center.x;
@@ -248,7 +246,7 @@ fn spherify(center: Measurement, data: &[Measurement]) -> Calibration {
 
     Calibration {
         center,
-        radius,
+        _radius,
         scale: Measurement {
             x: (1024.0 * scale_x) as i32,
             y: (1024.0 * scale_y) as i32,
@@ -258,27 +256,9 @@ fn spherify(center: Measurement, data: &[Measurement]) -> Calibration {
 }
 
 pub fn calibrated_measurement(measurement: Measurement, calibration: &Calibration) -> Measurement {
-    let mut out = measurement_to_enu(measurement);
-    out = Measurement {
-        x: ((out.x - calibration.center.x) * calibration.scale.x) >> 10,
-        y: ((out.y - calibration.center.y) * calibration.scale.y) >> 10,
-        z: ((out.z - calibration.center.z) * calibration.scale.z) >> 10,
-    };
-    enu_to_cartesian(out)
-}
-
-fn measurement_to_enu(measurement: Measurement) -> Measurement {
     Measurement {
-        x: -measurement.y,
-        y: -measurement.x,
-        z: measurement.z,
-    }
-}
-
-fn enu_to_cartesian(measurement: Measurement) -> Measurement {
-    Measurement {
-        x: -measurement.y,
-        y: measurement.x,
-        z: measurement.z,
+        x: ((measurement.x - calibration.center.x) * calibration.scale.x) >> 10,
+        y: ((measurement.y - calibration.center.y) * calibration.scale.y) >> 10,
+        z: ((measurement.z - calibration.center.z) * calibration.scale.z) >> 10,
     }
 }

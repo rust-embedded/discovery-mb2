@@ -59,25 +59,30 @@ fn main() -> ! {
         data = calibrated_measurement(data, &calibration);
 
 
-        // use libm's atan2f since this isn't in core yet
+        // Use libm's atan2f since this isn't in core.
         let theta = atan2f(data.y as f32, data.x as f32);
+        // Cut the unit circle into sixteen "hextants",
+        // with pairs of adjacent hextants corresponding to
+        // each compass direction (so actually octants: this
+        // just handles the offset to square everything up).
+        let hextant = theta * 16.0 / (2.0 * PI);
 
-        // Figure out the direction based on theta
-        let dir = if theta < -7. * PI / 8. {
+        // Figure out the direction based on the hextant.
+        let dir = if hextant < -7.0 {
             Direction::West
-        } else if theta < -5. * PI / 8. {
+        } else if hextant < -5.0 {
             Direction::SouthWest
-        } else if theta < -3. * PI / 8. {
+        } else if hextant < -3.0 {
             Direction::South
-        } else if theta < -PI / 8. {
+        } else if hextant < -1.0 {
             Direction::SouthEast
-        } else if theta < PI / 8. {
+        } else if hextant < 1.0 {
             Direction::East
-        } else if theta < 3. * PI / 8. {
+        } else if hextant < 3.0 {
             Direction::NorthEast
-        } else if theta < 5. * PI / 8. {
+        } else if hextant < 5.0 {
             Direction::North
-        } else if theta < 7. * PI / 8. {
+        } else if hextant < 7.0 {
             Direction::NorthWest
         } else {
             Direction::West

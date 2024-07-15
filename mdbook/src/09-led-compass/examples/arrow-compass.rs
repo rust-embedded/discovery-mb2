@@ -41,8 +41,8 @@ fn main() -> ! {
     ).unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
 
-    let calibration = calc_calibration(&mut sensor, &mut display, &mut timer0);
-    rprintln!("Calibration: {:?}", calibration);
+    //let calibration = calc_calibration(&mut sensor, &mut display, &mut timer0);
+    //rprintln!("Calibration: {:?}", calibration);
     rprintln!("Calibration done, entering busy loop");
     loop {
         while !sensor.mag_status().unwrap().xyz_new_data() {
@@ -51,7 +51,9 @@ fn main() -> ! {
         let mut data = Measurement::new(
             sensor.magnetic_field().unwrap().xyz_nt()
         );
-        data = calibrated_measurement(data, &calibration);
+        //rprintln!("raw {:?}", data);
+        //data = calibrated_measurement(data, &calibration);
+        //rprintln!("cal {:?}", data);
 
         let dir = match (data.x > 0, data.y > 0) {
             // Quadrant I
@@ -63,6 +65,7 @@ fn main() -> ! {
             // Quadrant IV
             (true, false) => Direction::NorthWest,
         };
+        //rprintln!("{:?}", dir);
 
         // use the led module to turn the direction into an LED arrow
         // and the led display functions from chapter 5 to display the

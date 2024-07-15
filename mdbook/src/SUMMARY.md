@@ -37,7 +37,6 @@
     - [The challenge](08-i2c/the-challenge.md)
     - [My solution](08-i2c/my-solution.md)
 - [LED compass](09-led-compass/README.md)
-    - [Calibration](09-led-compass/calibration.md)
     - [Take 1](09-led-compass/take-1.md)
     - [Solution 1](09-led-compass/solution-1.md)
     - [Take 2](09-led-compass/take-2.md)
@@ -57,6 +56,7 @@
 
 [General troubleshooting](appendix/1-general-troubleshooting/README.md)
 [How to use GDB](appendix/2-how-to-use-gdb/README.md)
+[Magnetometer Calibration](appendix/3-mag-calibration/README.md)
 
 <!-- - [Async IO: The future](17-async-io-the-future/README.md) -->
 <!--     - [Timer](17-async-io-the-future/timer.md) -->
