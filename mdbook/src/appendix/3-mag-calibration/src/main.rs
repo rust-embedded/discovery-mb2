@@ -3,14 +3,10 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use embedded_hal::delay::DelayNs;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
-// You'll find this useful ;-)
-use core::f32::consts::PI;
-use libm::atan2f;
-
+use embedded_hal::delay::DelayNs;
 use microbit::{
     display::blocking::Display,
     hal::{Timer, twim},
@@ -19,8 +15,7 @@ use microbit::{
 
 use lsm303agr::{AccelMode, AccelOutputDataRate, Lsm303agr, MagMode, MagOutputDataRate};
 
-use led_compass::calibration::{Measurement, calc_calibration, calibrated_measurement};
-use led_compass::led::{Direction, direction_to_led};
+use mag_cal::{Measurement, calc_calibration, calibrated_measurement};
 
 #[entry]
 fn main() -> ! {
@@ -53,18 +48,14 @@ fn main() -> ! {
         while !sensor.mag_status().unwrap().xyz_new_data() {
             timer0.delay_ms(1u32);
         }
-        let mut data = Measurement::new(
+        let raw_data = Measurement::new(
             sensor.magnetic_field().unwrap().xyz_nt()
         );
-        data = calibrated_measurement(data, &calibration);
-
-
-        // use libm's atan2f since this isn't in core yet
-        let theta = atan2f(data.y as f32, data.x as f32);
-
-        // Figure out the direction based on theta
-        let dir = todo!();
-
-        display.show(&mut timer0, direction_to_led(dir), 100);
+        let cal_data = calibrated_measurement(raw_data, &calibration);
+        rprintln!(
+            "raw (x {} y {} z {}); cal (x {} y {} z {})",
+            raw_data.x, raw_data.y, raw_data.z,
+            cal_data.x, cal_data.y, cal_data.z,
+        );
     }
 }

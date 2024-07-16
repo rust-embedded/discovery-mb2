@@ -1,0 +1,21 @@
+[package]
+name = "mag-cal"
+version = "0.1.0"
+authors = [
+  "Henrik Böving <hargonix@gmail.com>",
+  "Bart Massey <bart.massey@gmail.com>",
+]
+edition = "2021"
+
+[dependencies]
+microbit-v2 = "0.15.0"
+cortex-m-rt = "0.7.3"
+rtt-target = "0.5.0"
+panic-rtt-target = "0.1.3"
+lsm303agr = "1.1.0"
+libm = "0.2.8"
+embedded-hal = "1.0.0"
+
+[dependencies.cortex-m]
+version = "0.7.7"
+features = ["critical-section-single-core"]

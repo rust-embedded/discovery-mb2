@@ -20,9 +20,9 @@ field strengths are components of the magnetic field vector.
 </p>
 
 You should already be able to write a program that continuously prints the magnetometer data on the
-RTT console from the [I2C chapter](../08-i2c/index.md). After you write that program, locate where
-north is at your current location. Then line up your micro:bit with that direction and observe how
-the sensor's X and Y measurements look.
+RTT console from the [I2C chapter](../08-i2c/index.md). After you write that program
+(`examples/show-mag.rs`), locate where north is at your current location. Then line up your
+micro:bit with that direction and observe how the sensor's X and Y measurements look.
 
 Now rotate the board 90 degrees while keeping it parallel to the ground. What X, Y and Z values do
 you see this time? Then rotate it 90 degrees again. What values do you see?
@@ -35,7 +35,7 @@ you see this time? Then rotate it 90 degrees again. What values do you see?
 > a lot for an introductory guide to embedded systems. If you have only one MB2 and it doesn't seem
 > to be working, you may just want to skip to the [next chapter]. Cheap hardware: whatcha gonna do?
 
-[next chapter]: 10-punch-o-meter
+[next chapter]: ../10-punch-o-meter/index.html
 
 The Earth's magnetic north is a fickle thing: it differs from true north in most places on Earth,
 sometimes substantially. It can point down into the ground quite a bit. It changes over time.
@@ -48,3 +48,11 @@ location the "declination" (difference between true and magnetic north) is about
 "inclination" is an astonishing 67° down into the ground.
 
 [calculator]: http://www.geomag.bgs.ac.uk/data_service/models_compass/wmm_calc.html
+
+> **NOTE** The LSM303AGR magnetometer is not a particularly accurate device out-of-the box. The
+> manufacturer recommends a fancy calibration procedure for finding adjustments to the magnetometer
+> readings. You can find further information, a sample calibration implementation and some fancier
+> compass graphics in [appendix 3]: since we're doing something fairly basic with the magnetometer
+> we won't worry about it in this chapter.
+
+[appendix 3]: ../appendix/3-mag-calibration/index.html

@@ -1,29 +1,35 @@
-# Calibration
+# Magnetometer Calibration
 
 One very important thing to do before using a sensor and trying to develop an application using it
 is verifying that it's output is actually correct.  If this does not happen to be the case we need
-to calibrate the sensor (alternatively it could also be broken but that's rather unlikely in this
-case).
+to calibrate the sensor. Alternatively the sensor could be broken: health-checking sensors before
+and during use is a really good idea when possible.
 
-In my case, on two different micro:bit's the magnetometer without calibration was quite a bit off.
-Hence for the purposes of this chapter we will just assume that the sensor has to be calibrated.
+In my case, on two different MB2s the LSM303AGR's magnetometer without calibration is quite a bit
+off.  (I also have one where the z-axis appears to be broken; the manufacturer has some extra
+hardware and a process to help detect this, but we won't deal with that complexity here.)
 
-The calibration involves quite a bit of math (matrices) so we won't cover it here but this [Design
-Note] describes the procedure if you are interested.
+There is a manufacturer-specified procedure for calibrating the magnetometer.  The calibration
+involves quite a bit of math (matrices) so we won't cover it in detail here: this [Design Note]
+describes the procedure if you are interested in the details.
 
 [Design Note]: https://www.st.com/resource/en/design_tip/dt0103-compensating-for-magnetometer-installation-error-and-hardiron-effects-using-accelerometerassisted-2d-calibration-stmicroelectronics.pdf
 
-Luckily for us though the group that built the original software for the micro:bit already
-implemented a calibration mechanism in C++ over [here].
+Luckily for us, the CODAL group that built the original software for the micro:bit already
+implemented the manufacturer calibration mechanism (or something similar) in C++ over [here].
 
 [here]: https://github.com/lancaster-university/codal-microbit-v2/blob/006abf5566774fbcf674c0c7df27e8a9d20013de/source/MicroBitCompassCalibrator.cpp
 
-You can find a translation of it to Rust in `src/bin/calibration/calibration.rs`. The usage is
-demonstrated in the default `src/bin/calibration/main.rs` file.  Run this code with `cargo embed
---bin calibration`.
+You can find a translation of this C++ calibration to Rust in `src/lib.rs`. Note that this is a
+translation from Matlab to C++ to Rust, and that it makes some interesting choices.  In particular,
+when reading calibrated values *the axes are flipped* so that viewed from the top with the USB
+connector forward the X, Y and Z axes of the calibrated value are in "standard" (right, forward, up)
+orientation.
 
-The way the calibration works is illustrated in this video from the C++ version. (Ignore the initial
-printing — the calibration starts about halfway through.)
+The usage of this calibrator is demonstrated in the default `src/main.rs` file.
+
+The way the user does the calibration is shown in this video from the C++ version. (Ignore the
+initial printing — the calibration starts about halfway through.)
 
 <p align="center">
 <video src="https://video.microbit.org/support/compass+calibration.mp4" loop autoplay>
@@ -32,8 +38,8 @@ printing — the calibration starts about halfway through.)
 You have to tilt the micro:bit until all the LEDs on the LED matrix light up. The blinking cursor
 shows the current target LED.
 
-If you do not want to play the game every time you restart your application during development feel
-free to modify `src/calibration.rs` to return a static calibration once you have it.
+Note that the calibration matrix is printed by the demo program. This matrix can be hard-coded into
+a program such as the [chapter 9] compass program (or stored in flash somewhere somehow) to avoid
+the need to recalibrate every time the user runs the program.
 
-Now that we've got the sensor calibration out of the way let's look into actually building this
-application!
+[chapter 9]: ../../09-led-compass/index.html
