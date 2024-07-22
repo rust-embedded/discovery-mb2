@@ -11,7 +11,7 @@ explore.
 > mentoring for how to contribute this to the book, or open a Pull Request
 > adding the information!
 
-[open an issue]: https://github.com/rust-embedded/discovery/issues/new
+[open an issue]: https://github.com/rust-embedded/discovery-mb2/issues/new
 
 ## Topics about embedded software
 
@@ -21,15 +21,15 @@ strategies, and when they make sense (or don't make sense) to use.
 
 ### Multitasking
 
-Most of our programs executed a single task. How could we achieve multitasking in a
-system with no OS, and thus no threads? There are two main approaches to
-multitasking: preemptive multitasking and cooperative multitasking.
+Most of our programs executed a single task. How could we achieve multitasking in a system with no
+OS, and thus no threads? There are two main approaches to multitasking: preemptive multitasking and
+cooperative multitasking.
 
 In preemptive multitasking a task that's currently being executed can, at any point in time, be
 *preempted* (interrupted) by another task. On preemption, the first task will be suspended and the
 processor will instead execute the second task. At some point the first task will be resumed.
-Microcontrollers provide hardware support for preemption in the form of *interrupts*. We were introduced
-to interrupts when we built our snake game in chapter 11.
+Microcontrollers provide hardware support for preemption in the form of *interrupts*. We were
+introduced to interrupts when we built our snake game in chapter 11.
 
 In cooperative multitasking a task that's being executed will run until it reaches a *suspension
 point*. When the processor reaches that suspension point it will stop executing the current task and
@@ -40,16 +40,15 @@ its execution.
 
 ### Sleeping
 
-All our programs have been continuously polling peripherals to see if there's
-anything that needs to be done. However, sometimes there's nothing to be done!
-At those times, the microcontroller should "sleep".
+All our programs have been continuously polling peripherals to see if there's anything that needs to
+be done. However, sometimes there's nothing to be done!  At those times, the microcontroller should
+"sleep".
 
-When the processor sleeps, it stops executing instructions and this saves power.
-It's almost always a good idea to save power so your microcontroller should be
-sleeping as much as possible. But, how does it know when it has to wake up to
-perform some action? "Interrupts" (see below for what exactly those are)
-are one of the events that wake up the microcontroller but there are others
-and the `wfi` and `wfe` are the instructions that make the processor "sleep".
+When the processor sleeps, it stops executing instructions and this saves power.  It's almost always
+a good idea to save power so your microcontroller should be sleeping as much as possible. But, how
+does it know when it has to wake up to perform some action? Interrupts are one of the events that
+wake up the microcontroller but there are others. The ARM machine instructions `wfi` and `wfe` are
+the instructions that make the processor "sleep" waiting for an interrupt or event.
 
 ## Topics related to microcontroller capabilities
 
@@ -61,23 +60,28 @@ in embedded development.
 
 ### Direct Memory Access (DMA).
 
-This peripheral is a kind of *asynchronous* `memcpy`. If you are working with
-a micro:bit v2 you have actually already used this, the HAL does this for you
-with the UARTE and TWIM peripherals. A DMA peripheral can be used to perform bulk
-transfers of data. Either from RAM to RAM, from a peripheral, like a UARTE, to RAM
-or from RAM to a peripheral. You can schedule a DMA transfer, like read 256 bytes
-from UARTE into this buffer, leave it running in the background and then poll some
-register to see if it has completed so you can do other stuff while the transfer
-is ongoing. For more information as to how this is implemented you can checkout the
-`serial_setup` module from the UART chapter. If that isn't enough yet you could even
-try and dive into the code of the [`nrf52-hal`].
+Some peripherals have DMA, a kind of *asynchronous* `memcpy` that allows the peripheral to move data
+into or out of memory without the CPU being involved.
 
-[`nrf52-hal`]: https://github.com/nrf-rs/nrf-hal
+If you are working with a micro:bit v2 you have actually already used DMA: the HAL does this for you
+with the UARTE and TWIM peripherals. A DMA peripheral can be used to perform bulk transfers of data:
+either from RAM to RAM, from a peripheral like a UARTE, to RAM, or from RAM to a peripheral. You can
+schedule a DMA transfer — for example "read 256 bytes from UARTE into this buffer" — and leave it
+running in the background. You can check some register later to see if the transfer has completed,
+or you can ask to receive an interrupt when the transfer completes. Thus, you can schedule the DMA
+transfer and do other work while the transfer is ongoing.
+
+The details of low-level DMA can be a bit tricky. We hope to add a chapter covering this topic in
+the near future.
 
 ### Interrupts
 
-In order to interact with the real world, it is often necessary for the
-microcontroller to respond *immediately* when some kind of event occurs.
+We saw button interrupts briefly in [chapter 11].
+
+[chapter 11](11-snake-game/controls.html)
+
+This introduced the key idea: in order to interact with the real world, it is often necessary for
+the microcontroller to respond *immediately* when some kind of event occurs.
 
 Microcontrollers have the ability to be interrupted, meaning when a certain event
 occurs, it will stop whatever it is doing at the moment, to instead respond to that
@@ -109,149 +113,163 @@ motor thus it can be used to control its torque and speed. Then you can add an
 angular position sensor and you got yourself a closed loop controller that can
 control the position of the motor at different loads.
 
-PWM is already abstracted within the [`embedded-hal` `Pwm` trait] and you will
-again find implementations of this in the [`nrf52-hal`].
+There are some abstraction for working with PWM in the `embedded-hal` [`pwm` module] and you will
+find implementations of these traits in `nrf52833-hal`.
 
-[`embedded-hal` `Pwm` trait]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/trait.Pwm.html
+[`pwm` module]: https://docs.rs/embedded-hal/latest/embedded_hal/pwm/index.html
 
-### Digital inputs
+### Digital inputs and outputs
 
-We have used the microcontroller pins as digital outputs, to drive LEDs. When
-building our snake game, we also caught a glimpse of how these pins can be
-configured as digital inputs. As digital inputs, these pins can read the binary
-state of switches (on/off) or buttons (pressed/not pressed).
+We have used the microcontroller pins as digital outputs, to drive LEDs. When building our snake
+game, we also caught a glimpse of how these pins can be configured as digital inputs. As digital
+inputs, these pins can read the binary state of switches (on/off) or buttons (pressed/not pressed).
 
-Again digital inputs are abstracted within the [`embedded-hal` `InputPin` trait]
-and of course the [`nrf52-hal`] does have an implementation for them.
+Digital inputs and outputs are abstracted within the `embedded-hal` [`digital` module] and
+[`nrf52833-hal`] does have an implementation for them.
 
-(*spoilers* reading the binary state of switches / buttons is not as
-straightforward as it sounds ;-) )
+(*spoilers* reading the binary state of switches / buttons is not as straightforward as it sounds
+;-) )
 
-[`embedded-hal` `InputPin` trait]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/digital/v2/trait.InputPin.html
+[`digital` module]: https://docs.rs/embedded-hal/latest/embedded_hal/digital/index.html
 
 ### Analog-to-Digital Converters (ADC)
 
-There are a lot of digital sensors out there. You can use a protocol like I2C
-and SPI to read them. But analog sensors also exist! These sensors just output a
-voltage level that's proportional to the magnitude they are sensing.
+There are a lot of digital sensors out there. You can use a protocol like I2C and SPI to read
+them. But analog sensors also exist! These sensors just output a reading to the CPU of the voltage
+they are sensing at an ADC input pin.
 
-The ADC peripheral can be used to convert that "analog" voltage level, say `1.25`
-Volts, into a "digital" number, say in the `[0, 65535]` range, that the processor
-can use in its calculations.
+The ADC peripheral can thus be used to measure an "analog" voltage level — for example, `1.25` Volts
+— as a "digital" number — for example, `24824` — that the processor can use in its calculations.
 
-Again the [`embedded-hal` `adc` module] as well as the [`nrf52-hal`] got you covered.
+There were generic ADC traits in `embedded-hal`, but they were removed for `embedded-hal` 1.0: see
+[issue #377]. The `nrf52833-hal` crate provides a nice interface to the specific ADC built into the
+nRF52833.
 
-[`embedded-hal` `adc` module]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/adc/index.html
+[issue #377]: https://github.com/rust-embedded/embedded-hal/issues/377
 
 ### Digital-to-Analog Converters (DAC)
 
-As you might expect a DAC is exactly the opposite of ADC. You can write some
-digital value into a register to produce a voltage in the `[0, 3.3V]` range
-(assuming a `3.3V` power supply) on some "analog" pin. When this analog pin is
-connected to some appropriate electronics and the register is written to at some
-constant, fast rate (frequency) with the right values you can produce sounds or
-even music!
+As you might expect a DAC is exactly the opposite of ADC. You can write some digital number into a
+register to produce a specific voltage on some analog output pin. When this analog output pin is
+connected to some appropriate electronics and the register is written to quickly with the right
+values you can do things like produce sounds or music.
 
-### Real Time Clock (RTC)
+Neither the nRF52833 nor the MB2 board has a dedicated DAC. One typically gets a kind of DAC effect
+by outputting PWM and using a bit of electronics on the output (RC filter) to "smooth" out the PWM
+waveform.
 
-This peripheral can be used to track time in "human format". Seconds, minutes,
-hours, days, months and years. This peripheral handles the translation from
-"ticks" to these human friendly units of time. It even handles leap years and
-Daylight Save Time for you!
+### Real Time Clock
+
+A Real-Time Clock peripheral keeps track of time under its own power, usually in "human format":
+seconds, minutes, hours, days, months and years.  Some Real-Time Clocks even handle leap years and
+Daylight Saving Time automatically.
+
+Neither the nRF52833 nor the MB2 board contains a Real-Time Clock. The nRF52833 does contain
+"Real-Time Counter" (RTC), a low-frequency ticking clock that is supported by `nrf52833-hal`.  This
+counter can be dedicated to serve as a synthesized real-time clock. The key requirement, of course,
+is to keep the RTC peripheral powered even when the MB2 is not in use. While the MB2 does not have
+an on-board battery, the RTC should be able to run for a long time (possibly years) with a battery
+plugged into the battery port on the MB2 (for example, the battery pack provided with the micro::bit
+Go kit).
 
 ### Other communication protocols
 
-- SPI, abstracted within the [`embedded-hal` `spi` module] and implemented by the [`nrf52-hal`]
-- I2S, currently not abstracted within the `embedded-hal` but implemented by the [`nrf52-hal`]
-- Ethernet, there does exist a small TCP/IP stack named [`smoltcp`] which is implemented for some
-  chips but the ones on the micro:bit don't feature an Ethernet peripheral
-- USB, there is some experimental work on this, for example with the [`usb-device`] crate
-- Bluetooth, there does exist an incomplete BLE stack named [`rubble`] which does support nrf chips.
-- SMBUS, neither abstracted in `embedded-hal` nor implemented by the [`nrf52-hal`] at the moment.
-- CAN, neither abstracted in `embedded-hal` nor implemented by the [`nrf52-hal`] at the moment
-- IrDA, neither abstracted in `embedded-hal` nor implemented by the [`nrf52-hal`] at the moment
+- I2C: discussed in earlier chapters of this book
+- SPI: abstracted within the [`embedded-hal` `spi` module] and implemented by the [`nrf52-hal`]
+- I2S: currently not abstracted within the `embedded-hal` but implemented by the [`nrf52-hal`]
+- Ethernet: there does exist a small TCP/IP stack named [`smoltcp`] which is implemented for some
+  chips. The MB2 does not have an Ethernet peripheral
+- USB: there is some experimental work on this, for example with the [`usb-device`] crate
+- Bluetooth: the `nrf-softdevice` wrapper provided by the `Embassy` MB2 runtime is probably the
+  easiest entry into MB2 Bluetooth right now
+- CAN, SMBUS, IrDA, etc: All kinds of specialty interfaces exist in the world; Rust sometimes has
+  support for them. Please investigate the current situation for the interface you need
 
 [`embedded-hal` `spi` module]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/spi/index.html
 [`smoltcp`]: https://github.com/smoltcp-rs/smoltcp
 [`usb-device`]: https://github.com/mvirkkunen/usb-device
-[`rubble`]: https://github.com/jonas-schievink/rubble
 
-Different applications use different communication protocols. User facing
-applications usually have a USB connector because USB is a ubiquitous
-protocol in PCs and smartphones. Whereas inside cars you'll find plenty of CAN
-"buses". Some digital sensors use SPI, others use I2C and others, SMBUS.
+Different applications use different communication protocols. User facing applications usually have
+a USB connector because USB is a ubiquitous protocol in PCs and smartphones. Whereas inside cars
+you'll find plenty of CAN buses. Some digital sensors use SPI, I2C or SMBUS.
 
-If you happen to be interested in developing abstractions in the `embedded-hal` or
-implementations of peripherals in general, don't be shy to open an issue in the HAL
-repositories. Alternatively you could also join the [Rust Embedded matrix channel]
-and get into contact with most of the people who built the stuff from above.
+If you happen to be interested in developing abstractions in the `embedded-hal` or implementations
+of peripherals in general, don't be shy to open an issue in the HAL repositories. Alternatively you
+could also join the [Rust Embedded matrix channel] and get into contact with most of the people who
+built the stuff from above.
 
 ## General Embedded-Relevant Topics
 
-These topics cover items that are not specific to our device, or the hardware on
-it. Instead, they discuss useful techniques that could be used on embedded
-systems.
+These topics cover items that are not specific to our device, or the hardware on it. Instead, they
+discuss useful techniques that could be used on embedded systems. Most of what we will discuss here
+is not available on the MB2 — but most of it could easily be added by connecting a cheap piece of
+hardware to the MB2 edge-card connector, either driving it directly or using something like SPI or
+I2C to control it.
 
 ### Gyroscopes
 
-As part of our Punch-o-meter exercise, we used the Accelerometer to measure
-changes in acceleration in three dimensions. But there are other motion
-sensors such as gyroscopes, which allows us to measure changes in "spin" in three
-dimensions.
+As part of our Punch-o-meter exercise, we used the Accelerometer to measure changes in acceleration
+in three dimensions. But there are other motion sensors such as gyroscopes, which allows us to
+measure changes in "spin" in three dimensions.
 
-This can be very useful when trying to build certain systems, such as a robot
-that wants to avoid tipping over. Additionally, the data from a sensor like a
-gyroscope can also be combined with data from accelerometer using a technique
-called Sensor Fusion (see below for more information).
+This can be very useful when trying to build certain systems, such as a robot that wants to avoid
+tipping over. Additionally, the data from a sensor like a gyroscope can also be combined with data
+from accelerometer using a technique called Sensor Fusion (see below for more information).
 
 ### Servo and Stepper Motors
 
-While some motors are used primarily just to spin in one direction or the other,
-for example driving a remote control car forwards or backwards, it is sometimes
-useful to measure more precisely how a motor rotates.
+While some motors are used primarily just to spin in one direction or the other, for example driving
+a remote control car forwards or backwards, it is sometimes useful to measure more precisely how a
+motor rotates.
 
-Our microcontroller can be used to drive Servo or Stepper motors, which allow
-for more precise control of how many turns are being made by the motor, or
-can even position the motor in one specific place, for example if we wanted to
-move the arms of a clock to a particular direction.
+A microcontroller can be used to drive Servo or Stepper motors, which allow for more precise control
+of how many turns are being made by the motor, or can even position the motor in one specific place,
+for example if we wanted to move the arms of a clock to a particular direction.
 
 ### Sensor fusion
 
-The micro:bit contains two motion sensors: an accelerometer and a magnetometer.
-On their own these measure: (proper) acceleration and (the Earth's) magnetic field.
-But these magnitudes can be "fused" into something more useful: a "robust" measurement
-of the orientation of the board. Where robust means with less measurement error than
-a single sensor would be capable of.
+The micro:bit contains two motion sensors: an accelerometer and a magnetometer.  On their own these
+measure (proper) acceleration and (the Earth's) magnetic field.  But these magnitudes can be "fused"
+into something more useful: a "robust" measurement of the orientation of the board, with less
+measurement error than that of any single sensor.
 
-This idea of deriving more reliable data from different sources is known as
-sensor fusion.
+This idea of deriving more reliable data from different sources is known as sensor fusion.
 
 ---
 
-So where to next? There are several options:
+So where to next? 
 
-- You could check out the examples in the [`microbit`] board support crate. All those examples work for
-  the micro:bit board you have.
-
-[`microbit`]: https://github.com/nrf-rs/microbit/
-
-- You could join the [Rust Embedded matrix channel], lots of people who contribute or work on embedded software
-  hang out there. Including for example the people who wrote the `microbit` BSP, the `nrf52-hal`, `embedded-hal` etc.
+First and foremost, join us on the [Rust Embedded matrix channel]. Lots of people who contribute or
+work on embedded software hang out there, including, for example, the people who wrote the
+`microbit` BSP, the `nrf52-hal` crate, the `embedded-hal` crates, etc. We are happy to help you get
+started or move on with embedded programming in Rust!
 
 [Rust Embedded matrix channel]: https://matrix.to/#/#rust-embedded:matrix.org
 
-- If you are looking for a general overview of what is available in Rust Embedded right now check out the [Awesome Rust Embedded]
-  list
+There are many other options:
+
+- You could check out the examples in the [`microbit-v2`] board support crate. All those examples
+  work for the micro:bit board you have.
+
+[`microbit-v2`]: https://github.com/nrf-rs/microbit/
+
+- If you are looking for a general overview of what is available in Rust Embedded right now check
+  out the [Awesome Rust Embedded] list.
 
 [Awesome Rust Embedded]: https://github.com/rust-embedded/awesome-embedded-rust/
 
-- You could check out [Real-Time Interrupt-driven Concurrency]. A very efficient preemptive multitasking framework
-  that supports task prioritization and dead lock free execution.
+- You could check out [Embassy]. This is a modern efficient preemptive multitasking framework that
+  supports concurrent execution using Rust `async/await`.
 
-[Real-Time Interrupt-driven Concurrency]: https://rtic.rs
+[Embassy]: https://embassy.dev
 
-- You could check out more abstractions of the [`embedded-hal`] project and maybe even try and write your own
-  platform agnostic driver based on it.
+- You could check out Real-Time Interrupt-driven Concurrency [RTIC]. RTIC is a very efficient
+  preemptive multitasking framework that supports task prioritization and deadlock-free execution.
+
+[RTIC]: https://rtic.rs
+
+- You could check out more abstractions of the [`embedded-hal`] project and maybe even try and write
+  your own platform agnostic driver based on it.
 
 [`embedded-hal`]: https://github.com/rust-embedded/embedded-hal
 
@@ -259,25 +277,3 @@ So where to next? There are several options:
   use the [`cortex-m-quickstart`] Cargo project template.
 
 [`cortex-m-quickstart`]: https://docs.rs/cortex-m-quickstart/0.3.1/cortex_m_quickstart/
-
-- You could try out [this motion sensors demo][madgwick]. Details about the implementation and
-  source code are available in [this blog post][wd-1-2].
-
-[madgwick]: https://mobile.twitter.com/japaricious/status/962770003325005824
-[wd-1-2]: http://blog.japaric.io/wd-1-2-l3gd20-lsm303dlhc-madgwick/
-
-- You could check out [this blog post][brave-new-io] which describes how Rust type system can
-  prevent bugs in I/O configuration.
-
-[brave-new-io]: http://blog.japaric.io/brave-new-io/
-
-- You could check out [japaric's blog] for miscellaneous topics about embedded development with Rust.
-
-[japaric's blog]: http://blog.japaric.io
-
-
-- You could join the [Weekly driver initiative] and help us write generic drivers on top of the
-  `embedded-hal` traits and that work for all sorts of platforms (ARM Cortex-M, AVR, MSP430, RISCV,
-  etc.)
-
-[Weekly driver initiative]: https://github.com/rust-lang-nursery/embedded-wg/issues/39
