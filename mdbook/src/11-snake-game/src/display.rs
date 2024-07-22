@@ -1,17 +1,21 @@
+pub mod interrupt;
+pub mod show;
+
+pub use show::{display_image, clear_display};
+
 use core::cell::RefCell;
-use cortex_m::interrupt::{free, Mutex};
+use cortex_m::interrupt::{free as interrupt_free, Mutex};
 use microbit::display::nonblocking::Display;
 use microbit::gpio::DisplayPins;
 use microbit::pac;
-use microbit::pac::{interrupt, TIMER1};
-use tiny_led_matrix::Render;
+use microbit::pac::TIMER1;
 
 static DISPLAY: Mutex<RefCell<Option<Display<TIMER1>>>> = Mutex::new(RefCell::new(None));
 
-pub(crate) fn init_display(board_timer: TIMER1, board_display: DisplayPins) {
+pub fn init_display(board_timer: TIMER1, board_display: DisplayPins) {
     let display = Display::new(board_timer, board_display);
 
-    free(move |cs| {
+    interrupt_free(move |cs| {
         *DISPLAY.borrow(cs).borrow_mut() = Some(display);
     });
     unsafe {
@@ -19,29 +23,3 @@ pub(crate) fn init_display(board_timer: TIMER1, board_display: DisplayPins) {
     }
 }
 
-/// Display an image.
-pub(crate) fn display_image(image: &impl Render) {
-    free(|cs| {
-        if let Some(display) = DISPLAY.borrow(cs).borrow_mut().as_mut() {
-            display.show(image);
-        }
-    })
-}
-
-/// Clear the display (turn off all LEDs).
-pub(crate) fn clear_display() {
-    free(|cs| {
-        if let Some(display) = DISPLAY.borrow(cs).borrow_mut().as_mut() {
-            display.clear();
-        }
-    })
-}
-
-#[interrupt]
-fn TIMER1() {
-    free(|cs| {
-        if let Some(display) = DISPLAY.borrow(cs).borrow_mut().as_mut() {
-            display.handle_display_event();
-        }
-    })
-}

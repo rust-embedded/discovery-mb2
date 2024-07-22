@@ -48,6 +48,7 @@
     - [Game logic](11-snake-game/game-logic.md)
     - [Controls](11-snake-game/controls.md)
     - [Non-blocking display](11-snake-game/nonblocking-display.md)
+    - [Final assembly](11-snake-game/final-assembly.md)
 - [What's left for you to explore](explore.md)
 
 ---

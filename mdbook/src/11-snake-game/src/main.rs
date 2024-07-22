@@ -1,9 +1,13 @@
 #![no_main]
 #![no_std]
 
-mod game;
-mod control;
+pub mod game;
+mod controls;
 mod display;
+
+use controls::{get_turn, init_buttons};
+use display::{clear_display, display_image, init_display};
+use game::{Game, GameStatus};
 
 use cortex_m_rt::entry;
 use embedded_hal::delay::DelayNs;
@@ -15,22 +19,16 @@ use microbit::{
 use rtt_target::rtt_init_print;
 use panic_rtt_target as _;
 
-use crate::control::{get_turn, init_buttons};
-use crate::display::{clear_display, display_image, init_display};
-use crate::game::{Game, GameStatus};
-
-
 #[entry]
 fn main() -> ! {
     rtt_init_print!();
     let board = Board::take().unwrap();
     let mut timer = Timer::new(board.TIMER0).into_periodic();
     let mut rng = Rng::new(board.RNG);
-    let mut game = Game::new(rng.random_u32());
+    let mut game = Game::new(&mut rng);
 
     init_buttons(board.GPIOTE, board.buttons);
     init_display(board.TIMER1, board.display_pins);
-
 
     loop {
         loop {  // Game loop

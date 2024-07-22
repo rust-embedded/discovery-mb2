@@ -1,16 +1,25 @@
 # Snake game
 
-We're now going to implement a basic [snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) game that you can play on a micro:bit v2 using its 5x5 LED matrix as a
-display and its two buttons as controls. In doing so, we will build on some of the concepts covered in the earlier
-chapters of this book, and also learn about some new peripherals and concepts.
+We're now going to implement a basic [snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre))
+game that you can play on an MB2 using its 5×5 LED matrix as a display and its two buttons as
+controls. In doing so, we will build on some of the concepts covered in the earlier chapters of this
+book, and also learn about some new peripherals and concepts.
 
-In particular, we will be using the concept of hardware interrupts to allow our program to interact with multiple
-peripherals at once. Interrupts are a common way to implement concurrency in embedded contexts. There is a good
-introduction to concurrency in an embedded context in the [Embedded Rust Book](https://docs.rust-embedded.org/book/concurrency/index.html) that I suggest you read through
-before proceeding.
+In particular, we will be using the concept of hardware interrupts to allow our program to interact
+with multiple peripherals at once. Interrupts are a common way to implement concurrency in embedded
+contexts. There is a good introduction to concurrency in an embedded context [here] that
+you might read through before proceeding.
 
-> **NOTE** In this chapter, we are going to use later versions of certain libraries that have been used in previous
-> chapters. We are going to use version 0.13.0 of the `microbit` library (the preceding chapters have used 0.12.0).
-> Version 0.13.0 fixes a couple of bugs in the non-blocking display code that we will be using. We are also going to use
-> version 0.8.0 of the `heapless` library (previous chapters used version 0.7.10), which allows us to use certain of its
-> data structures with structs that implement Rust's `core::Hash` trait.
+[here]: https://docs.rust-embedded.org/book/concurrency/index.html
+
+## Modularity
+
+The source code here is more modular than it probably should be. This fine-grained modularity allows
+us to look at the source code a little at a time. We will build the code bottom-up: we will first
+build three modules — `game`, `controls` and `display`, and then compose these to build the final
+program. Each module will have a top-level source file and one or more included source files: for
+example, the `game` module will consist of `src/game.rs`, `src/game/coords.rs`,
+`src/game/movement.rs`, etc. The Rust `mod` statement is used to combine the various components of
+the module. *The Rust Programming Language* has a good [description] of Rust's module system.
+
+[description]: https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html
