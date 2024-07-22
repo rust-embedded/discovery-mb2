@@ -1,4 +1,4 @@
-use super::{GPIO, TURN, Turn};
+use super::{Turn, GPIO, TURN};
 
 use cortex_m::interrupt::free as interrupt_free;
 use microbit::pac::{self, interrupt};
@@ -13,7 +13,7 @@ fn GPIOTE() {
             let turn = match (a_pressed, b_pressed) {
                 (true, false) => Turn::Left,
                 (false, true) => Turn::Right,
-                _ => Turn::None
+                _ => Turn::None,
             };
 
             gpiote.channel0().reset_events();

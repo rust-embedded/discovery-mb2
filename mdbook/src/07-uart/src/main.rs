@@ -1,8 +1,8 @@
 #![no_main]
 #![no_std]
 
-use cortex_m_rt::entry;
 use core::fmt::Write;
+use cortex_m_rt::entry;
 use heapless::Vec;
 use microbit::hal::uarte::{self, Baudrate, Parity};
 use panic_rtt_target as _;

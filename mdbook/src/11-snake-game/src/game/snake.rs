@@ -12,7 +12,7 @@ pub struct Snake {
     /// collision checking).
     pub coord_set: FnvIndexSet<Coords, 32>,
     /// The direction the snake is currently moving in.
-    pub direction: Direction
+    pub direction: Direction,
 }
 
 impl Snake {
@@ -51,7 +51,7 @@ impl Snake {
             Direction::Up => Direction::Right,
             Direction::Down => Direction::Left,
             Direction::Left => Direction::Up,
-            Direction::Right => Direction::Down
+            Direction::Right => Direction::Down,
         }
     }
 
@@ -60,7 +60,7 @@ impl Snake {
             Direction::Up => Direction::Left,
             Direction::Down => Direction::Right,
             Direction::Left => Direction::Down,
-            Direction::Right => Direction::Up
+            Direction::Right => Direction::Up,
         }
     }
 
@@ -68,7 +68,7 @@ impl Snake {
         match direction {
             Turn::Left => self.turn_left(),
             Turn::Right => self.turn_right(),
-            Turn::None => ()
+            Turn::None => (),
         }
     }
 }

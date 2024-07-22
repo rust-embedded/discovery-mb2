@@ -3,9 +3,9 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use panic_halt as _;
-use microbit::board::Board;
 use embedded_hal::digital::OutputPin;
+use microbit::board::Board;
+use panic_halt as _;
 
 #[entry]
 fn main() -> ! {

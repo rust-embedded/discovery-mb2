@@ -3,7 +3,7 @@ use super::{Buttons, GPIO};
 use cortex_m::interrupt::free as interrupt_free;
 use microbit::{
     hal::{
-        gpio::{Pin, Input, Floating},
+        gpio::{Floating, Input, Pin},
         gpiote::{Gpiote, GpioteChannel},
     },
     pac,
@@ -14,10 +14,7 @@ pub fn init_buttons(board_gpiote: pac::GPIOTE, board_buttons: Buttons) {
     let gpiote = Gpiote::new(board_gpiote);
 
     fn init_channel(channel: &GpioteChannel<'_>, button: &Pin<Input<Floating>>) {
-        channel
-            .input_pin(button)
-            .hi_to_lo()
-            .enable_interrupt();
+        channel.input_pin(button).hi_to_lo().enable_interrupt();
         channel.reset_events();
     }
 

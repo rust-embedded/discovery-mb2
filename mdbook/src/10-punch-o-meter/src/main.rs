@@ -7,11 +7,11 @@ const THRESHOLD: f32 = 1.5;
 
 use cortex_m::asm::nop;
 use cortex_m_rt::entry;
-use rtt_target::{rtt_init_print, rprintln};
 use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
-    hal::{Timer, twim},
+    hal::{twim, Timer},
     pac::twim0::frequency::FREQUENCY_A,
 };
 
@@ -27,11 +27,9 @@ fn main() -> ! {
     let mut delay = Timer::new(board.TIMER0);
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_accel_mode_and_odr(
-        &mut delay,
-        AccelMode::Normal,
-        AccelOutputDataRate::Hz400,
-    ).unwrap();
+    sensor
+        .set_accel_mode_and_odr(&mut delay, AccelMode::Normal, AccelOutputDataRate::Hz400)
+        .unwrap();
     // Allow the sensor to measure up to 16 G since human punches
     // can actually be quite fast
     sensor.set_accel_scale(AccelScale::G16).unwrap();

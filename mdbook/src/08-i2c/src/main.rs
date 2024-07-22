@@ -5,18 +5,18 @@ use core::str;
 
 use cortex_m_rt::entry;
 use embedded_hal::delay::DelayNs;
-use rtt_target::rtt_init_print;
 use panic_rtt_target as _;
+use rtt_target::rtt_init_print;
 
 use microbit::{
-    hal::{Timer, twim},
-    pac::twim0::frequency::FREQUENCY_A,
     hal::uarte::{self, Baudrate, Parity},
+    hal::{twim, Timer},
+    pac::twim0::frequency::FREQUENCY_A,
 };
 
-use lsm303agr::{AccelMode, AccelOutputDataRate, MagMode, MagOutputDataRate, Lsm303agr};
-use heapless::Vec;
 use core::fmt::Write;
+use heapless::Vec;
+use lsm303agr::{AccelMode, AccelOutputDataRate, Lsm303agr, MagMode, MagOutputDataRate};
 
 use serial_setup::UartePort;
 
@@ -38,16 +38,20 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_accel_mode_and_odr(
-        &mut timer0,
-        AccelMode::HighResolution,
-        AccelOutputDataRate::Hz50,
-    ).unwrap();
-    sensor.set_mag_mode_and_odr(
-        &mut timer0,
-        MagMode::HighResolution,
-        MagOutputDataRate::Hz50,
-    ).unwrap();
+    sensor
+        .set_accel_mode_and_odr(
+            &mut timer0,
+            AccelMode::HighResolution,
+            AccelOutputDataRate::Hz50,
+        )
+        .unwrap();
+    sensor
+        .set_mag_mode_and_odr(
+            &mut timer0,
+            MagMode::HighResolution,
+            MagOutputDataRate::Hz50,
+        )
+        .unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
     let mut buffer: Vec<u8, 32> = Vec::new();
 
@@ -68,14 +72,14 @@ fn main() -> ! {
         }
 
         if str::from_utf8(&buffer).unwrap().trim() == "accelerometer" {
-            while !sensor.accel_status().unwrap().xyz_new_data()  {
+            while !sensor.accel_status().unwrap().xyz_new_data() {
                 timer0.delay_ms(1u32);
             }
 
             let (x, y, z) = sensor.acceleration().unwrap().xyz_mg();
             write!(serial, "Accelerometer: x {} y {} z {}\r\n", x, y, z).unwrap();
         } else if str::from_utf8(&buffer).unwrap().trim() == "magnetometer" {
-            while !sensor.mag_status().unwrap().xyz_new_data()  {
+            while !sensor.mag_status().unwrap().xyz_new_data() {
                 timer0.delay_ms(1u32);
             }
 

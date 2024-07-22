@@ -3,11 +3,11 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use rtt_target::{rtt_init_print, rprintln};
-use panic_rtt_target as _;
+use embedded_hal::{delay::DelayNs, digital::OutputPin};
 use microbit::board::Board;
 use microbit::hal::timer::Timer;
-use embedded_hal::{delay::DelayNs, digital::OutputPin};
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
 fn main() -> ! {

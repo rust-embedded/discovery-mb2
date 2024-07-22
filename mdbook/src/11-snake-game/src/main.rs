@@ -1,9 +1,9 @@
 #![no_main]
 #![no_std]
 
-pub mod game;
 mod controls;
 mod display;
+pub mod game;
 
 use controls::{get_turn, init_buttons};
 use display::{clear_display, display_image, init_display};
@@ -12,12 +12,12 @@ use game::{Game, GameStatus};
 use cortex_m_rt::entry;
 use embedded_hal::delay::DelayNs;
 use microbit::{
-    Board,
+    display::nonblocking::{BitImage, GreyscaleImage},
     hal::{Rng, Timer},
-    display::nonblocking::{BitImage, GreyscaleImage}
+    Board,
 };
-use rtt_target::rtt_init_print;
 use panic_rtt_target as _;
+use rtt_target::rtt_init_print;
 
 #[entry]
 fn main() -> ! {
@@ -31,7 +31,8 @@ fn main() -> ! {
     init_display(board.TIMER1, board.display_pins);
 
     loop {
-        loop {  // Game loop
+        loop {
+            // Game loop
             let image = GreyscaleImage::new(&game.game_matrix(6, 3, 9));
             display_image(&image);
             timer.delay_ms(game.step_len_ms());
@@ -47,7 +48,7 @@ fn main() -> ! {
                     clear_display();
                     display_image(&BitImage::new(&game.score_matrix()));
                     timer.delay_ms(2000u32);
-                    break
+                    break;
                 }
             }
         }

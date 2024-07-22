@@ -3,11 +3,11 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use rtt_target::{rtt_init_print, rprintln};
 use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
-    hal::{Timer, twim},
+    hal::{twim, Timer},
     pac::twim0::frequency::FREQUENCY_A,
 };
 
@@ -23,11 +23,13 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_accel_mode_and_odr(
-        &mut timer0,
-        AccelMode::HighResolution,
-        AccelOutputDataRate::Hz10,
-    ).unwrap();
+    sensor
+        .set_accel_mode_and_odr(
+            &mut timer0,
+            AccelMode::HighResolution,
+            AccelOutputDataRate::Hz10,
+        )
+        .unwrap();
     loop {
         if sensor.accel_status().unwrap().xyz_new_data() {
             let (x, y, z) = sensor.acceleration().unwrap().xyz_mg();

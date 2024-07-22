@@ -13,7 +13,7 @@ use libm::{atan2f, floorf};
 
 use microbit::{
     display::blocking::Display,
-    hal::{Timer, twim},
+    hal::{twim, Timer},
     pac::twim0::frequency::FREQUENCY_A,
 };
 
@@ -31,23 +31,37 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_mag_mode_and_odr(
-        &mut timer0,
-        MagMode::HighResolution,
-        MagOutputDataRate::Hz10,
-    ).unwrap();
+    sensor
+        .set_mag_mode_and_odr(
+            &mut timer0,
+            MagMode::HighResolution,
+            MagOutputDataRate::Hz10,
+        )
+        .unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
 
     let mut leds = [[0u8; 5]; 5];
 
     // Indexes of the 16 LEDs to be used in the display, and their
     // compass directions.
-    #[rustfmt::ignore]
+    #[rustfmt::skip]
     let indices = [
-        (2, 0) /* W */, (3, 0) /* W-SW */, (3, 1) /* SW */, (4, 1) /* S-SW */,
-        (4, 2) /* S */, (4, 3) /* S-SE */, (3, 3) /* SE */, (3, 4) /* E-SE */,
-        (2, 4) /* E */, (1, 4) /* E-NE */, (1, 3) /* NE */, (0, 3) /* N-NE */,
-        (0, 2) /* N */, (0, 1) /* N-NW */, (1, 1) /* NW */, (1, 0) /* W-NW */,
+        (2, 0), /* W */
+        (3, 0), /* W-SW */
+        (3, 1), /* SW */
+        (4, 1), /* S-SW */
+        (4, 2), /* S */
+        (4, 3), /* S-SE */
+        (3, 3), /* SE */
+        (3, 4), /* E-SE */
+        (2, 4), /* E */
+        (1, 4), /* E-NE */
+        (1, 3), /* NE */
+        (0, 3), /* N-NE */
+        (0, 2), /* N */
+        (0, 1), /* N-NW */
+        (1, 1), /* NW */
+        (1, 0), /* W-NW */
     ];
 
     loop {
@@ -63,14 +77,14 @@ fn main() -> ! {
         // with pairs of adjacent segments corresponding to
         // each compass direction.
         let seg = floorf(16.0 * theta / PI) as i8;
-        
+
         // Figure out what LED index to blink.
         let index = if seg >= 15 || seg <= -15 {
             8
         } else if seg >= 0 {
-            (seg / 2) as usize 
+            (seg / 2) as usize
         } else {
-            ((31 + seg) / 2) as usize 
+            ((31 + seg) / 2) as usize
         };
 
         // Blink the given LED.

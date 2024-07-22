@@ -3,8 +3,8 @@
 //! Translated from <https://github.com/lancaster-university/codal-microbit-v2/blob/006abf5566774fbcf674c0c7df27e8a9d20013de/source/MicroBitCompassCalibrator.cpp>
 
 use core::fmt::Debug;
-use embedded_hal::i2c::I2c;
 use embedded_hal::delay::DelayNs;
+use embedded_hal::i2c::I2c;
 use libm::{fabsf, sqrtf};
 
 use lsm303agr::{interface::I2cInterface, mode::MagContinuous, Lsm303agr};
@@ -123,9 +123,7 @@ where
             while !sensor.mag_status().unwrap().xyz_new_data() {
                 timer.delay_us(10u32);
             }
-            let measurement = Measurement::new(
-                sensor.magnetic_field().unwrap().xyz_nt()
-            );
+            let measurement = Measurement::new(sensor.magnetic_field().unwrap().xyz_nt());
             let mag_data = measurement_to_enu(measurement);
             data[samples] = mag_data;
             samples += 1;

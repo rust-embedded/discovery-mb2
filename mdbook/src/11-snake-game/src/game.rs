@@ -19,7 +19,7 @@ pub struct Game {
     snake: Snake,
     food_coords: Coords,
     speed: u8,
-    score: u8
+    score: u8,
 }
 
 impl Game {
@@ -35,7 +35,7 @@ impl Game {
             food_coords,
             speed: 1,
             status: GameStatus::Ongoing,
-            score: 0
+            score: 0,
         }
     }
 
@@ -75,10 +75,22 @@ impl Game {
     fn get_next_move(&self) -> Coords {
         let head = &self.snake.head;
         let next_move = match self.snake.direction {
-            Direction::Up => Coords { row: head.row - 1, col: head.col },
-            Direction::Down => Coords { row: head.row + 1, col: head.col },
-            Direction::Left => Coords { row: head.row, col: head.col - 1 },
-            Direction::Right => Coords { row: head.row, col: head.col + 1 },
+            Direction::Up => Coords {
+                row: head.row - 1,
+                col: head.col,
+            },
+            Direction::Down => Coords {
+                row: head.row + 1,
+                col: head.col,
+            },
+            Direction::Left => Coords {
+                row: head.row,
+                col: head.col - 1,
+            },
+            Direction::Right => Coords {
+                row: head.row,
+                col: head.col + 1,
+            },
         };
         if next_move.is_out_of_bounds() {
             self.wraparound(next_move)
@@ -124,7 +136,7 @@ impl Game {
                     self.speed += 1
                 }
                 GameStatus::Ongoing
-            },
+            }
             StepOutcome::Move(c) => {
                 self.snake.move_snake(c, false);
                 GameStatus::Ongoing
@@ -157,7 +169,7 @@ impl Game {
         &self,
         head_brightness: u8,
         tail_brightness: u8,
-        food_brightness: u8
+        food_brightness: u8,
     ) -> [[u8; 5]; 5] {
         let mut values = [[0u8; 5]; 5];
         values[self.snake.head.row as usize][self.snake.head.col as usize] = head_brightness;

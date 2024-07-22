@@ -3,8 +3,8 @@
 
 use cortex_m::asm::wfi;
 use cortex_m_rt::entry;
-use rtt_target::rtt_init_print;
 use panic_rtt_target as _;
+use rtt_target::rtt_init_print;
 
 use microbit::hal::uarte::{self, Baudrate, Parity};
 

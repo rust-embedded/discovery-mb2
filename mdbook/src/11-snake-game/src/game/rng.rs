@@ -2,7 +2,7 @@ use crate::Rng;
 
 /// A basic pseudo-random number generator.
 pub struct Prng {
-    value: u32
+    value: u32,
 }
 
 impl Prng {
@@ -11,7 +11,7 @@ impl Prng {
     }
 
     pub fn new(seed: u32) -> Self {
-        Self {value: seed}
+        Self { value: seed }
     }
 
     /// Basic xorshift PRNG function: see https://en.wikipedia.org/wiki/Xorshift

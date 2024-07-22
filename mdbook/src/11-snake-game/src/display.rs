@@ -1,7 +1,7 @@
 pub mod interrupt;
 pub mod show;
 
-pub use show::{display_image, clear_display};
+pub use show::{clear_display, display_image};
 
 use core::cell::RefCell;
 use cortex_m::interrupt::{free as interrupt_free, Mutex};
@@ -18,8 +18,5 @@ pub fn init_display(board_timer: TIMER1, board_display: DisplayPins) {
     interrupt_free(move |cs| {
         *DISPLAY.borrow(cs).borrow_mut() = Some(display);
     });
-    unsafe {
-        pac::NVIC::unmask(pac::Interrupt::TIMER1)
-    }
+    unsafe { pac::NVIC::unmask(pac::Interrupt::TIMER1) }
 }
-

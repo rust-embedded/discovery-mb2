@@ -42,7 +42,7 @@ fn main() -> ! {
 
     // Indexes of the 16 LEDs to be used in the display, and their
     // compass directions.
-    #[rustfmt::ignore]
+    #[rustfmt::skip]
     let indices = [
         (2, 0) /* W */, (3, 0) /* W-SW */, (3, 1) /* SW */, (4, 1) /* S-SW */,
         (4, 2) /* S */, (4, 3) /* S-SE */, (3, 3) /* SE */, (3, 4) /* E-SE */,

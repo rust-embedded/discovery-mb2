@@ -10,7 +10,7 @@ use rtt_target::{rprintln, rtt_init_print};
 use libm::sqrtf;
 
 use microbit::{
-    hal::{Timer, twim},
+    hal::{twim, Timer},
     pac::twim0::frequency::FREQUENCY_A,
 };
 
@@ -27,11 +27,13 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_mag_mode_and_odr(
-        &mut timer0,
-        MagMode::HighResolution,
-        MagOutputDataRate::Hz10,
-    ).unwrap();
+    sensor
+        .set_mag_mode_and_odr(
+            &mut timer0,
+            MagMode::HighResolution,
+            MagOutputDataRate::Hz10,
+        )
+        .unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
 
     loop {

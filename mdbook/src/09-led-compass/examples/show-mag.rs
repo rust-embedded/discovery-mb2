@@ -3,15 +3,15 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use rtt_target::{rtt_init_print, rprintln};
 use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
-    hal::{Timer, twim},
+    hal::{twim, Timer},
     pac::twim0::frequency::FREQUENCY_A,
 };
 
-use lsm303agr::{MagMode, MagOutputDataRate, Lsm303agr};
+use lsm303agr::{Lsm303agr, MagMode, MagOutputDataRate};
 
 #[entry]
 fn main() -> ! {
@@ -23,11 +23,13 @@ fn main() -> ! {
 
     let mut sensor = Lsm303agr::new_with_i2c(i2c);
     sensor.init().unwrap();
-    sensor.set_mag_mode_and_odr(
-        &mut timer0,
-        MagMode::HighResolution,
-        MagOutputDataRate::Hz10,
-    ).unwrap();
+    sensor
+        .set_mag_mode_and_odr(
+            &mut timer0,
+            MagMode::HighResolution,
+            MagOutputDataRate::Hz10,
+        )
+        .unwrap();
     sensor.enable_mag_offset_cancellation().unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
     loop {

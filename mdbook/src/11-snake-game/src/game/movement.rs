@@ -5,7 +5,7 @@ pub enum Direction {
     Up,
     Down,
     Left,
-    Right
+    Right,
 }
 
 /// What direction the snake should turn.
@@ -13,14 +13,14 @@ pub enum Direction {
 pub enum Turn {
     Left,
     Right,
-    None
+    None,
 }
 
 /// The current status of the game.
 pub enum GameStatus {
     Won,
     Lost,
-    Ongoing
+    Ongoing,
 }
 
 /// The outcome of a single move/step.
@@ -32,5 +32,5 @@ pub enum StepOutcome {
     /// Snake has eaten some food
     Eat(Coords),
     /// Snake has moved (and nothing else has happened)
-    Move(Coords)
+    Move(Coords),
 }
