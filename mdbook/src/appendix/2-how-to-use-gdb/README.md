@@ -1,10 +1,15 @@
 # How to use GDB
 
-Below are some useful GDB commands that can help us debug our programs. This assumes you have [flashed a program](../../05-led-roulette/flash-it.md) onto your microcontroller and attached GDB to a `cargo-embed` session.
+Below are some useful GDB commands that can help us debug our programs. This assumes you have
+[flashed a program](../../05-led-roulette/flash-it.md) onto your microcontroller and attached GDB to
+a `cargo-embed` session.
 
 ## General Debugging
 
-> **NOTE:** Many of the commands you see below can be executed using a short form. For example, `continue` can simply be used as `c`, or `break $location` can be used as `b $location`. Once you have experience with the commands below, try to see how short you can get the commands to go before GDB doesn't recognize them!
+> **NOTE:** Many of the commands you see below can be executed using a short form. For example,
+> `continue` can simply be used as `c`, or `break $location` can be used as `b $location`. Once you
+> have experience with the commands below, try to see how short you can get the commands to go
+> before GDB doesn't recognize them!
 
 
 ### Dealing with Breakpoints
@@ -40,7 +45,8 @@ Below are some useful GDB commands that can help us debug our programs. This ass
 
 ### Printing Information
 
-* `print /$f $data` - Print the value contained by the variable `$data`. Optionally format the output with `$f`, which can include:
+* `print /$f $data` - Print the value contained by the variable `$data`. Optionally format the
+  output with `$f`, which can include:
     ```txt
     x: hexadecimal
     d: signed decimal
@@ -52,21 +58,25 @@ Below are some useful GDB commands that can help us debug our programs. This ass
     f: floating point
     ```
     * `print /t 0xA`: Prints the hexadecimal value `0xA` as binary (0b1010)
-* `x /$n$u$f $address`: Examine memory at `$address`. Optionally, `$n` define the number of units to display,
-  `$u` unit size (bytes, halfwords, words, etc.), `$f` any `print` format defined above
+
+* `x /$n$u$f $address`: Examine memory at `$address`. Optionally, `$n` define the number of units to
+  display, `$u` unit size (bytes, halfwords, words, etc.), `$f` any `print` format defined above
     * `x /5i 0x080012c4`: Print 5 machine instructions staring at address `0x080012c4`
     * `x/4xb $pc`: Print 4 bytes of memory starting where `$pc` currently is pointing
 * `disassemble $location`
-    * `disassemble /r main`: Disassemble the function `main`, using `/r` to show the bytes that make up each instruction
+    * `disassemble /r main`: Disassemble the function `main`, using `/r` to show the bytes that make
+      up each instruction
 
 
 ### Looking at the Symbol Table
 
-* `info functions $regex`: Print the names and data types of functions matched by `$regex`, omit `$regex` to print all functions
+* `info functions $regex`: Print the names and data types of functions matched by `$regex`, omit
+  `$regex` to print all functions
     * `info functions main`: Print names and types of defined functions that contain the word `main`
 * `info address $symbol`: Print where `$symbol` is stored in memory
     * `info address GPIOC`: Print the memory address of the variable `GPIOC`
-* `info variables $regex`: Print names and types of global variables matched by `$regex`, omit `$regex` to print all global variables
+* `info variables $regex`: Print names and types of global variables matched by `$regex`, omit
+  `$regex` to print all global variables
 * `ptype $data`: Print more detailed information about `$data`
     * `ptype cp`: Print detailed type information about the variable `cp`
 
@@ -79,7 +89,8 @@ Below are some useful GDB commands that can help us debug our programs. This ass
 * `down $n`: Select frame `$n` frames down
 * `info frame $address`: Describe frame at `$address`, omit `$address` for currently selected frame
 * `info args`: Print arguments of selected frame
-* `info registers $r`: Print the value of register `$r` in selected frame, omit `$r` for all registers
+* `info registers $r`: Print the value of register `$r` in selected frame, omit `$r` for all
+  registers
     * `info registers $sp`: Print the value of the stack pointer register `$sp` in the current frame
 
 ### Controlling `cargo-embed` Remotely

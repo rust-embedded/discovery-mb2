@@ -15,7 +15,7 @@ describes the procedure if you are interested in the details.
 
 [Design Note]: https://www.st.com/resource/en/design_tip/dt0103-compensating-for-magnetometer-installation-error-and-hardiron-effects-using-accelerometerassisted-2d-calibration-stmicroelectronics.pdf
 
-Luckily for us, the CODAL group that built the original software for the micro:bit already
+Luckily for us, the CODAL group that built the original C++ software for the micro:bit already
 implemented the manufacturer calibration mechanism (or something similar) in C++ over [here].
 
 [here]: https://github.com/lancaster-university/codal-microbit-v2/blob/006abf5566774fbcf674c0c7df27e8a9d20013de/source/MicroBitCompassCalibrator.cpp
@@ -26,7 +26,7 @@ when reading calibrated values *the axes are flipped* so that viewed from the to
 connector forward the X, Y and Z axes of the calibrated value are in "standard" (right, forward, up)
 orientation.
 
-The usage of this calibrator is demonstrated in the default `src/main.rs` file.
+The usage of this calibrator is demonstrated in `src/main.rs` here.
 
 The way the user does the calibration is shown in this video from the C++ version. (Ignore the
 initial printing — the calibration starts about halfway through.)

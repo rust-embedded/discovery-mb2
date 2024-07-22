@@ -1,13 +1,12 @@
 # General troubleshooting
 
 ## `cargo-embed` problems
-Most `cargo-embed` problems are either related to not having installed the `udev`
-rules properly (on Linux) or having selected the wrong chip configuration in `Embed.toml` so
-make sure you got both of those right.
 
-If the above does not work out for you, you can open an issue in the [`discovery` issue tracker].
-Alternatively you can also visit the [Rust Embedded matrix channel] or the [probe-rs matrix channel]
-and ask for help there.
+Most `cargo-embed` problems are related to not having installed the `udev` rules properly on
+Linux, so make sure you got that right.
+
+If you are stuck, you can open an issue in the [`discovery` issue tracker] or visit the [Rust
+Embedded matrix channel] or the [probe-rs matrix channel] and ask for help there.
 
 [`discovery` issue tracker]: https://github.com/rust-embedded/discovery/issues
 [Rust Embedded matrix channel]: https://matrix.to/#/#rust-embedded:matrix.org
@@ -17,7 +16,7 @@ and ask for help there.
 
 ### "can't find crate for `core`"
 
-#### Symptoms
+*Symptoms:*
 
 ```
    Compiling volatile-register v0.1.2
@@ -42,11 +41,11 @@ error: Could not compile `r0`.
 To learn more, run the command again with --verbose.
 ```
 
-#### Cause
+*Cause:*
 
 You forgot to install the proper target for your microcontroller `thumbv7em-none-eabihf`.
 
-#### Fix
+*Fix:*
 
 Install the proper target.
 
