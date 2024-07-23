@@ -1,5 +1,18 @@
 #!/usr/bin/python3
 
+# How to use this tool:
+# 1. Set up
+# 1.1 make sure to be on a clean branch so that undo is easy
+# 1.2 cd to mdbook/src
+# 1.3 ensure that all chapters are in directories named ##-name
+# 1.4 ensure that SUMMARY.md contains all chapters in correct order
+# 2. python3 ../../rechapter.py
+# 3. inspect rechapter.sh, rechapter.sed and SUMMARY.md.new
+# 4. git mv -f SUMMARY.md.new SUMMARY.md
+# 5. sh rechapter.sh
+# 6. git rm rechapter.sh rechapter.sed
+# 7. git commit -a
+
 import re, sys
 from pathlib import Path
 
