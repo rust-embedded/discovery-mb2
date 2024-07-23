@@ -42,4 +42,4 @@ Note that the calibration matrix is printed by the demo program. This matrix can
 a program such as the [chapter 9] compass program (or stored in flash somewhere somehow) to avoid
 the need to recalibrate every time the user runs the program.
 
-[chapter 9]: ../../09-led-compass/index.html
+[chapter 9]: ../../11-led-compass/index.html
