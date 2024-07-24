@@ -4,10 +4,6 @@ authors = [
     "Wink Saville <wink@saville.com>",
     "Henk Oordt <hd@oordt.dev>",
 ]
-edition = "2018"
+edition = "2021"
 name = "registers"
 version = "0.2.0"
-default-run = "registers"
-
-[dependencies]
-aux7 = { path = "auxiliary" }

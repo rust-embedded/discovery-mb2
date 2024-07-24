@@ -2,14 +2,16 @@
 resolver = "2"
 members = [
   "mdbook/src/03-setup",
+  "mdbook/src/05-hello-world",
   "mdbook/src/05-led-roulette",
-  "mdbook/src/07-uart",
-  "mdbook/src/08-i2c",
-  "mdbook/src/09-led-compass",
-  "mdbook/src/10-punch-o-meter",
-  "mdbook/src/11-snake-game",
-  "mdbook/src/serial-setup",
+  "mdbook/src/07-registers",
+  "mdbook/src/09-uart",
+  "mdbook/src/10-i2c",
+  "mdbook/src/11-led-compass",
+  "mdbook/src/12-punch-o-meter",
+  "mdbook/src/13-snake-game",
   "mdbook/src/appendix/3-mag-calibration",
+  "mdbook/src/serial-setup",
 ]
 
 [profile.release]

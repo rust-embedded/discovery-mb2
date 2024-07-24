@@ -8,9 +8,9 @@
 # 1.4 ensure that SUMMARY.md contains all chapters in correct order
 # 2. python3 ../../rechapter.py
 # 3. inspect rechapter.sh, rechapter.sed and SUMMARY.md.new
-# 4. git mv -f SUMMARY.md.new SUMMARY.md
+# 4. mv -f SUMMARY.md.new SUMMARY.md
 # 5. sh rechapter.sh
-# 6. git rm rechapter.sh rechapter.sed
+# 6. rm rechapter.sh rechapter.sed
 # 7. git commit -a
 
 import re, sys
