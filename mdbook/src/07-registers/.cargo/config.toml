@@ -1,9 +1,8 @@
-[target.'cfg(all(target_arch = "arm", target_os = "none"))']
-runner = "rust-gdb -x embed.gdb"
-
-rustflags = [
-  "-C", "link-arg=-Tlink.x",
-]
-
 [build]
 target = "thumbv7em-none-eabihf"
+
+[target.thumbv7em-none-eabihf]
+runner = "probe-rs run --chip nRF52833_xxAA"
+rustflags = [
+  "-C", "linker=rust-lld",
+]
