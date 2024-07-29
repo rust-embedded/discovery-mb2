@@ -39,19 +39,19 @@ But what do we do in software to cause this to occur? We will work at the level 
 particular microcontroller easier to work with. As can be seen from the name, we have one for the
 microcontroller on the MB2. It happens to contain everything needed to turn our target LED on.
 
-Take a look at `src/bin/light-up.rs` in this chapter's directory, and then try running it.
+Take a look at `examples/light-up.rs` in this chapter's directory, and then try running it.
 You could use something fancy like before, but we have it set up so that
 
 ```
-cargo run --bin light-up
+cargo run --example light-up
 ```
 
 will load and run your program. That one LED should now be brightly lit!
 
 ``` rust
-{{#include src/bin/light-up.rs}}
+{{#include examples/light-up.rs}}
 ```
 
 Note that we access the Peripheral Access Crate (PAC) for this chip through our HAL crate. There's a
 complicated dance needed to get access to our pins. Finally, since we can just initialize the pins
-to the right levels, we don't need to set them. That's a topic for the next section.
+to the right levels, we don't need to set them. Wiggling the pins is a topic for the next section.

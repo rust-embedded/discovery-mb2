@@ -1,11 +1,11 @@
-# Spin Wait
+# Spin wait
 
 To blink the LED, we need to wait about a half-second between each change. How do we do that?
 
-Well, here's the dumb way. It's not good, but it's a start. Take a look at `src/bin/spin-wait.rs`.
+Well, here's the dumb way. It's not good, but it's a start. Take a look at `examples/spin-wait.rs`.
 
 ```rust
-{{#include src/bin/spin-wait.rs}}
+{{#include examples/spin-wait.rs}}
 ```
 
 Run this with `cargo run --release --bin spin-wait` — the `--release` is really important here — and
@@ -42,6 +42,10 @@ Things you might be wondering:
   This is only three or four instructions, but the backward branch may cost an extra bit.  Notice
   that these *are not the same:* the compiler chooses to emit different instructions for the first
   and second wait loops. See "it varies depending" below.
+  
+  Still, we're executing about 4 instructions per loop iteration. This means that on our 64MHz CPU a
+  half-second spin should take 64M/2/4 = 8M iterations to complete. So something is slowing us down
+  by a factor of 2. What? I dunno. This whole thing is terrible.
 
 * **Why is `--release` so all-important?** Try without it. Notice that the LED is still flashing on
   and off, but with a period of *many* seconds. The wait loop is now unoptimized and is taking many
