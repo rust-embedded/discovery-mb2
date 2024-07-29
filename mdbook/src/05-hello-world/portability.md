@@ -3,7 +3,7 @@
 (This section is optional. Feel free to skip to the [next section], where we clean our code up a bit
 and call it a day.)
 
-[next section]: board-support.html
+[next section]: board-support-crate.html
 
 You may wonder whether all this fancy ecosystem is worth its weight. The setup for our blinky is
 pretty fancy, and uses a lot of Rust crates and features for such a simple job.

@@ -7,6 +7,7 @@ blink the next LED over, while leaving the original LED on. That is an easy chan
 
 ```rust
 {{#include examples/fast-blink.rs}}
+```
 
 The `embedded-hal` crate is being used here to provide the Rust traits needed to set and unset the
 LED. This means that this part of the code is portable to any Rust HAL that implements the
