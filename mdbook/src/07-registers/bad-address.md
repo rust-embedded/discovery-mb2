@@ -45,7 +45,7 @@ handler*, which is just a function/subroutine.
 There are different kind of exceptions. Each kind of exception is raised by different conditions and
 each one is handled by a different exception handler.
 
-The `aux7` crate depends on the `cortex-m-rt` crate which defines a default
+The `registers` crate depends on the `cortex-m-rt` crate which defines a default
 *hard fault* handler, named `HardFault_`, that handles the "invalid memory
 address" exception. `embed.gdb` placed a breakpoint on `HardFault`; that's why
 the debugger halted your program while it was executing the exception handler.

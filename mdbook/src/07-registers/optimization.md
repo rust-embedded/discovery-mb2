@@ -34,7 +34,7 @@ $ cat debug.dump
      160:      	push	{r7, lr}
      162:      	mov	r7, sp
      164:      	sub	sp, #0x8
-     166:      	bl	0x198 <aux7::init::hb6346637538e8ec5> @ imm = #0x2e
+     166:      	bl	0x198 <registers::init::hb6346637538e8ec5> @ imm = #0x2e
      16a:      	movw	r1, #0x504        ; <-- Load lower half of `OUT` register address into register `r1`
      16e:      	movt	r1, #0x5000       ; <-- Load upper half of `OUT` register address into register `r1`
      172:      	str	r1, [sp, #0x4]
@@ -69,7 +69,7 @@ $ cat release.dump
 00000160 <registers::__cortex_m_rt_main::h1f38525e07b97485>:
      160:      	push	{r7, lr}
      162:      	mov	r7, sp
-     164:      	bl	0x17a <aux7::init::h4390f1d4f8a071f7> @ imm = #0x12
+     164:      	bl	0x17a <registers::init::h4390f1d4f8a071f7> @ imm = #0x12
      168:      	movw	r0, #0x504          ; <-- Load lower half of `OUT` register address into register `r0`
      16c:      	movt	r0, #0x5000         ; <-- Load upper half of `OUT` register address into register `r0`
      170:      	ldr	r1, [r0]                ; <-- (?) Load value at the address in `r0` into `r1`.
@@ -110,7 +110,7 @@ $ cat release.volatile.dump
 00000160 <registers::__cortex_m_rt_main::h1f38525e07b97485>:
      160:      	push	{r7, lr}
      162:      	mov	r7, sp
-     164:      	bl	0x192 <aux7::init::h4390f1d4f8a071f7> @ imm = #0x2a
+     164:      	bl	0x192 <registers::init::h4390f1d4f8a071f7> @ imm = #0x2a
      168:      	movw	r0, #0x504
      16c:      	movt	r0, #0x5000
      170:      	ldr	r1, [r0]

@@ -17,7 +17,7 @@ Wouldn't it be nice if we had an API to manipulate registers in a "safe" manner?
 should encode these three points I've mentioned: No messing around with the actual addresses, should
 respect read/write permissions and should prevent modification of the reserved parts of a register.
 
-Well, we do! `aux7::init()` actually returns a value that provides a type safe API to manipulate the
+Well, we do! `registers::init()` actually returns a value that provides a type safe API to manipulate the
 registers of the `P0` and `P1` ports.
 
 As you may remember: a group of registers associated to a peripheral is called register block, and
@@ -340,7 +340,7 @@ Then search for `main` in `release.type-safe.dump`
 00000160 <registers::__cortex_m_rt_main::h0e9b57c6799332fd>:
      160:      	push	{r7, lr}
      162:      	mov	r7, sp
-     164:      	bl	0x192 <aux7::init::hec71dddc40be11b5> @ imm = #0x2a
+     164:      	bl	0x192 <registers::init::hec71dddc40be11b5> @ imm = #0x2a
      168:      	movw	r0, #0x504
      16c:      	movt	r0, #0x5000
      170:      	ldr	r1, [r0]

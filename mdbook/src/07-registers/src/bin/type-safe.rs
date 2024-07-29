@@ -2,11 +2,11 @@
 #![no_std]
 
 #[allow(unused_imports)]
-use aux7::entry;
+use registers::entry;
 
 #[entry]
 fn main() -> ! {
-    let (p0, _p1) = aux7::init();
+    let (p0, _p1) = registers::init();
 
     // Turn on the top row
     p0.out.modify(|_, w| w.pin21().set_bit());

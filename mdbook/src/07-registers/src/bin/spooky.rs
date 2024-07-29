@@ -4,7 +4,7 @@
 use core::ptr;
 
 #[allow(unused_imports)]
-use aux7::{entry, rprintln};
+use registers::{entry, rprintln};
 
 // Print the current contents of P0.OUT
 fn print_out() {
@@ -17,7 +17,7 @@ fn print_out() {
 
 #[entry]
 fn main() -> ! {
-    aux7::init();
+    registers::init();
 
     unsafe {
         // A bunch of magic addresses!

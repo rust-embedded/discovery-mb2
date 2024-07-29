@@ -2,11 +2,11 @@
 #![no_std]
 
 #[allow(unused_imports)]
-use aux7::entry;
+use registers::entry;
 
 #[entry]
 fn main() -> ! {
-    aux7::init();
+    registers::init();
 
     unsafe {
         // A magic address!

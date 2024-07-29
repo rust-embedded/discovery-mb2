@@ -4,11 +4,11 @@
 use core::ptr;
 
 #[allow(unused_imports)]
-use aux7::entry;
+use registers::entry;
 
 #[entry]
 fn main() -> ! {
-    aux7::init();
+    registers::init();
 
     unsafe {
         ptr::read_volatile(0x5000_A784 as *const u32);
