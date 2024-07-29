@@ -12,6 +12,7 @@
 # 5. sh rechapter.sh
 # 6. rm rechapter.sh rechapter.sed
 # 7. git commit -a
+# 8. run reworkspace.py (see insns there) to fix the Cargo workspace
 
 import re, sys
 from pathlib import Path
