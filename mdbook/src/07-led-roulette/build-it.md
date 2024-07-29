@@ -39,7 +39,7 @@ while [verifying your setup].
 
 
 With the `rust-std` component in place you can now cross compile the program using Cargo.
-Make sure you are in the `src/05-led-roulette` directory, then build. This initial code is an
+Make sure you are in the `src/07-led-roulette` directory, then build. This initial code is an
 example, so we compile it as such.
 
 ``` console

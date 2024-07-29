@@ -68,18 +68,18 @@ cortex_m_rt::DefaultPreInit () at src/lib.rs:1058
 (gdb) continue
 Continuing.
 
-Breakpoint 1, registers::__cortex_m_rt_main_trampoline () at src/07-registers/src/main.rs:7
+Breakpoint 1, registers::__cortex_m_rt_main_trampoline () at src/06-registers/src/main.rs:7
 7	#[entry]
 (gdb) continue
 Continuing.
 
 Program received signal SIGINT, Interrupt.
-registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:8
+registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:8
 8	fn main() -> ! {
 (gdb) continue
 Continuing.
 
-Breakpoint 4.2, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:12
+Breakpoint 4.2, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:12
 12	    p0.out.modify(|_, w| w.pin21().set_bit());
 (gdb) print *p0                                               ; ⬅️ Printing `*p0` here!
 $1 = nrf52833_pac::p0::RegisterBlock {

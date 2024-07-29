@@ -19,13 +19,13 @@ Target halted
 (gdb) continue
 Continuing.
 
-Breakpoint 1, registers::__cortex_m_rt_main_trampoline () at src/07-registers/src/main.rs:9
+Breakpoint 1, registers::__cortex_m_rt_main_trampoline () at src/06-registers/src/main.rs:9
 9	#[entry]
 (gdb) continue
 Continuing.
 
 Program received signal SIGINT, Interrupt.
-registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:10
+registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:10
 10	fn main() -> ! {
 (gdb) continue
 Continuing.

@@ -1,7 +1,7 @@
 # How to use GDB
 
 Below are some useful GDB commands that can help us debug our programs. This assumes you have
-[flashed a program](../../05-led-roulette/flash-it.md) onto your microcontroller and attached GDB to
+[flashed a program](../../07-led-roulette/flash-it.md) onto your microcontroller and attached GDB to
 a `cargo-embed` session.
 
 ## General Debugging

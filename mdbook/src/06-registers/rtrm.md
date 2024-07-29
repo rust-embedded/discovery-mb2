@@ -63,14 +63,14 @@ So here we go. Furst turn off the `inaccessible-by-default` flag, then set a cou
 ```
 (gdb) set mem inaccessible-by-default off
 (gdb) break 16
-Breakpoint 1 at 0x172: file src/07-registers/src/main.rs, line 16.
+Breakpoint 1 at 0x172: file src/06-registers/src/main.rs, line 16.
 Note: automatically using hardware breakpoints for read-only addresses.
 (gdb) break 19
-Breakpoint 2 at 0x17c: file src/07-registers/src/main.rs, line 19.
+Breakpoint 2 at 0x17c: file src/06-registers/src/main.rs, line 19.
 (gdb) break 22
-Breakpoint 3 at 0x184: file src/07-registers/src/main.rs, line 22.
+Breakpoint 3 at 0x184: file src/06-registers/src/main.rs, line 22.
 (gdb) break 25
-Breakpoint 4 at 0x18c: file src/07-registers/src/main.rs, line 25.
+Breakpoint 4 at 0x18c: file src/06-registers/src/main.rs, line 25.
 (gdb) monitor reset halt
 Resetting and halting target
 Target halted
@@ -82,7 +82,7 @@ All right. Let's continue until the first breakpoint, right before line 16, and 
 (gdb) c
 Continuing.
 
-Breakpoint 1, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:16
+Breakpoint 1, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:16
 16              *(PORT_P0_OUT as *mut u32) |= 1 << 21;
 (gdb) x 0x50000504
 0x50000504:     0x00000000
@@ -97,12 +97,12 @@ Let's go on. This line consists of multiple instructions (reading, bitwise ORing
 Continuing.
 
 Program received signal SIGINT, Interrupt.
-0x00000174 in registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:16
+0x00000174 in registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:16
 16              *(PORT_P0_OUT as *mut u32) |= 1 << 21;
 (gdb) c
 Continuing.
 
-Breakpoint 2, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:19
+Breakpoint 2, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:19
 19              *(PORT_P0_OUT as *mut u32) |= 1 << 19;
 ```
 
@@ -126,12 +126,12 @@ Yeah, I was gonna say that. Now, hit 'c' another time to continue execution up t
 
 ```
 Program received signal SIGINT, Interrupt.
-0x0000017e in registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:19
+0x0000017e in registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:19
 19              *(PORT_P0_OUT as *mut u32) |= 1 << 19;
 (gdb) c
 Continuing.
 
-Breakpoint 3, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:22
+Breakpoint 3, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:22
 22              *(PORT_P0_OUT as *mut u32) &= !(1 << 21);
 (gdb) x 0x50000504
 0x50000504:     0x00280000
@@ -150,12 +150,12 @@ Continue execution and check that the reported values of the `OUT` register matc
 Continuing.
 
 Program received signal SIGINT, Interrupt.
-0x00000186 in registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:22
+0x00000186 in registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:22
 22              *(PORT_P0_OUT as *mut u32) &= !(1 << 21);
 (gdb) c
 Continuing.
 
-Breakpoint 4, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:25
+Breakpoint 4, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:25
 25              *(PORT_P0_OUT as *mut u32) &= !(1 << 19);
 (gdb) x 0x50000504
 0x50000504:     0x00080000
@@ -163,13 +163,13 @@ Breakpoint 4, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:2
 Continuing.
 
 Program received signal SIGINT, Interrupt.
-0x0000018e in registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:25
+0x0000018e in registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:25
 25              *(PORT_P0_OUT as *mut u32) &= !(1 << 19);
 (gdb) c
 Continuing.
 ^C
 Program received signal SIGINT, Interrupt.
-0x00000196 in registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:28
+0x00000196 in registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:28
 28          loop {}
 (gdb) x 0x50000504
 0x50000504:     0x00000000

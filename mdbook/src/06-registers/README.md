@@ -2,7 +2,7 @@
 
 It's time to explore what calling `display_pins.row1.set_high()` does under the hood.
 
-In a nutshell, it just writes to some special memory regions. Go into the `07-registers` directory
+In a nutshell, it just writes to some special memory regions. Go into the `06-registers` directory
 and let's run the starter code statement by statement.
 
 ``` rust

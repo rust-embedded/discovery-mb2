@@ -78,7 +78,7 @@ with summary_file.open(mode="r") as s:
         if line is not None:
             print(line, file=ns)
         if ch - 1 != nch:
-            print("chapter count mismatch: summary {ch - 1}, dir {nch}", file=sys.stderr)
+            print(f"chapter count mismatch: summary {ch - 1}, dir {nch}", file=sys.stderr)
             exit(1)
 
 sed_script = Path("rechapter.sed")

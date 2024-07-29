@@ -15,7 +15,7 @@ The starter code is in the `src` directory of the book repository. Inside that d
 more directories named after each chapter of this book. Most of those directories are starter Cargo
 projects.
 
-Now, jump into the `src/05-led-roulette` directory. Check the `examples/init.rs` file:
+Now, jump into the `src/07-led-roulette` directory. Check the `examples/init.rs` file:
 
 ``` rust
 {{#include examples/init.rs}}
