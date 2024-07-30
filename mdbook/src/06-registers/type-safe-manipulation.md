@@ -4,21 +4,21 @@ One of the registers of `P0`, the `IN` register, is documented as a read-only re
 
 > 6.8.2.4 IN - Pages 145 and 146
 
-Note that in the 'Access' column of the table, only the 'R' is given for this register.
-We are not supposed to write to this register or Bad Stuff May Happen.
+Note that in the 'Access' column of the table, only the 'R' is given for this register.  We are not
+supposed to write to this register or Bad Stuff May Happen.
 
-Registers have different read/write permissions. Some of them are write
-only, others can be read and written to and there must be others that are read only.
+Registers have different read/write permissions. Some of them are write only, others can be read and
+written to and there must be others that are read only.
 
-Finally, directly working with hexadecimal addresses is error prone. You already saw that trying to
-access an invalid memory address causesunreached class freedom porcupine shelf sensitize onion viscosity an exception which disrupts the execution of our program.
+Directly working with hexadecimal addresses is also error-prone. You already saw that trying to
+access an invalid memory address caused an exception which disrupted the execution of our program.
 
 Wouldn't it be nice if we had an API to manipulate registers in a "safe" manner? Ideally, the API
 should encode these three points I've mentioned: No messing around with the actual addresses, should
 respect read/write permissions and should prevent modification of the reserved parts of a register.
 
-Well, we do! `registers::init()` actually returns a value that provides a type safe API to manipulate the
-registers of the `P0` and `P1` ports.
+Well, we do! `registers::init()` actually returns a value that provides a type safe API to
+manipulate the registers of the `P0` and `P1` ports.
 
 As you may remember: a group of registers associated to a peripheral is called register block, and
 it's located in a contiguous region of memory. In this type safe API each register block is modeled
@@ -28,20 +28,31 @@ newtype over e.g. `u32` that exposes a combination of the following methods: `re
 like `u32`, instead they take yet another newtype that can be constructed using the builder pattern
 and that prevent the modification of the reserved parts of the register.
 
-The best way to get familiar with this API is to port our running example to it.
+The best way to get familiar with this API is to port our running example to it
+(`examples/type-safe.rs`).
 
 ```rust
-{{#include src/bin/type-safe.rs}}
+{{#include examples/type-safe.rs}}
 ```
 
 First thing you notice: There are no magic addresses involved. Instead we use a more human friendly
 way, `p0.out`, to refer to the `OUT` register in the `P0` port register block.
 
-Then we have this [`modify`] method that takes a closure. Before this closure is called, the `OUT` register's value is read and passed to the closure as the `r` parameter. Given the value of `r`, you can manipulate `w` to the desired new value of the register using its methods. The result is the written to the register once the closure returns. In our case, the current value of the register is also passed in the `w` parameter, allowing us to just manipulate `w` when we want to keep the rest of the register bits as is.
+The register block has a [`modify`] method that takes a closure. Before this closure is called, the
+`OUT` register's value is read and passed to the closure as the `r` parameter. Given the value of
+`r`, you can manipulate `w` to the desired new value of the register using its methods. The result
+is written to the register once the closure returns. In our case, the current value of the register
+is also passed in the `w` parameter, allowing us to just manipulate `w` when we want to keep the
+rest of the register bits as is.
 
-The `modify` method is defined for registers that allow both write and read access. If you'd like to just read a register's value, but not update it, you can use the [`read`] method. Or, if you simply want to write a register value without reading, there's the [`write`] method.
+The `modify` method is defined for registers that allow both write and read access. If you'd like to
+just read a register's value, but not update it, you can use the [`read`] method. Or, if you simply
+want to write a register value without reading, there's the [`write`] method.
 
-Read-only registers only expose `read`, and write-only registers only expose `write`. This prevents users from accessing a register in a way that's not allowed, and therefore you don't need to wrap the calls in an `unsafe` block. And you don't need to figure out the exact register address and bit positions yourself!
+Read-only registers only expose `read`, and write-only registers only expose `write`. This prevents
+users from accessing a register in a way that's not allowed, and therefore you don't need to wrap
+the calls in an `unsafe` block. And you don't need to figure out the exact register address and bit
+positions yourself!
 
 [`write`]: https://docs.rs/svd2rust/latest/svd2rust/#write
 [`read`]: https://docs.rs/svd2rust/latest/svd2rust/#read
@@ -318,10 +329,9 @@ $1 = nrf52833_pac::p0::RegisterBlock {
 
 ```
 
-All these newtypes and closures sound like they'd generate large, bloated programs but, if you
-actually compile the program in release mode with [LTO] enabled, you'll see that it produces exactly
-the same instructions that the "unsafe" version that used `write_volatile` and hexadecimal addresses
-did!
+All these newtypes and closures sound like they'd generate large, bloated programs. If you actually
+compile the program in release mode with [LTO] enabled, though, you'll see exactly the same
+instructions that the "unsafe" version that used `write_volatile` and hexadecimal addresses had!
 
 [LTO]: https://en.wikipedia.org/wiki/Interprocedural_optimization
 
@@ -358,10 +368,11 @@ Then search for `main` in `release.type-safe.dump`
      190:      	b	0x190 <registers::__cortex_m_rt_main::h0e9b57c6799332fd+0x30> @ imm = #-0x4
 ```
 
-You can validate that this yields the exact same binary as the one with the calls to `ptr::read_volatile` and `ptr::write_volatile`.
+You can validate that this yields the exact same binary as the one with the calls to
+`ptr::read_volatile` and `ptr::write_volatile`.
 
-The best part of all this is that nobody had to write a single line of code to implement the
-GPIO API. All the code was automatically generated from a System View Description (SVD) file using the
+The best part of all this is that nobody had to write a single line of code to implement the GPIO
+API. All the code was automatically generated from a System View Description (SVD) file using the
 [svd2rust] tool. This SVD file is actually an XML file that microcontroller vendors provide and that
 contains the register maps of their microcontrollers. The file contains the layout of register
 blocks, the base addresses, the read/write permissions of each register, the layout of the

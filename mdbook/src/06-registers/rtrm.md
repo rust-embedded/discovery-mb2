@@ -1,13 +1,14 @@
 # RTRM: Reading The Reference Manual
 
-I mentioned that the microcontroller has several pins. For convenience, these pins are grouped in
-*ports*. There are two ports, Port 0 and Port 1, abbreviated to `P0` and `P1` respectively. The pins within each
-port are named with numbers starting from 0. Port 0 has 32 pins, named `P0.00` to `P0.31`, and Port 1 has 10 pins, named `P1.00` to `P1.09`.
+We have previously seen the GPIO pins on the nRF52833. On this chip (and on many others) the GPIO
+pins are grouped into *ports*. There are two ports, Port 0 and Port 1, abbreviated to `P0` and `P1`
+respectively. The pins within each port are named with numbers starting from 0. Port 0 has 32 pins,
+named `P0.00` to `P0.31`, and Port 1 has 10 pins, named `P1.00` to `P1.09`.
 
-The first thing we have to find out is which pin is connected to which LED. This information is in
-the microbit [hardware documentation]. Specifically, it's in the [pinmap table].
+The first thing we have to remember out is which pin is connected to which LED.  We previously did
+this by tracing the schematic. That turns out to be hard mode: the required information is in the
+MB2 [pinmap table].
 
-[hardware documentation]: https://tech.microbit.org/hardware/schematic/#v2-pinmap
 [pinmap table]: https://tech.microbit.org/hardware/schematic/#v2-pinmap
 
 The table says:
@@ -15,11 +16,11 @@ The table says:
 - `ROW1`, the top LED row, is connected to the pin `P0.21`. `P0.21` is the short form of: Pin 21 on Port 0.
 - `ROW5`, the bottom LED row, is connected to the pin `P0.19`.
 
-Up to this point, we know that we want to change the state of the pins `P0.21` and `P0.19` to turn the
-top and bottom rows on and off. These pins are part of Port 0 so we'll have to deal with the `P0`
-peripheral.
+Up to this point, we know that we want to change the state of the pins `P0.21` and `P0.19` to turn
+the top and bottom rows on and off. These pins are part of Port 0 so we'll use the `P0` peripheral
+to set them up.
 
-Each peripheral has a register *block* associated to it. A register block is a collection of
+Each peripheral has a register *block* associated with it. A register block is a collection of
 registers allocated in contiguous memory. The address at which the register block starts is known as
 its base address. We need to figure out what's the base address of the `P0` peripheral. That
 information is in the following section of the microcontroller [Product Specification]:
@@ -36,8 +37,8 @@ peripheral, that table is in:
 
 > Section 6.8.2 Registers - Page 144
 
-`OUT` is the register which we will be using to set/reset. Its offset value is `0x504` from the base address 
-of the `P0`. We can look up `OUT` in the reference manual. 
+`OUT` is the register which we will be using to set/reset. Its offset value is `0x504` from the base
+address of the `P0`. We can look up `OUT` in the reference manual.
 
 That register is specified right under the `GPIO` registers table:
 
@@ -46,10 +47,11 @@ That register is specified right under the `GPIO` registers table:
 Anyway, `0x5000_0000` + `0x504` = `0x50000504`. That looks familiar! Finally! 
 
 This is the register we were writing to. The documentation says some interesting things. First, this
-register can both be written to and read from. Next, the register is a 32-bit piece of memory, and each bit
-represents the state of the corresponding pin. That means that bit 19 matches pin 19, for instance.
-Setting the bit to 1 will enable the pin output, and setting it to 0 will reset it. Furthermore,
-we can see that all pin outputs are disable by default, as the reset value of all bits is 0.
+register can both be written to and read from. Next, the register is a 32-bit piece of memory, and
+each bit represents the state of the corresponding pin. That means that bit 19 matches pin 19, for
+instance.  Setting the bit to 1 will enable the pin output, and setting it to 0 will reset
+it. Furthermore, we can see that all pin outputs are disabled by default, as the reset value of all
+bits is 0.
 
 We'll use GDB's `examine` command: `x`. Depending on the configuration of your GDB server,
 GDB will refuse to read memory that isn't specified. You can disable this behaviour by running:
@@ -76,7 +78,8 @@ Resetting and halting target
 Target halted
 ```
 
-All right. Let's continue until the first breakpoint, right before line 16, and print the contents of the register at address `0x50000504`.
+All right. Let's continue until the first breakpoint, right before line 16, and print the contents
+of the register at address `0x50000504`.
 
 ```
 (gdb) c
@@ -88,9 +91,13 @@ Breakpoint 1, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:1
 0x50000504:     0x00000000
 ```
 
-Ok, we see that the register's value is `0x00000000` or `0` at this point. This corresponds with the data in the product specification, which says that `0` is the 'reset value' of this register. That means that once the MCU resets, the register will have `0` as its value.
+Ok, we see that the register's value is `0x00000000` or `0` at this point. This corresponds with the
+data in the product specification, which says that `0` is the 'reset value' of this register. That
+means that once the MCU resets, the register will have `0` as its value.
 
-Let's go on. This line consists of multiple instructions (reading, bitwise ORing and writing), so we need to instruct the debugger to continue execution more than once, until we hit the next breakpoint.
+Let's go on. This line consists of multiple instructions (reading, bitwise ORing and writing), so we
+need to instruct the debugger to continue execution more than once, until we hit the next
+breakpoint.
 
 ```
 (gdb) c
@@ -106,23 +113,29 @@ Breakpoint 2, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:1
 19              *(PORT_P0_OUT as *mut u32) |= 1 << 19;
 ```
 
-We've stopped right before line 19, meaning that line 16 is fully executed at this point. Let's have a look at the `OUT` register's contents again:
+We've stopped right before line 19, meaning that line 16 is fully executed at this point. Let's have
+a look at the `OUT` register's contents again:
 
 ```
 (gdb) x 0x50000504
 0x50000504:     0x00200000
 ```
 
-The value of the `OUT` register is `0x00200000` at this point, which is `2097152` in decimal, or `2^21`. That means that bit 21 is set to 1, and the rest of the bits is set to 0. That corresponds to the code on line 16, which writes `1 << 21`, or a 1 shifted left 21 positions, bitwise ORed with `OUT`s current value (which was 0), to the `OUT` register.
+The value of the `OUT` register is `0x00200000` at this point, which is `2097152` in decimal, or
+`2^21`. That means that bit 21 is set to 1, and the rest of the bits is set to 0. That corresponds
+to the code on line 16, which writes `1 << 21`, or a 1 shifted left 21 positions, bitwise ORed with
+`OUT`s current value (which was 0), to the `OUT` register.
 
-Writing `1 << 21` (`OUT[21]= 1`)  to `OUT`  sets `P0.21` *high*. That turns the top LED row *on*. Check that the top row is now indeed lit up.
+Writing `1 << 21` (`OUT[21]= 1`) to `OUT` sets `P0.21` *high*. That turns the top LED row
+*on*. Check that the top row is now indeed lit up.
 
 ```
 (gdb) c
 Continuing.
 ```
 
-Yeah, I was gonna say that. Now, hit 'c' another time to continue execution up to the next breakpoint and print its value.
+Yeah, I was gonna say that. Now, hit 'c' another time to continue execution up to the next
+breakpoint and print its value.
 
 ```
 Program received signal SIGINT, Interrupt.
@@ -137,13 +150,20 @@ Breakpoint 3, registers::__cortex_m_rt_main () at src/06-registers/src/main.rs:2
 0x50000504:     0x00280000
 ```
 
-On line 19, we've set bit 21 of `OUT` to 1, keeping bit 19 as is. The result is `0x00280000`, wich is `2621440` in decimal, or `2^19 + 2^21`, meaning that both bit 19 and bit 21 is set to 1.
+On line 19, we've set bit 21 of `OUT` to 1, keeping bit 19 as is. The result is `0x00280000`, which
+is `2621440` in decimal, or `2^19 + 2^21`, meaning that both bit 19 and bit 21 is set to 1.
 
-Writing `1 << 19` (`OUT[19]= 1`) to `OUT` sets `P0.19` *high*. That turns the bottom LED row *on*. As such, the bottom row should now be lit up.
+Writing `1 << 19` (`OUT[19]= 1`) to `OUT` sets `P0.19` *high*. That turns the bottom LED row
+*on*. As such, the bottom row should now be lit up.
 
-The following lines turn the rows off again. First the top row, then the bottom row. This time, we're doing a bitwise AND operation, combined with a bitwise NOT. We calculate  `!(1 << 21)`, which is all bits set to 1, except for bit 21. Next, we bitwise AND that with the current value of `OUT`, ensuring that only bit 21 is set to 0, keeping the value of the other bits intact.
+The following lines turn the rows off again. First the top row, then the bottom row. This time,
+we're doing a bitwise AND operation, combined with a bitwise NOT. We calculate `!(1 << 21)`, which
+is all bits set to 1, except for bit 21. Next, we bitwise AND that with the current value of `OUT`,
+ensuring that only bit 21 is set to 0, keeping the value of the other bits intact.
 
-Continue execution and check that the reported values of the `OUT` register matches what you expect. You can press `CTRL+C` to pause execution once the device enters the endless loop at the end of the `main` function.
+Continue execution and check that the reported values of the `OUT` register matches what you
+expect. You can press `CTRL+C` to pause execution once the device enters the endless loop at the end
+of the `main` function.
 
 ```
 (gdb) c

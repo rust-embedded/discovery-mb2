@@ -19,7 +19,7 @@
     - [Board support crate](05-hello-world/board-support-crate.md)
 - [Registers](06-registers/README.md)
     - [RTRM](06-registers/rtrm.md)
-    - [(mis)Optimization](06-registers/optimization.md)
+    - [(mis)Optimization](06-registers/misoptimization.md)
     - [`0xBAAAAAAD` address](06-registers/bad-address.md)
     - [Spooky action at a distance](06-registers/spooky-action-at-a-distance.md)
     - [Type safe manipulation](06-registers/type-safe-manipulation.md)

@@ -2,12 +2,14 @@
 
 Reads/writes to registers are quite special. I may even dare to say that they are embodiment of side
 effects. In the previous example we wrote four different values to the same register. If you didn't
-know that address was a register, you may have simplified the logic to just write the final value `0x00000000` into the register.
+know that address was a register, you may have simplified the logic to just write the final value
+`0x00000000` into the register.
 
 Actually, LLVM, the compiler's backend / optimizer, does not know we are dealing with a register and
 will merge the writes thus changing the behavior of our program. Let's check that really quick.
 
-First, we'll use cargo objdump to get us the assembly of the build artifacts from both the optimized and the non-optimized build.
+First, we'll use cargo objdump to get us the assembly of the build artifacts from both the optimized
+and the non-optimized build.
 
 ```
 # Non-optimized
@@ -16,11 +18,12 @@ cargo objdump -- --disassemble --no-show-raw-insn --source > debug.dump
 cargo objdump --release -- --disassemble --no-show-raw-insn --source > release.dump
 ```
 
-Let's see what's in there. Specifically, let's try to find the assembly that manipulates the `OUT` register.
+Let's see what's in there. Specifically, let's try to find the assembly that manipulates the `OUT`
+register.
 
 First, let's have a look at the contents of `debug.dump`, the assembly from the non-optimized build.
-I skipped a bunch and added my comments behind the `; <--`, indicating the line number in the source code that corresponds
-to the instruction.
+I skipped a bunch and added my comments behind the `; <--`, indicating the line number in the source
+code that corresponds to the instruction.
 
 ```
 $ cat debug.dump
@@ -55,8 +58,9 @@ $ cat debug.dump
 [...]
 ```
 
-As you can see, the non-optimized assembly contains 4 loads, 4 stores, and 4 bit manipulation instructions.
-Those correspond nicely with the code we wrote. Now, let's have a look at the optimized assembly.
+As you can see, the non-optimized assembly contains 4 loads, 4 stores, and 4 bit manipulation
+instructions.  Those correspond nicely with the code we wrote. Now, let's have a look at the
+optimized assembly.
 
 ```
 $ cat release.dump
@@ -79,16 +83,16 @@ $ cat release.dump
 [...]
 ```
 
-Huh? Just a single load - bit manipulate - store?
-The state of the LEDs didn't change this time! The `str` instruction is the one that writes a value
-to the register. Our *debug* (unoptimized) program had four of them, one for each write to the
-register, but the *release* (optimized) program only has one.
+Huh? Just a single load - bit manipulate - store?  The state of the LEDs didn't change this time!
+The `str` instruction is the one that writes a value to the register. Our *debug* (unoptimized)
+program had four of them, one for each write to the register, but the *release* (optimized) program
+only has one.
 
 How do we prevent LLVM from misoptimizing our program? We use *volatile* operations instead of plain
-reads/writes:
+reads/writes (`examples/volatile.rs`):
 
 ``` rust
-{{#include src/bin/volatile.rs}}
+{{#include examples/volatile.rs}}
 ```
 
 Let's run cargo objdump once again, with optimizations enabled.

@@ -1,18 +1,18 @@
 # Spooky action at a distance
 
 `OUT` is not the only register that can control the pins of Port E. The `OUTSET` register also lets
-you change the value of the pins, as can `OUTCLR`. However, `ODRSET` and `OUTCLR` don't let you retrieve the current output status of Port E.
+you change the value of the pins, as can `OUTCLR`. However, `ODRSET` and `OUTCLR` don't let you
+retrieve the current output status of Port E.
 
 `OUTSET` is documented in:
 
 > Subsection 6.8.2.2. OUTSET - Page 145
 
-Let's look at below program. The key to this program
-is `fn print_out`. This function prints the current
-value in `OUT` to the `RTT` console:
+Let's look at below program. The key to this program is `fn print_out`. This function prints the
+current value in `OUT` to the `RTT` console (`examples/spooky.rs`):
 
 ``` rust
-{{#include src/bin/spooky.rs}}
+{{#include examples/spooky.rs}}
 ```
 
 You'll see this if you run this program:

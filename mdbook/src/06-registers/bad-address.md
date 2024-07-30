@@ -1,13 +1,13 @@
 # `0xBAAAAAAD` address
 
-Not all the peripheral memory can be accessed. Look at this program.
+Not all the peripheral memory can be accessed. Look at this program (`examples/bad.rs`).
 
 ```rust
-{{#include src/bin/bad.rs}}
+{{#include examples/bad.rs}}
 ```
 
-This address is close to the `OUT` address we used before but this address is *invalid*.
-Invalid in the sense that there's no register at this address.
+This address is close to the `OUT` address we used before but this address is *invalid*, in the
+sense that there's no register at this address.
 
 Now, let's try it.
 
@@ -36,7 +36,7 @@ Breakpoint 3, cortex_m_rt::HardFault_ (ef=0x2001ffb8) at src/lib.rs:1046
 ```
 
 We tried to do an invalid operation, reading memory that doesn't exist, so the processor raised an
-*exception*, a *hardware* exception.
+*exception*: a *hardware* exception.
 
 In most cases, exceptions are raised when the processor attempts to perform an invalid operation.
 Exceptions break the normal flow of a program and force the processor to execute an *exception
@@ -45,11 +45,10 @@ handler*, which is just a function/subroutine.
 There are different kind of exceptions. Each kind of exception is raised by different conditions and
 each one is handled by a different exception handler.
 
-The `registers` crate depends on the `cortex-m-rt` crate which defines a default
-*hard fault* handler, named `HardFault_`, that handles the "invalid memory
-address" exception. `embed.gdb` placed a breakpoint on `HardFault`; that's why
-the debugger halted your program while it was executing the exception handler.
-We can get more information about the exception from the debugger. Let's see:
+The `registers` crate depends on the `cortex-m-rt` crate which defines a default *hard fault*
+handler, named `HardFault_`, that handles the "invalid memory address" exception. `embed.gdb` placed
+a breakpoint on `HardFault`; that's why the debugger halted your program while it was executing the
+exception handler.  We can get more information about the exception from the debugger. Let's see:
 
 ```
 (gdb) list
@@ -82,9 +81,9 @@ $1 = cortex_m_rt::ExceptionFrame {
 }
 ```
 
-There are several fields here but the most important one is `pc`, the Program Counter register.
-The address in this register points to the instruction that generated the exception. Let's
-disassemble the program around the bad instruction.
+There are several fields here but the most important one is `pc`, the Program Counter register.  The
+address in this register points to the instruction that generated the exception. Let's disassemble
+the program around the bad instruction.
 
 ```
 (gdb) disassemble /m ef.pc

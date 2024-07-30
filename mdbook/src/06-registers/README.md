@@ -1,9 +1,16 @@
 # Registers
 
+This chapter is a technical deep-dive. You can safely [skip it] for now and come back to it later if
+you like. That said, there's a lot of good stuff in here, so I'd recommend you dive in.
+
+[skip it]: ../07-led-roulette/index.html
+
+-----
+
 It's time to explore what calling `display_pins.row1.set_high()` does under the hood.
 
 In a nutshell, it just writes to some special memory regions. Go into the `06-registers` directory
-and let's run the starter code statement by statement.
+and let's run the starter code statement by statement (`src/main.rs`).
 
 ``` rust
 {{#include src/main.rs}}
@@ -25,22 +32,24 @@ pins are organized in
 Drive? Pin? Low? High?
 
 A pin is a electrical contact. Our microcontroller has several of them and some of them are
-connected to LEDs. An LED, a Light Emitting Diode, will only emit light when voltage is applied to
-it with a certain polarity.
+connected to Light Emitting Diodes (LEDs). An LED will emit light when voltage is applied to it.  As
+the name implies, an LED also acts as a "diode". A diode will only let electricity flow in one
+direction. Hook an LED up "forwards" and light comes out. Hook it up "backwards" and nothing
+happens.
 
 <p align="center">
 <img class="white_bg" height=180 title="LED circuit" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/LED_circuit.svg">
 </p>
 
-Luckily for us, the microcontroller's pins are connected to the LEDs with the right polarity. All
-that we have to do is *output* some non-zero voltage through the pin to turn the LED on. The pins
-attached to the LEDs are configured as *digital outputs* and can only output two different voltage
-levels: "low", 0 Volts, or "high", 3 Volts. A "high" (voltage) level will turn the LED on whereas
-a "low" (voltage) level will turn it off.
+Luckily for us, the microcontroller's pins are connected such that we can drive the LEDs the right
+way round. All that we have to do is apply enough voltage across the pins to turn the LED on. The
+pins attached to the LEDs are normally configured as *digital outputs* and can output two different
+voltage levels: "low", 0 Volts, or "high", 3 Volts. A "high" (voltage) level will turn the LED on
+whereas a "low" (voltage) level will turn it off.
 
 These "low" and "high" states map directly to the concept of digital logic. "low" is `0` or `false`
 and "high" is `1` or `true`. This is why this pin configuration is known as digital output.
 
----
+-----
 
 OK. But how can one find out what this register does? Time to RTRM (Read the Reference Manual)!
