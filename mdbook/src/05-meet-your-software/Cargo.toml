@@ -1,5 +1,5 @@
 [package]
-name = "led-roulette"
+name = "meet-your-software"
 version = "0.1.0"
 authors = ["Henrik Böving <hargonix@gmail.com>"]
 edition = "2021"

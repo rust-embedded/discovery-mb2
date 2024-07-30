@@ -54,12 +54,12 @@ setting a breakpoint there and then continuing program execution until we hit th
 
 ```
 (gdb) break main
-Breakpoint 1 at 0x104: file src/08-led-roulette/examples/init.rs, line 9.
+Breakpoint 1 at 0x104: file src/08-meet-your-software/examples/init.rs, line 9.
 Note: automatically using hardware breakpoints for read-only addresses.
 (gdb) continue
 Continuing.
 
-Breakpoint 1, init::__cortex_m_rt_main_trampoline () at src/08-led-roulette/examples/init.rs:9
+Breakpoint 1, init::__cortex_m_rt_main_trampoline () at src/08-meet-your-software/examples/init.rs:9
 9       #[entry]
 ```
 
@@ -89,11 +89,11 @@ numbers.  If we want to break in line 13 we can simply do:
 
 ```
 (gdb) break 13
-Breakpoint 2 at 0x110: file src/08-led-roulette/examples/init.rs, line 13.
+Breakpoint 2 at 0x110: file src/08-meet-your-software/examples/init.rs, line 13.
 (gdb) continue
 Continuing.
 
-Breakpoint 2, init::__cortex_m_rt_main () at src/08-led-roulette/examples/init.rs:13
+Breakpoint 2, init::__cortex_m_rt_main () at src/08-meet-your-software/examples/init.rs:13
 (gdb)
 ```
 
@@ -201,7 +201,7 @@ One last trick before we move to something more interesting. Enter the following
 (gdb) c
 Continuing.
 
-Breakpoint 1, init::__cortex_m_rt_main_trampoline () at src/08-led-roulette/src/main.rs:9
+Breakpoint 1, init::__cortex_m_rt_main_trampoline () at src/08-meet-your-software/src/main.rs:9
 9       #[entry]
 (gdb)
 ```
@@ -230,7 +230,7 @@ A debugging session is active.
         Inferior 1 [Remote target] will be detached.
 
 Quit anyway? (y or n) y
-Detaching from program: $PWD/target/thumbv7em-none-eabihf/debug/led-roulette, Remote target
+Detaching from program: $PWD/target/thumbv7em-none-eabihf/debug/meet-your-software, Remote target
 Ending remote debugging.
 [Inferior 1 (Remote target) detached]
 ```
