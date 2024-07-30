@@ -3,13 +3,13 @@
 This chapter is a technical deep-dive. You can safely [skip it] for now and come back to it later if
 you like. That said, there's a lot of good stuff in here, so I'd recommend you dive in.
 
-[skip it]: ../07-led-roulette/index.html
+[skip it]: ../08-led-roulette/index.html
 
 -----
 
 It's time to explore what calling `display_pins.row1.set_high()` does under the hood.
 
-In a nutshell, it just writes to some special memory regions. Go into the `06-registers` directory
+In a nutshell, it just writes to some special memory regions. Go into the `07-registers` directory
 and let's run the starter code statement by statement (`src/main.rs`).
 
 ``` rust

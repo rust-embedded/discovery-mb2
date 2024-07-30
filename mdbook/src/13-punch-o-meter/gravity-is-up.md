@@ -5,7 +5,7 @@ What's the first thing we'll do?
 Perform a sanity check!
 
 You should already be able to write a program that continuously prints the accelerometer data on the
-RTT console from the [I2C chapter](../10-i2c/index.md). Mine is in `examples/show-accel.rs`. Do you
+RTT console from the [I2C chapter](../11-i2c/index.md). Mine is in `examples/show-accel.rs`. Do you
 observe something interesting even when holding the board parallel to the floor with the back side
 facing up?  (Remember that the accelerometer is mounted on the back of the board, so holding it
 upside-down like this makes the Z axis point up.)

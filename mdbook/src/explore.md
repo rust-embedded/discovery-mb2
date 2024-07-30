@@ -78,7 +78,7 @@ the near future.
 
 We saw button interrupts briefly in [chapter 11].
 
-[chapter 11](13-snake-game/controls.html)
+[chapter 11](14-snake-game/controls.html)
 
 This introduced the key idea: in order to interact with the real world, it is often necessary for
 the microcontroller to respond *immediately* when some kind of event occurs.

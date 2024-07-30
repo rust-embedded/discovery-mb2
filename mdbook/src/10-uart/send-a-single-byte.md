@@ -4,7 +4,7 @@ Our first task will be to send a single byte from the microcontroller to the com
 serial connection.
 
 In order to do that we will use the following snippet (this one is already in
-`09-uart/examples/send-byte.rs`):
+`10-uart/examples/send-byte.rs`):
 
 ``` rust
 {{#include examples/send-byte.rs}}

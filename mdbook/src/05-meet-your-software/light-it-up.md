@@ -16,7 +16,7 @@ matrix lights up.
 Right now we will use the `microbit-v2` crate to manipulate the LEDs. In the [next chapter] we will
 go in detail through all of the options available.
 
-[next chapter]: ../05-hello-world/index.html
+[next chapter]: ../06-hello-world/index.html
 
 ## Actually lighting it up!
 

@@ -14,7 +14,7 @@ root = Path("mdbook/src")
 repos = []
 for d0 in (root, root / "appendix"):
     for d in d0.iterdir():
-        if (d / "src").is_dir():
+        if (d / "src").is_dir() or (d / "examples").is_dir():
             repos.append(d)
 
 def next_line(lines):
