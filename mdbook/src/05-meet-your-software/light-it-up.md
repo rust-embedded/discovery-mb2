@@ -1,10 +1,8 @@
 # Light it up
-## embedded-hal
 
-In this chapter we are going to make one of the many LEDs on the micro:bit light up since this is
-basically the "Hello World" of embedded programming. In order to get this task done we will use one
-of the traits provided by `embedded-hal`, specifically the [`OutputPin`] trait which allows us to
-turn a pin on or off.
+We will finish this chapter by making one of the many LEDs on the MB2 light up. In order to get this
+task done we will use one of the traits provided by `embedded-hal`, specifically the [`OutputPin`]
+trait which allows us to turn a pin on or off.
 
 [`OutputPin`]: https://docs.rs/embedded-hal/0.2.6/embedded_hal/digital/v2/trait.OutputPin.html
 
@@ -15,12 +13,10 @@ matrix alignment is used so that instead of having to use 25 separate pins to dr
 of the LEDs, we can just use 10 (5+5) pins in order to control which column and which row of our
 matrix lights up.
 
-Usually in order to determine which specific pins we have to control in order to light a specific
-LED up we would now have to read the [micro:bit v2 schematic].  Luckily for us though we can use the
-aforementioned micro:bit BSP which abstracts all of this nicely away from us.
+Right now we will use the `microbit-v2` crate to manipulate the LEDs. In the [next chapter] we will
+go in detail through all of the options available.
 
-[schematic page]: https://tech.microbit.org/hardware/schematic/
-[micro:bit v2 schematic]: https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.00/MicroBit_V2.0.0_S_schematic.PDF
+[next chapter]: ../05-hello-world/index.html
 
 ## Actually lighting it up!
 
@@ -49,6 +45,9 @@ representation of the other chips on the board.
 > separate variables and thus lots of possible confusing behaviour because two variables modify the
 > same resource. In order to avoid this, PACs are implemented in a way that it would panic if you
 > tried to take the peripherals twice.
+
+(Again, if you are confused by all of this, the [next chapter] will go through it all again in
+greater detail.)
 
 Now we can light the LED connected to `row1`, `col1` up by setting the `row1` pin to high
 (i.e. switching it on).  The reason we can leave `col1` set to low is because of how the LED matrix

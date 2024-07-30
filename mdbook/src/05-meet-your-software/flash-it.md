@@ -3,9 +3,9 @@
 Flashing is the process of moving our program into the microcontroller's persistent memory. Once
 flashed, the microcontroller will execute the flashed program every time it is powered on.
 
-In this case, our `led-roulette` program will be the *only* program in the microcontroller memory.
-By this I mean that there's nothing else running on the microcontroller: no OS, no "daemon",
-nothing. `led-roulette` has full control over the device.
+Our program will be the *only* program in the microcontroller memory.  By this I mean that there's
+nothing else running on the microcontroller: no OS, no "daemon", nothing. Our program has full
+control over the device.
 
 Flashing the binary itself is quite simple, thanks to `cargo embed`.
 
@@ -38,6 +38,6 @@ $ cargo embed --example init
 You will notice that `cargo-embed` does not exit after outputting the last line. This is intended:
 you should not close `cargo-embed`, since we need it in this state for the next step — debugging it!
 Furthermore, you will have noticed that `cargo build` and `cargo embed` are actually passed the same
-flags, this is because `cargo embed` actually executes the build and then flashes the resulting
-binary on to the chip. Thus, you can leave out the `cargo build` step in the future if you want to
-flash your code right away.
+flags. This is because `cargo embed` actually executes the build and then flashes the resulting
+binary on to the chip. This means you can leave out the `cargo build` step in the future if you want
+to flash your code right away.

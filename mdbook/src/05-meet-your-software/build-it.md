@@ -38,9 +38,9 @@ while [verifying your setup].
 [verifying your setup]: ../03-setup/verify.html#verifying-cargo-embed
 
 
-With the `rust-std` component in place you can now cross compile the program using Cargo.
-Make sure you are in the `src/07-led-roulette` directory, then build. This initial code is an
-example, so we compile it as such.
+With the `rust-std` component in place you can now cross compile the program using Cargo.  Make sure
+you are in the `mdbook/src/07-led-roulette` directory in the Git repo, then build. This initial code
+is an example, so we compile it as such.
 
 ``` console
 $ cargo build --example init

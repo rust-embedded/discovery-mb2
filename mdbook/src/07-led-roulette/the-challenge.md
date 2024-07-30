@@ -1,7 +1,6 @@
 # The challenge
 
-You are now well armed to face a challenge! Your task will be to implement the application I showed
-you at the beginning of this chapter.
+You are now well armed to face our challenge! Again, your application should look like this:
 
 <p align="center">
 <video src="../assets/roulette_fast.mp4" width="500" loop autoplay/>
@@ -13,14 +12,7 @@ If you can't exactly see what's happening here it is in a much slower version:
 <video src="../assets/roulette_slow.mp4" width="500" loop autoplay/>
 </p>
 
-Since working with the LED pins separately is quite annoying
-(especially if you have to use basically all of them like
-here) you can use the display API provided by the BSP. It
-works like this (`examples/light-it-all.rs`):
+If you need a hint, `templates/solution.rs` provides a mostly-filled-out chunk of code to finish. I
+would suggest you try it on your own first, though: it should be doable by now…
 
-```rust
-{{#include examples/light-it-all.rs}}
-```
-
-Equipped with this API your task basically boils down to just having
-to calculate the proper image matrix and passing it into the BSP.
+Got it?
