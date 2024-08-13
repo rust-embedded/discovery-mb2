@@ -78,7 +78,7 @@ part of the more general [`probe-rs`](https://probe.rs/) embedded debugging tool
 `probe-rs-tools` with Cargo.
 
 ```console
-$ cargo install probe-rs-tools
+$ cargo install --locked probe-rs-tools
 ```
 
 **NOTE** This may fail due to frequent changes in `probe-rs`. If so, go to <https://probe.rs> and
