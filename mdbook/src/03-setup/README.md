@@ -26,7 +26,7 @@ should work but we have listed the version we have tested.
 
   [`cargo-binutils`]: https://github.com/rust-embedded/cargo-binutils
 
-- [`probe-rs-tools`]. Version 0.24.0.
+- [`probe-rs-tools`]. Version 0.24.0 or newer.
 
   [`probe-rs-tools`]: https://probe.rs/docs/overview/about-probe-rs/
 
@@ -61,17 +61,32 @@ cargo-size 0.3.6
 
 ### `probe-rs-tools`
 
+**NOTE** If you already have old versions of `probe-run`, `probe-rs` or `cargo-embed` installed on
+your system, remove them before starting this step, as they could conceivably cause problems for you
+down the line. In particular, `probe-run` no longer officially exists. Try these as needed:
+
+```console
+$ cargo uninstall cargo-embed
+$ cargo uninstall probe-run
+$ cargo uninstall probe-rs
+$ cargo uninstall probe-rs-cli
+```
+
 In order to install `probe-rs-tools`, first install its
 [prerequisites](https://probe.rs/docs/getting-started/installation/) (note: these instructions are
 part of the more general [`probe-rs`](https://probe.rs/) embedded debugging toolkit). Then install
-it with Cargo.
+`probe-rs-tools` with Cargo.
 
 ```console
-$ cargo install probe-rs-tools --vers 0.24.0
+$ cargo install probe-rs-tools
 ```
 
-This will install several useful tools, including `probe-rs` and `cargo-embed` (which is normally
-run as a Cargo command).
+**NOTE** This may fail due to frequent changes in `probe-rs`. If so, go to <https://probe.rs> and
+follow the current installation instructions there.
+
+Installing `probe-rs-tools` will install several useful tools, including `probe-rs` and
+`cargo-embed` (which is normally run as a Cargo command). Check that things are working before
+proceeding.
 
 ```
 $ cargo embed --version
