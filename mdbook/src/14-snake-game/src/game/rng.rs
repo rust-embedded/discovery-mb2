@@ -14,7 +14,7 @@ impl Prng {
         Self { value: seed }
     }
 
-    /// Basic xorshift PRNG function: see https://en.wikipedia.org/wiki/Xorshift
+    /// Basic xorshift PRNG function: see <https://en.wikipedia.org/wiki/Xorshift>
     fn xorshift32(mut input: u32) -> u32 {
         input ^= input << 13;
         input ^= input >> 17;
