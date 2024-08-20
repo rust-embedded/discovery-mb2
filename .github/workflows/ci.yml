@@ -8,17 +8,9 @@ on:
   merge_group: # Run CI for the GitHub merge queue
 
 jobs:
-  # Check a build succeeds for each book chapter that contains example code.
-  build-book-chapter:
+  # Check code build succeeds.
+  build-book-code:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        chapter:
-          - 05-led-roulette
-          - 07-uart
-          - 08-i2c
-          - 09-led-compass
-          - 10-punch-o-meter
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -26,12 +18,12 @@ jobs:
           profile: minimal
           toolchain: stable
           target: thumbv7em-none-eabihf
-      - name: Build chapter micro:bit v2
-        working-directory: mdbook/src/${{ matrix.chapter }}
-        run: cargo build --features v2 --target thumbv7em-none-eabihf --target-dir ../target
+      - name: Build book code
+        working-directory: .
+        run: cargo build
 
   # Check build succeeds for microbit docs.
-  build-microbit-doc:
+  build-book-doc:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -41,8 +33,8 @@ jobs:
           toolchain: stable
           target: thumbv7em-none-eabihf
       - name: Build docs for micro:bit v2
-        run: cargo doc --features v2 --target thumbv7em-none-eabihf --target-dir ../target
-        working-directory: mdbook
+        working-directory: .
+        run: cargo doc
 
   # Build the book HTML itself and optionally publish it.
   build-book:
@@ -67,38 +59,35 @@ jobs:
         with:
           path: ~/cargo-bin
           key: cache-cargo
+
       - name: Install mdbook
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         uses: actions-rs/install@v0.1
         with:
           crate: mdbook
           version: latest
+
       - name: Copy mdbook to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: |
           mkdir ~/cargo-bin
           cp ~/.cargo/bin/mdbook ~/cargo-bin
+
       - name: Put new cargo binary directory into path
         run: echo "~/cargo-bin" >> $GITHUB_PATH
 
       - name: Build book
         working-directory: mdbook
         run: mdbook build
+
       - name: Check book links
         working-directory: mdbook
         run: linkchecker --ignore-url "print.html" book
-
-      - name: Check links
-        run: linkchecker book
-
-      - name: Collect books
-        run: |
-          mv mdbook/book book
 
       - name: Deploy book
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: book
+          publish_dir: mdbook/book
           force_orphan: true
