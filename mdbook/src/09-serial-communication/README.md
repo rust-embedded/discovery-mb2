@@ -57,7 +57,7 @@ your computer will see the microcontroller as a virtual serial device.
 Now, let's get familiar with the serial module and the serial communication tools that your OS
 offers. Pick a route:
 
-- [Linux](Linux-tooling.md)
+- [Linux/UNIX](nix-tooling.md)
 - [Windows](windows-tooling.md)
 
 For MacOS check out the Linux documentation, although your experience may differ somewhat.
