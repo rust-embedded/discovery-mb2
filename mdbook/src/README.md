@@ -4,7 +4,7 @@
 
 You are looking at a pre-release of this book, not really
 ready for general use. For now, you probably want to go to
-<https://docs.rust-embedded.org/discovery> unless you are
+<https://docs.rust-embedded.org/discovery/microbit> unless you are
 working on this version.
 
 -----

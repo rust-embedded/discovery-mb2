@@ -2,10 +2,15 @@
 
 **Danger Will Robinson! Danger!**
 
-You are looking at the sources for a pre-release of this book,
-not really ready for general use. For now, you probably want to
-go to <https://github.com/rust-embedded/microbit> unless you are
-working on this version.
+You are looking at the sources for a pre-release of this
+book, not really ready for general use. For now, you
+probably want to go to
+<https://docs.rust-embedded.org/discovery/microbit>
+unless you are working on this version.
+
+If want to continue, the published text of this book is at
+<https://docs.rust-embedded.org/discovery-mb2> for your
+perusing pleasure.
 
 -----
 
