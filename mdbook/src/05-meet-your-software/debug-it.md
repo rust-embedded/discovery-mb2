@@ -104,7 +104,7 @@ At any point you can leave the TUI mode using the following command:
 ```
 
 We are now "on" the `_y = x` statement; that statement hasn't been executed yet. This means that `x`
-is initialized but `_y` is not. Let's inspect those stack/local variables using the `print` command:
+is initialized but `_y` could contain anything. Let's inspect `x` using the `print` command:
 
 ```
 (gdb) print x
