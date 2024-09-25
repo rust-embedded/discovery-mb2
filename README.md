@@ -52,15 +52,15 @@ Here's some ways to get started:
 - Start working on the examples from this repository
 - You've got questions?
     - Have a look at our [discussions section on
-      GitHub](https://github.com/rust-embedded/discovery/discussions)
+      GitHub](https://github.com/rust-embedded/discovery-mb2/discussions)
     - Maybe it has already been answered
     - If not, start a new discussion
 - You've found an issue?
     - Have a look at our [issues on
-      GitHub](https://github.com/rust-embedded/discovery/issues)
+      GitHub](https://github.com/rust-embedded/discovery-mb2/issues)
     - Maybe there is already a workaround
     - If not, please open a new one - or even better - a [pull
-      request](https://github.com/rust-embedded/discovery/pulls) for solving
+      request](https://github.com/rust-embedded/discovery-mb2/pulls) for solving
       it
 - You want to talk to a human being directly?
     - The general Rust [Embedded Matrix
