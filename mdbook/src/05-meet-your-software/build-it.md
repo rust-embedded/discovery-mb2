@@ -39,7 +39,7 @@ while [verifying your setup].
 
 
 With the `rust-std` component in place you can now cross compile the program using Cargo.  Make sure
-you are in the `mdbook/src/08-meet-your-software` directory in the Git repo, then build. This initial code
+you are in the `mdbook/src/05-meet-your-software` directory in the Git repo, then build. This initial code
 is an example, so we compile it as such.
 
 ``` console
