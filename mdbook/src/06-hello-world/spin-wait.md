@@ -8,7 +8,7 @@ Well, here's the dumb way. It's not good, but it's a start. Take a look at `exam
 {{#include examples/spin-wait.rs}}
 ```
 
-Run this with `cargo run --release --bin spin-wait` — the `--release` is really important here — and
+Run this with `cargo run --release --example spin-wait` — the `--release` is really important here — and
 you should see the LED on your MB2 flash on and off *about* once per second.
 
 Things you might be wondering:
