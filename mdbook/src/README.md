@@ -62,8 +62,8 @@ use of the micro:bit development board.
 The source of this book is in [this repository]. If you encounter any typo or problem with the code
 report it on the [issue tracker].
 
-[this repository]: https://github.com/rust-embedded/discovery
-[issue tracker]: https://github.com/rust-embedded/discovery/issues
+[this repository]: https://github.com/rust-embedded/discovery-mb2
+[issue tracker]: https://github.com/rust-embedded/discovery-mb2/issues
 
 ## Other embedded Rust resources
 
