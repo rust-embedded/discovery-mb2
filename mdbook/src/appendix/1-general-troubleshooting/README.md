@@ -8,7 +8,7 @@ Linux, so make sure you got that right.
 If you are stuck, you can open an issue in the [`discovery` issue tracker] or visit the [Rust
 Embedded matrix channel] or the [probe-rs matrix channel] and ask for help there.
 
-[`discovery` issue tracker]: https://github.com/rust-embedded/discovery/issues
+[`discovery` issue tracker]: https://github.com/rust-embedded/discovery-mb2/issues
 [Rust Embedded matrix channel]: https://matrix.to/#/#rust-embedded:matrix.org
 [probe-rs matrix channel]: https://matrix.to/#/#probe-rs:matrix.org
 
