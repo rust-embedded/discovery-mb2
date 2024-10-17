@@ -1,14 +1,5 @@
 # `micro::bit v2 Embedded Discovery Book`
 
-**Danger Will Robinson! Danger!**
-
-You are looking at a pre-release of this book, not really
-ready for general use. For now, you probably want to go to
-<https://docs.rust-embedded.org/discovery/microbit> unless you are
-working on this version.
-
------
-
 > Discover the world of microcontrollers through [Rust]!
 
 [Rust]: https://www.rust-lang.org/
