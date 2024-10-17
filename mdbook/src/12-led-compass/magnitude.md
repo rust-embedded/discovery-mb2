@@ -24,7 +24,7 @@ Putting all this together in a program (`examples/magnitude.rs`):
 {{#include examples/magnitude.rs}}
 ```
 
-Run this with `cargo run --bin magnitude`.
+Run this with `cargo run --example magnitude`.
 
 This program will report the magnitude (strength) of the magnetic field in nanotesla (`nT`) and
 milligauss (`mG`, where 1 `mG` = 100 `nT`). The magnitude of the Earth's magnetic field is in the
