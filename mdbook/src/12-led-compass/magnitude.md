@@ -6,6 +6,11 @@ only thing we have to compute in order to get the magnitude of the magnetic fiel
 the magnitude of the 3D vector that our `x` `y` `z` values describe. As you might remember from
 school this is simply:
 
+``` rust
+use libm::sqrtf;
+let magnitude = sqrtf(x * x + y * y + z * z);
+```
+
 [`magnetic_field()`]: https://docs.rs/lsm303agr/1.1.0/lsm303agr/struct.Lsm303agr.html#method.magnetic_field
 
 Rust does not have floating-point math functions such as `sqrtf()` in `core`, so our `no_std`
@@ -13,21 +18,13 @@ program has to get an implementation from somewhere. We use the [libm] crate for
 
 [libm]: https://crates.io/crates/libm
 
-``` rust
-use libm::sqrtf;
-let magnitude = sqrtf(x * x + y * y + z * z);
-```
-
-
-
-
 Putting all this together in a program (`examples/magnitude.rs`):
 
 ``` rust
 {{#include examples/magnitude.rs}}
 ```
 
-Run this with `cargo run --bin magnitude`.
+Run this with `cargo run --example magnitude`.
 
 This program will report the magnitude (strength) of the magnetic field in nanotesla (`nT`) and
 milligauss (`mG`, where 1 `mG` = 100 `nT`). The magnitude of the Earth's magnetic field is in the

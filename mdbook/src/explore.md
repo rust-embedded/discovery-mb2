@@ -29,7 +29,7 @@ In preemptive multitasking a task that's currently being executed can, at any po
 *preempted* (interrupted) by another task. On preemption, the first task will be suspended and the
 processor will instead execute the second task. At some point the first task will be resumed.
 Microcontrollers provide hardware support for preemption in the form of *interrupts*. We were
-introduced to interrupts when we built our snake game in chapter 11.
+introduced to interrupts when we built our snake game in [chapter 14](14-snake-game/index.md).
 
 In cooperative multitasking a task that's being executed will run until it reaches a *suspension
 point*. When the processor reaches that suspension point it will stop executing the current task and
@@ -76,10 +76,7 @@ the near future.
 
 ### Interrupts
 
-We saw button interrupts briefly in [chapter 11].
-
-[chapter 11](14-snake-game/controls.html)
-
+We saw button interrupts briefly in [chapter 14](14-snake-game/controls.html).
 This introduced the key idea: in order to interact with the real world, it is often necessary for
 the microcontroller to respond *immediately* when some kind of event occurs.
 
