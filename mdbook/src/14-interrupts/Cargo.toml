@@ -1,0 +1,17 @@
+[package]
+name = "interrupts"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+microbit-v2 = "0.15"
+cortex-m-rt = "0.7"
+rtt-target = "0.5"
+panic-rtt-target = "0.1"
+heapless = "0.8"
+tiny-led-matrix = "1.0"
+embedded-hal = "1.0"
+
+[dependencies.cortex-m]
+version = "0.7"
+features = ["critical-section-single-core"]
