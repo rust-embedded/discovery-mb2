@@ -10,6 +10,7 @@ members = [
   "mdbook/src/11-i2c",
   "mdbook/src/12-led-compass",
   "mdbook/src/13-punch-o-meter",
+  "mdbook/src/14-interrupts",
   "mdbook/src/14-snake-game",
   "mdbook/src/appendix/3-mag-calibration",
   "mdbook/src/serial-setup",
