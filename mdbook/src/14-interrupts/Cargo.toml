@@ -6,11 +6,12 @@ edition = "2021"
 [dependencies]
 microbit-v2 = "0.15"
 cortex-m-rt = "0.7"
+critical-section = "1"
 rtt-target = "0.5"
 panic-rtt-target = "0.1"
 heapless = "0.8"
-tiny-led-matrix = "1.0"
-embedded-hal = "1.0"
+tiny-led-matrix = "1"
+embedded-hal = "1"
 
 [dependencies.cortex-m]
 version = "0.7"
