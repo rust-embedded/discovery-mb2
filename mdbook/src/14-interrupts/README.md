@@ -58,12 +58,23 @@ interrupt when the wire connect to Button A goes from high to low voltage. Secon
 configured to allow the interrupt. Order matters a bit: doing things in the "wrong" order may
 generate a bogus interrupt before you are ready to handle it.
 
-In case of our microcontroller, you may define ISR's for many different interrupt sources: when I2C
-is ready, when a timer expires, and on and on. Inside an ISR you can do pretty much anything you
-want, but it's good practice to keep the interrupt handlers short and quick.
+When you push the A Button, you will see an "ouch" message and then a panic. Why does the interrupt
+handler call `panic!()`? Try commenting the `panic!()` call out and see what happens when you push
+the button. You will see "ouch" messages scroll off the screen. The GPIOTE records when an interrupt
+has been issued, and that record is kept until it is explicitly cleared by the running
+program. Without the `panic!()`, when the interrupt handler returns the GPIOTE will re-enable the
+interrupt, notice that an interrupt has been issued and not cleared, and run the handler again. This
+will continue forever: each time the interrupt handler returns it will be called again. In the next
+section we will see how to clear the interrupt indication from within the interrupt handler.
 
-When the ISR function returns (using a magic instruction), the core loads back the original content
-of its core registers and returns to the point where it left off, almost as if nothing happened.
+You may define ISRs for many different interrupt sources: when I2C is ready, when a timer expires,
+and on and on. Inside an ISR you can do pretty much anything you want, but it's good practice to
+keep the interrupt handlers short and quick.
+
+When the ISR function returns (using a magic instruction), the CPU looks to see if interrupts have
+happened that need to be handled, and if so calls one of the handlers (according to a priority order
+set by the NVIC). Otherwise, the CPU restores the CPU registers and returns to the running program
+as if nothing has happened.
 
 But if the core just goes on with its life after handling an interrupt, how does your device know
 that it happened? Seeing as an ISR doesn't have any input parameters or result, how can ISR code
