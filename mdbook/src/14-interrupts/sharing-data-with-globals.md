@@ -1,20 +1,20 @@
 ## Sharing Data With Globals
 
-> **NOTE:** This content is partially taken from
-> <https://onevariable.com/blog/interrupts-is-threads/>, which contains more discussion about this
+> **NOTE:** This content is partially taken with permission from the blog post
+> *[Interrupts Is Threads]* by James Munns, which contains more discussion about this
 > topic.
 
-As we mentioned in the last section, when an interrupt occurs we aren't passed any arguments. How do
-we get access to things needed in the interrupt handler, such as the peripherals or other main
-program state?
+As I mentioned in the last section, when an interrupt occurs we aren't passed any arguments and
+cannot return any result. This makes it hard for our program interact with peripherals and other
+main program state. Before worrying about this
+bare-metal embedded problem, it is likely worth thinking about threads in "std" Rust.
 
-### Std Rust: Sharing Data With A Thread
+### "std" Rust: Sharing Data With A Thread
 
 In "std" Rust, we also have to think about sharing data when we do things like
 spawn a thread.
 
-When you want to *give* something to a thread, you might pass it
-by ownership.
+When you want to *give* something to a thread, you might pass it into a closure by ownership.
 
 ```rust
 // Create a string in our current thread
@@ -28,8 +28,8 @@ std::thread::spawn(move || {
 });
 ```
 
-If we want to *share* something, and still have access to it in the original thread,
-we usually can't pass a reference to it. If we do this:
+If you want to *share* something, and still have access to it in the original thread, you usually
+can't pass a reference to it. If you do this:
 
 ```rust
 use std::{thread::{sleep, spawn}, time::Duration};
@@ -52,7 +52,7 @@ fn main() {
 }
 ```
 
-We get an error like this:
+you'll get an error like this:
 
 ```text
 error[E0597]: `data` does not live long enough
@@ -74,8 +74,8 @@ error[E0597]: `data` does not live long enough
    |   - `data` dropped here while still borrowed
 ```
 
-We need to *make sure the data lives long enough* for both the current thread and the new thread we
-are creating. We can do this by putting it in an `Arc` (Atomically Reference Counted heap
+You need to *make sure the data lives long enough* for both the current thread and the new thread
+you are creating. You can do this by putting it in an `Arc` (Atomically Reference Counted heap
 allocation) like this:
 
 ```rust
@@ -86,7 +86,7 @@ fn main() {
     let data = Arc::new(String::from("hello"));
     
     let handle = spawn({
-        // Make a copy of the handle, that we GIVE to the new thread.
+        // Make a copy of the handle to GIVE to the new thread.
         // Both `data` and `new_thread_data` are pointing at the
         // same string!
         let new_thread_data = data.clone();
@@ -102,13 +102,12 @@ fn main() {
 }
 ```
 
-This is great! We can now access the data in both the main thread as long as we'd
-like. But what if we want to *mutate* the data in both places?
+This is great! You can now access the data in both the main thread as long as you'd
+like. But what if you want to *mutate* the data in both places?
 
-For this, we usually need some kind of "inner mutability", a type that doesn't
-require an `&mut` to modify. On the desktop, we'd typically reach for a type
-like a `Mutex`, which requires us to `lock()` it before we can gain mutable access
-to the data.
+For this, you will usually need some kind of "inner mutability" — a type that doesn't require an
+`&mut` to modify. On the desktop, you'd typically reach for a type like `Mutex`, `lock()`-ing it to
+gain mutable access to the data.
 
 That might look something like this:
 
@@ -127,7 +126,7 @@ fn main() {
     }
     
     let handle = spawn({
-        // Make a copy of the handle, that we GIVE to the new thread.
+        // Make a copy of the handle, that you GIVE to the new thread.
         // Both `data` and `new_thread_data` are pointing at the
         // same `Mutex<String>`!
         let new_thread_data = data.clone();
@@ -152,7 +151,7 @@ fn main() {
 }
 ```
 
-If we run this code, we get:
+If you run this code, you will see:
 
 ```text
 hello
@@ -162,13 +161,13 @@ hello | thread was here! |
 Why does "std" Rust make us do this? Rust is helping us out by making us think about two things:
 
 1. The data lives long enough (potentially "forever"!)
-2. Only one piece of code can mutably access the data at the same time
+2. Only one piece of code can mutably access the data at a time
 
 If Rust allowed us to access data that might not live long enough, like data borrowed from one
 thread into another, things might go wrong. We might get corrupted data if the original thread ends
 or panics and then the second thread tries to access the data that is now invalid. If Rust allowed
-two pieces of code to access the same data at the same, we could have a data race, or the data could
-end up corrupted.
+two pieces of code to try to mutate the same data at the same, we could have a data race, or the
+data could end up corrupted.
 
 ### Embedded Rust: Sharing Data With An ISR
 
@@ -194,10 +193,60 @@ and similar are not possibilities for us.
 Without the ability to pass things by value, and without a heap to store data, that leaves us with
 one place to put our shared data that our ISR can access: `static` globals.
 
-> **TODO AJM:** Next talk about how statics only (safely) allow read access, we need
-inner mutability to get write access, show something with a mutex'd integer that
-we can init in const context
+### Embedded Rust ISR Data Sharing: The "Standard Method" 
+
+Global variables are very much second-class citizens in Rust, with many limitations compared to
+local variables. You can declare a global state variable like this:
+
+```rust
+static COUNTER: usize = 0;
+```
+
+Of course, this isn't super-useful: you want to be able to mutate the `COUNTER`. You can
+say 
+
+```rust
+static mut COUNTER: usize = 0;
+```
+
+but now all accesses will be unsafe.
+
+```rust
+unsafe { COUNTER += 1 };
+```
+
+The unsafety here is for a reason: imagine that in the middle of updating `COUNTER` an interrupt
+handler runs and also tries to update `COUNTER`. The usual chaos will ensue. Clearly some kind of
+locking is in order.
+
+The `critical-section` crate provides a sort of `Mutex` type, but with an unusual API and unusual
+operations. Examining the `Cargo.toml` for this chapter, you will see the feature
+`critical-section-single-core` on the `cortex-m` crate enabled. This feature asserts that there is
+only one processor core in this system, and that thus synchronization can be performed by simply
+*disabling interrupts* across the critical section. If not in an interrupt, this will ensure that
+only the main program has access to the global. If in an interrupt, this will ensure that the main
+program cannot be accessing the global (program control is in the interrupt handler) and that no
+other higher-priority interrupt handler can fire.
+
+`critical_section::Mutex` is a bit weird in that it gives mutual exclusion but does not itself give
+mutability. To make the data mutable, you will need to protect an interior-mutable type — usually
+`RefCell` — with the mutex. This `Mutex` is also a bit weird in that you don't `.lock()`
+it. Instead, you initiate a critical section with a closure that receives a "critical section token"
+certifying that other program execution is prevented. This token can be passed to the `Mutex`'s
+`borrow()` method to allow access.
+
+Putting it all together gives us the ability to share state between ISRs and the main program
+(`examples/count-once.rs`).
+
+```rust
+{{#include examples/count-once.rs}}
+```
+
+We still cannot safely return from our ISR, but now we are in a position to do something about that:
+share the `GPIOTE` with the ISR so that the ISR can clear the interrupt.
 
 > **TODO AJM:** THEN talk about data that doesn't exist at startup, like sticking a
 peripheral in after being configured, and how we do that, something like Lazy
 Use Bart's crate for now, maybe add Lazy to the Blocking Mutex crate?
+
+[Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads
