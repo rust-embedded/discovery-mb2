@@ -235,18 +235,21 @@ it. Instead, you initiate a critical section with a closure that receives a "cri
 certifying that other program execution is prevented. This token can be passed to the `Mutex`'s
 `borrow()` method to allow access.
 
-Putting it all together gives us the ability to share state between ISRs and the main program
+Putting it all together gives you the ability to share state between ISRs and the main program
 (`examples/count-once.rs`).
 
 ```rust
 {{#include examples/count-once.rs}}
 ```
 
-We still cannot safely return from our ISR, but now we are in a position to do something about that:
-share the `GPIOTE` with the ISR so that the ISR can clear the interrupt.
+You still cannot safely return from your ISR, but now you are in a position to do something about
+that: share the `GPIOTE` with the ISR so that the ISR can clear the interrupt.
 
-> **TODO AJM:** THEN talk about data that doesn't exist at startup, like sticking a
-peripheral in after being configured, and how we do that, something like Lazy
-Use Bart's crate for now, maybe add Lazy to the Blocking Mutex crate?
+### Sharing Peripherals (etc) With Globals
+
+There's one more problem yet to solve: Rust globals must be initialized statically — before the
+program starts. For the counter that was easy — just initialize it to 0. If we want to share the
+`GPIOTE` peripheral, though, that won't work. The peripheral must be retrieved from the `Board`
+struct and set up once the program has started: there is no `const` initializer.
 
 [Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads
