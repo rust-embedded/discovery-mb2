@@ -26,7 +26,7 @@ fn GPIOTE() {
     critical_section::with(|cs| {
         let mut count = COUNTER.borrow(cs).borrow_mut();
         *count += 1;
-        rprintln!("ouch {}", count);
+        rprintln!("count: {}", count);
     });
     panic!();
 }
