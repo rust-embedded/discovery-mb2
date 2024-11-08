@@ -15,12 +15,20 @@ use microbit::{
     },
 };
 
-static TE: LockMut<gpiote::Gpiote> = LockMut::new();
+struct Counter {
+    count: usize,
+    gpiote: gpiote::Gpiote,
+}
+
+static COUNTER: LockMut<Counter> = LockMut::new();
 
 #[interrupt]
 fn GPIOTE() {
-    rprintln!("ouch");
-    TE.with_lock(|te| te.channel0().reset_events());
+    COUNTER.with_lock(|counter| {
+        counter.count += 1;
+        rprintln!("isr count: {}", counter.count);
+        counter.gpiote.channel0().reset_events();
+    });
 }
 
 #[entry]
@@ -29,8 +37,6 @@ fn main() -> ! {
     let board = Board::take().unwrap();
     let button_a = board.buttons.button_a.into_floating_input();
 
-    // Set up the GPIOTE to generate an interrupt when Button A is pressed (GPIO
-    // wire goes low).
     let gpiote = gpiote::Gpiote::new(board.GPIOTE);
     let channel = gpiote.channel0();
     channel
@@ -38,15 +44,20 @@ fn main() -> ! {
         .hi_to_lo()
         .enable_interrupt();
     channel.reset_events();
-    TE.init(gpiote);
+    let counter = Counter {
+        count: 0,
+        gpiote,
+    };
+    COUNTER.init(counter);
 
-    // Set up the NVIC to handle GPIO interrupts.
     unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
     pac::NVIC::unpend(pac::Interrupt::GPIOTE);
 
     loop {
-        // "wait for interrupt": CPU goes to sleep until an interrupt.
         asm::wfi();
-        rprintln!("got poked");
+        
+        COUNTER.with_lock(|counter| {
+            rprintln!("host count: {}", counter.count);
+        });
     }
 }
