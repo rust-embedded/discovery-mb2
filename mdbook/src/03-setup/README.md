@@ -54,7 +54,7 @@ rustc 1.79.0 (129f3b996 2024-06-10)
 
 ``` console
 $ rustup component add llvm-tools
-$ cargo install cargo-binutils --vers 0.3.3
+$ cargo install cargo-binutils --vers '^0.3'
 $ cargo size --version
 cargo-size 0.3.6
 ```
