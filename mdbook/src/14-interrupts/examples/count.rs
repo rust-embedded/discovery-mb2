@@ -1,11 +1,11 @@
 #![no_main]
 #![no_std]
 
-use core::cell::RefCell;
+use core::sync::atomic::{AtomicUsize, Ordering::AcqRel};
 
 use cortex_m::asm;
 use cortex_m_rt::entry;
-use critical_section::Mutex;
+use critical_section_lock_mut::LockMut;
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
@@ -18,18 +18,17 @@ use microbit::{
 };
 
 static COUNTER: AtomicUsize = AtomicUsize::new(0);
-static GPIOTE_Peripheral: LockMut<gpiote::Gpiote> = LockMut::new();
+static GPIOTE_PERIPHERAL: LockMut<gpiote::Gpiote> = LockMut::new();
 
 /// This "function" will be called when an interrupt is received. For now, just
 /// report and panic.
 #[interrupt]
 fn GPIOTE() {
-    let mut count = COUNTER.fetch_add(1, AcqRel);
+    let count = COUNTER.fetch_add(1, AcqRel);
     rprintln!("ouch {}", count + 1);
-    GPIOTE_Peripheral.with(|gpiote| {
-        // TODO
+    GPIOTE_PERIPHERAL.with_lock(|gpiote| {
+        gpiote.channel0().reset_events();
     });
-    panic!();
 }
 
 #[entry]
@@ -47,6 +46,7 @@ fn main() -> ! {
         .hi_to_lo()
         .enable_interrupt();
     channel.reset_events();
+    GPIOTE_PERIPHERAL.init(gpiote);
 
     // Set up the NVIC to handle GPIO interrupts.
     unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
