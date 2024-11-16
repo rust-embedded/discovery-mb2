@@ -20,8 +20,6 @@ use microbit::{
 static COUNTER: AtomicUsize = AtomicUsize::new(0);
 static GPIOTE_PERIPHERAL: LockMut<gpiote::Gpiote> = LockMut::new();
 
-/// This "function" will be called when an interrupt is received. For now, just
-/// report and panic.
 #[interrupt]
 fn GPIOTE() {
     let count = COUNTER.fetch_add(1, AcqRel);
