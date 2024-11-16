@@ -248,8 +248,23 @@ that: share the `GPIOTE` with the ISR so that the ISR can clear the interrupt.
 ### Sharing Peripherals (etc) With Globals
 
 There's one more problem yet to solve: Rust globals must be initialized statically — before the
-program starts. For the counter that was easy — just initialize it to 0. If we want to share the
+program starts. For the counter that was easy — just initialize it to 0. If you want to share the
 `GPIOTE` peripheral, though, that won't work. The peripheral must be retrieved from the `Board`
-struct and set up once the program has started: there is no `const` initializer.
+struct and set up once the program has started: there is no `const` initializer for this (nor can
+there reasonably be).
+
+Let's rewrite the button counter a bit. First, move the actual count to be an `AtomicUsize`. This is
+a more natural type for this global anyhow. Next, add a global `GPIOTE_PERIPHERAL` variable using
+the `LockMut` type from the `critical-section-lock-mut` crate. This crate is a convenient wrapper
+for the pattern of the last section.
+
+Now that the main program can set up the GPIOTE peripheral and then make it available to the
+interrupt handler, you can quit panicking and let the counter bump up on every button press
+(`examples/count.rs`). Give this example a run and note that the count is bumped up 1 on every push
+of the MB2 A button.
+
+Maybe. Especially if your MB2 is old, you may see a single press bump the counter by several. *This
+is not a software bug*. In the next section, I'll talk about what might be going on and how we
+should deal with it.
 
 [Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads
