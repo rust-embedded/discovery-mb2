@@ -259,12 +259,15 @@ the `LockMut` type from the `critical-section-lock-mut` crate. This crate is a c
 for the pattern of the last section.
 
 Now that the main program can set up the GPIOTE peripheral and then make it available to the
-interrupt handler, you can quit panicking and let the counter bump up on every button press
-(`examples/count.rs`). Give this example a run and note that the count is bumped up 1 on every push
+interrupt handler, you can quit panicking and let the counter bump up on every button press. Move
+the count display into the main loop, to show that the count is shared between the interrupt handler
+and the rest of the program.
+
+Give this example (`examples/count.rs`) a run and note that the count is bumped up 1 on every push
 of the MB2 A button.
 
 Maybe. Especially if your MB2 is old, you may see a single press bump the counter by several. *This
-is not a software bug*. In the next section, I'll talk about what might be going on and how we
-should deal with it.
+is not a software bug.* Mostly. In the next section, I'll talk about what might be going on and how
+we should deal with it.
 
 [Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads
