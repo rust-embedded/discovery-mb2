@@ -1,6 +1,8 @@
 #![no_main]
 #![no_std]
 
+use core::sync::atomic::{AtomicUsize, Ordering::{Acquire, AcqRel}};
+
 use cortex_m::asm;
 use cortex_m_rt::entry;
 use critical_section_lock_mut::LockMut;
@@ -15,19 +17,14 @@ use microbit::{
     },
 };
 
-struct Counter {
-    count: usize,
-    gpiote: gpiote::Gpiote,
-}
-
-static COUNTER: LockMut<Counter> = LockMut::new();
+static COUNTER: AtomicUsize = AtomicUsize::new(0);
+static GPIOTE_PERIPHERAL: LockMut<gpiote::Gpiote> = LockMut::new();
 
 #[interrupt]
 fn GPIOTE() {
-    COUNTER.with_lock(|counter| {
-        counter.count += 1;
-        rprintln!("isr count: {}", counter.count);
-        counter.gpiote.channel0().reset_events();
+    let _ = COUNTER.fetch_add(1, AcqRel);
+    GPIOTE_PERIPHERAL.with_lock(|gpiote| {
+        gpiote.channel0().reset_events();
     });
 }
 
@@ -37,6 +34,8 @@ fn main() -> ! {
     let board = Board::take().unwrap();
     let button_a = board.buttons.button_a.into_floating_input();
 
+    // Set up the GPIOTE to generate an interrupt when Button A is pressed (GPIO
+    // wire goes low).
     let gpiote = gpiote::Gpiote::new(board.GPIOTE);
     let channel = gpiote.channel0();
     channel
@@ -44,20 +43,16 @@ fn main() -> ! {
         .hi_to_lo()
         .enable_interrupt();
     channel.reset_events();
-    let counter = Counter {
-        count: 0,
-        gpiote,
-    };
-    COUNTER.init(counter);
+    GPIOTE_PERIPHERAL.init(gpiote);
 
+    // Set up the NVIC to handle GPIO interrupts.
     unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
     pac::NVIC::unpend(pac::Interrupt::GPIOTE);
 
     loop {
+        // "wait for interrupt": CPU goes to sleep until an interrupt.
         asm::wfi();
-        
-        COUNTER.with_lock(|counter| {
-            rprintln!("host count: {}", counter.count);
-        });
+        let count = COUNTER.load(Acquire);
+        rprintln!("ouch {}", count);
     }
 }
