@@ -24,8 +24,14 @@ processor within the microcontroller package and provides the processor with ext
 After all, the processor, on its own, can only do math and logic.
 
 This particular register controls General Purpose Input/Output (GPIO) *pins* (GPIO *is* a
-peripheral) and can be used to *drive* each of those pins *low* or *high*. On the nRF52833, these
-pins are organized in
+peripheral) and can be used to *drive* each of those pins
+*low* or *high*. 
+
+(On the nRF52833 there are more than 32
+GPIOs, yet the CPU is 32-bit. Thus, the GPIO
+pins are organized in two groups "P0" and "P1", with a set of registers
+for reading, writing and configuring each group. The address
+above is the address of the output register for the P0 pins.)
 
 ## An aside: LEDs, digital outputs and voltage levels
 
