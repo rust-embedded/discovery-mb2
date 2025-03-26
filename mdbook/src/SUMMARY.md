@@ -65,7 +65,7 @@
     - [My solution](14-inputs-and-polling/my-solution.md)
     - [Polling sucks, actually](14-inputs-and-polling/polling-sucks.md)
 - [Interrupts](15-interrupts/README.md)
-    - [Interrupts and Poking the MB2](15-interrupts/interrupts.md)
+    - [Interrupts](15-interrupts/interrupts.md)
     - [NVIC and interrupt priority](15-interrupts/nvic-and-interrupt-priority.md)
     - [Sharing data with globals](15-interrupts/sharing-data-with-globals.md)
     - [Debouncing](15-interrupts/debouncing.md)
