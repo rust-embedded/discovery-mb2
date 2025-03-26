@@ -17,8 +17,6 @@ fn button_pressed() -> bool {
 
 #[entry]
 fn main() -> ! {
-    let (p0, _p1) = registers::init();
-
     loop {
         let button_a_pressed = button_pressed();
         if button_a_pressed {
@@ -43,9 +41,9 @@ fn button_a_pressed() -> bool {
 }
 ```
 
-This code performs a *volatile* read from the GPIO IN register, ensuring that every access directly targets the memory-mapped register address and doesn't get optimized away.  
+This code performs a *volatile* read from the GPIO IN register, ensuring that every access directly targets the memory-mapped register address and doesn't get optimized away.  Using the type-safe `registers` interface, like we showed on the [previous page](./README.md), hides these low-level volatile reads entirely.
 
-Thankfully, the micro:bit's Board Support Crate (BSP) abstracts away these low-level volatile reads entirely, allowing us to read button states in a simpler way that still ensures correct behavior under the hood:
+Thankfully, the micro:bit's Board Support Crate (BSP) goes even further and abstracts away register-level operations entirely, allowing us to read button states in a simpler way that still ensures correct behavior under the hood:
 
 ```rust
 {{#include examples/button-a-bsp.rs}}
