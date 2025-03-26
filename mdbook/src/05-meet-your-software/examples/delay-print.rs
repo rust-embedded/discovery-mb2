@@ -3,7 +3,6 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use embedded_hal::delay::DelayNs;
 use microbit::board::Board;
 use microbit::hal::timer::Timer;
 use panic_rtt_target as _;
