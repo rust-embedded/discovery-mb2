@@ -30,7 +30,7 @@ fn main() -> ! {
 }
 ```
 
-Here we have code that looks like it should work as intended, i.e. it repeatedly reads the state of Button A and prints the result. Unfortunately, as discussed in the "(mis)Optimization" section of Chapter 7, reading or writing directly to memory-mapped registers through address dereferencing is likely to produce incorrect results.  The compiler might mistakenly assume these registers are regular memory locations and cache the reads or writes in registers, only reading the value from the register once and using that cached value for all subsequent reads, regardless of the actual state of the register.
+Here we have code that looks like it should work as intended, i.e. it repeatedly reads the state of Button A and prints the result. Unfortunately, as discussed in the [(mis)Optimization](../07-registers/misoptimization.md) section of Chapter 7, reading or writing directly to memory-mapped registers through address dereferencing is likely to produce incorrect results.  The compiler is likely to mistakenly assume subsequent reads or writes are to regular memory locations and cache the reads or writes in registers.  This means that the compiler will only read the value from the register once and use that cached value for the rest of the program, regardless of the actual state of the register.
 
 As you may have guessed, we need to do *volatile* reads instead.  Here is a better implementation of the `button_pressed` function:
 
@@ -45,7 +45,7 @@ fn button_a_pressed() -> bool {
 
 This code performs a *volatile* read from the GPIO IN register, ensuring that every access directly targets the memory-mapped register address and doesn't get optimized away.  
 
-Thankfully, the micro:bit's Board Support Crate (BSP) abstracts away these low-level volatile reads entirely, allowing us to read button states in a simpler way:
+Thankfully, the micro:bit's Board Support Crate (BSP) abstracts away these low-level volatile reads entirely, allowing us to read button states in a simpler way that still ensures correct behavior under the hood:
 
 ```rust
 {{#include examples/button-a-bsp.rs}}
