@@ -73,11 +73,11 @@
     - [Turn signaller revisited](15-interrupts/turn-signaller-revisited.md)
     - [My solution](15-interrupts/my-solution.md)
     - [Concurrency](15-interrupts/concurrency.md)
-- [Snake game](14-snake-game/README.md)
-    - [Game logic](14-snake-game/game-logic.md)
-    - [Controls](14-snake-game/controls.md)
-    - [Non-blocking display](14-snake-game/nonblocking-display.md)
-    - [Final assembly](14-snake-game/final-assembly.md)
+- [Snake game](16-snake-game/README.md)
+    - [Game logic](16-snake-game/game-logic.md)
+    - [Controls](16-snake-game/controls.md)
+    - [Non-blocking display](16-snake-game/nonblocking-display.md)
+    - [Final assembly](16-snake-game/final-assembly.md)
 - [What's left for you to explore](explore.md)
 
 ---
