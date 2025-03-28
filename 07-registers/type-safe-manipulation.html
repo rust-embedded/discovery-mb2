@@ -1,0 +1,580 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Type safe manipulation - Discovery</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Discover the world of microcontrollers through Rust with the BB2 micro:bit v2">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Discovery</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-embedded/discovery-mb2/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="type-safe-manipulation"><a class="header" href="#type-safe-manipulation">Type safe manipulation</a></h1>
+<p>One of the registers of <code>P0</code>, the <code>IN</code> register, is documented as a read-only register.</p>
+<blockquote>
+<p>6.8.2.4 IN - Pages 145 and 146</p>
+</blockquote>
+<p>Note that in the 'Access' column of the table, only the 'R' is given for this register.  We are not
+supposed to write to this register or Bad Stuff May Happen.</p>
+<p>Registers have different read/write permissions. Some of them are write only, others can be read and
+written to and there must be others that are read only.</p>
+<p>Directly working with hexadecimal addresses is also error-prone. You already saw that trying to
+access an invalid memory address caused an exception which disrupted the execution of our program.</p>
+<p>Wouldn't it be nice if we had an API to manipulate registers in a "safe" manner? Ideally, the API
+should encode these three points I've mentioned: No messing around with the actual addresses, should
+respect read/write permissions and should prevent modification of the reserved parts of a register.</p>
+<p>Well, we do! <code>registers::init()</code> actually returns a value that provides a type safe API to
+manipulate the registers of the <code>P0</code> and <code>P1</code> ports.</p>
+<p>As you may remember: a group of registers associated to a peripheral is called register block, and
+it's located in a contiguous region of memory. In this type safe API each register block is modeled
+as a <code>struct</code> where each of its fields represents a register. Each register field is a different
+newtype over e.g. <code>u32</code> that exposes a combination of the following methods: <code>read</code>, <code>write</code> or
+<code>modify</code> according to its read/write permissions. Finally, these methods don't take primitive values
+like <code>u32</code>, instead they take yet another newtype that can be constructed using the builder pattern
+and that prevent the modification of the reserved parts of the register.</p>
+<p>The best way to get familiar with this API is to port our running example to it
+(<code>examples/type-safe.rs</code>).</p>
+<pre><pre class="playground"><code class="language-rust">#![no_main]
+#![no_std]
+
+#[allow(unused_imports)]
+use registers::entry;
+
+#[entry]
+fn main() -&gt; ! {
+    let (p0, _p1) = registers::init();
+
+    // Turn on the top row
+    p0.out.modify(|_, w| w.pin21().set_bit());
+
+    // Turn on the bottom row
+    p0.out.modify(|_, w| w.pin19().set_bit());
+
+    // Turn off the top row
+    p0.out.modify(|_, w| w.pin21().clear_bit());
+
+    // Turn off the bottom row
+    p0.out.modify(|_, w| w.pin19().clear_bit());
+
+    loop {}
+}</code></pre></pre>
+<p>First thing you notice: There are no magic addresses involved. Instead we use a more human friendly
+way, <code>p0.out</code>, to refer to the <code>OUT</code> register in the <code>P0</code> port register block.</p>
+<p>The register block has a <a href="https://docs.rs/svd2rust/latest/svd2rust/#modify"><code>modify</code></a> method that takes a closure. Before this closure is called, the
+<code>OUT</code> register's value is read and passed to the closure as the <code>r</code> parameter. Given the value of
+<code>r</code>, you can manipulate <code>w</code> to the desired new value of the register using its methods. The result
+is written to the register once the closure returns. In our case, the current value of the register
+is also passed in the <code>w</code> parameter, allowing us to just manipulate <code>w</code> when we want to keep the
+rest of the register bits as is.</p>
+<p>The <code>modify</code> method is defined for registers that allow both write and read access. If you'd like to
+just read a register's value, but not update it, you can use the <a href="https://docs.rs/svd2rust/latest/svd2rust/#read"><code>read</code></a> method. Or, if you simply
+want to write a register value without reading, there's the <a href="https://docs.rs/svd2rust/latest/svd2rust/#write"><code>write</code></a> method.</p>
+<p>Read-only registers only expose <code>read</code>, and write-only registers only expose <code>write</code>. This prevents
+users from accessing a register in a way that's not allowed, and therefore you don't need to wrap
+the calls in an <code>unsafe</code> block. And you don't need to figure out the exact register address and bit
+positions yourself!</p>
+<p>Let's run this program! There's some interesting stuff we can do <em>while</em> debugging the program.</p>
+<p><code>p0</code> is a reference to the <code>P0</code> port's register block. <code>print p0</code> will return the base address of
+the register block, and <code>print *p0</code> will print its value.</p>
+<pre><code>$ cargo run
+(..)
+Target halted
+(gdb) set mem inaccessible-by-default off
+(gdb) break main.rs:12
+Breakpoint 4 at 0x162: main.rs:12. (2 locations)
+(gdb) continue
+Continuing.
+
+Program received signal SIGINT, Interrupt.
+cortex_m_rt::DefaultPreInit () at src/lib.rs:1058
+1058	pub unsafe extern "C" fn DefaultPreInit() {}
+(gdb) continue
+Continuing.
+
+Breakpoint 1, registers::__cortex_m_rt_main_trampoline () at src/07-registers/src/main.rs:7
+7	#[entry]
+(gdb) continue
+Continuing.
+
+Program received signal SIGINT, Interrupt.
+registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:8
+8	fn main() -&gt; ! {
+(gdb) continue
+Continuing.
+
+Breakpoint 4.2, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:12
+12	    p0.out.modify(|_, w| w.pin21().set_bit());
+(gdb) print *p0                                               ; ⬅️ Printing `*p0` here!
+$1 = nrf52833_pac::p0::RegisterBlock {
+  _reserved0: [0 &lt;repeats 1284 times&gt;],
+  out: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::out::OUT_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::out::OUT_SPEC&gt;
+  },
+  outset: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::outset::OUTSET_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::outset::OUTSET_SPEC&gt;
+  },
+  outclr: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::outclr::OUTCLR_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::outclr::OUTCLR_SPEC&gt;
+  },
+  in_: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::in_::IN_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::in_::IN_SPEC&gt;
+  },
+  dir: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::dir::DIR_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 3513288704
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::dir::DIR_SPEC&gt;
+  },
+  dirset: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::dirset::DIRSET_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 3513288704
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::dirset::DIRSET_SPEC&gt;
+  },
+  dirclr: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::dirclr::DIRCLR_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 3513288704
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::dirclr::DIRCLR_SPEC&gt;
+  },
+  latch: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::latch::LATCH_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::latch::LATCH_SPEC&gt;
+  },
+  detectmode: nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::detectmode::DETECTMODE_SPEC&gt; {
+    register: vcell::VolatileCell&lt;u32&gt; {
+      value: core::cell::UnsafeCell&lt;u32&gt; {
+        value: 0
+      }
+    },
+    _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::detectmode::DETECTMODE_SPEC&gt;
+  },
+  _reserved9: [0 &lt;repeats 472 times&gt;],
+  pin_cnf: [nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    } &lt;repeats 11 times&gt;, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+--Type &lt;RET&gt; for more, q to quit, c to continue without paging--c
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 2
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }, nrf52833_pac::generic::Reg&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt; {
+      register: vcell::VolatileCell&lt;u32&gt; {
+        value: core::cell::UnsafeCell&lt;u32&gt; {
+          value: 3
+        }
+      },
+      _marker: core::marker::PhantomData&lt;nrf52833_pac::p0::pin_cnf::PIN_CNF_SPEC&gt;
+    }]
+}
+
+
+</code></pre>
+<p>All these newtypes and closures sound like they'd generate large, bloated programs. If you actually
+compile the program in release mode with <a href="https://en.wikipedia.org/wiki/Interprocedural_optimization">LTO</a> enabled, though, you'll see exactly the same
+instructions that the "unsafe" version that used <code>write_volatile</code> and hexadecimal addresses had!</p>
+<p>Use <code>cargo objdump</code> to grab the assembler code to <code>release.type-safe.dump</code>:</p>
+<pre><code class="language-console">cargo objdump -q --release --bin type-safe -- --disassemble --no-show-raw-insn  &gt; release.type-safe.dump
+</code></pre>
+<p>Then search for <code>main</code> in <code>release.type-safe.dump</code></p>
+<pre><code>00000158 &lt;main&gt;:
+     158:      	push	{r7, lr}
+     15a:      	mov	r7, sp
+     15c:      	bl	0x160 &lt;registers::__cortex_m_rt_main::h0e9b57c6799332fd&gt; @ imm = #0x0
+
+00000160 &lt;registers::__cortex_m_rt_main::h0e9b57c6799332fd&gt;:
+     160:      	push	{r7, lr}
+     162:      	mov	r7, sp
+     164:      	bl	0x192 &lt;registers::init::hec71dddc40be11b5&gt; @ imm = #0x2a
+     168:      	movw	r0, #0x504
+     16c:      	movt	r0, #0x5000
+     170:      	ldr	r1, [r0]
+     172:      	orr	r1, r1, #0x200000
+     176:      	str	r1, [r0]
+     178:      	ldr	r1, [r0]
+     17a:      	orr	r1, r1, #0x80000
+     17e:      	str	r1, [r0]
+     180:      	ldr	r1, [r0]
+     182:      	bic	r1, r1, #0x200000
+     186:      	str	r1, [r0]
+     188:      	ldr	r1, [r0]
+     18a:      	bic	r1, r1, #0x80000
+     18e:      	str	r1, [r0]
+     190:      	b	0x190 &lt;registers::__cortex_m_rt_main::h0e9b57c6799332fd+0x30&gt; @ imm = #-0x4
+</code></pre>
+<p>You can validate that this yields the exact same binary as the one with the calls to
+<code>ptr::read_volatile</code> and <code>ptr::write_volatile</code>.</p>
+<p>The best part of all this is that nobody had to write a single line of code to implement the GPIO
+API. All the code was automatically generated from a System View Description (SVD) file using the
+<a href="https://crates.io/crates/svd2rust">svd2rust</a> tool. This SVD file is actually an XML file that microcontroller vendors provide and that
+contains the register maps of their microcontrollers. The file contains the layout of register
+blocks, the base addresses, the read/write permissions of each register, the layout of the
+registers, whether a register has reserved bits and lots of other useful information.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07-registers/spooky-action-at-a-distance.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../08-led-roulette/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07-registers/spooky-action-at-a-distance.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../08-led-roulette/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
