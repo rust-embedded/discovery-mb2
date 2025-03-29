@@ -66,4 +66,10 @@ Superloops work and are often used in embedded systems, but the programmer has t
 
 Doing multiple things at once is called *concurrent* programming, and shows up in many places in programming, but especially in embedded systems.  There's a whole host of techniques for implementing systems that concurrently interact with peripherals while maintaining a high degree of responsiveness (e.g. interrupt handling, cooperative multitasking, event queues, etc.).  We'll explore some of these in later chapters.
 
+There is a good introduction to concurrency in an embedded context [here] that
+you might read through before proceeding.
+
+[here]: https://docs.rust-embedded.org/book/concurrency/index.html
+
+
 For now, let's take a deeper look into what's happening when we call `button_a.is_low()` or `display_pins.row1.set_high()`.

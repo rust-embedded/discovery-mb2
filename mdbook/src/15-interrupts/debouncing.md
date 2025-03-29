@@ -23,6 +23,10 @@ interrupt handler sees that the timer is running, it can just do nothing.
 The implementation of all this can be seen in the next example (`examples/count-debounce.rs`). When
 you run the example you should see one count per button press.
 
+```rust
+{{#include examples/count-debounce.rs}}
+```
+
 > **NOTE** The buttons on the MB2 are a little fiddly: it's pretty easy to push one down enough to
 feel a "click" but not enough to actually make contact with the switch. I recommend using a
 fingernail to press the button when testing.
