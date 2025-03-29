@@ -8,7 +8,7 @@ Now it’s your turn to put polling into practice. Your task is to implement a s
 
 You'll need to:
 
-- Initialize the LEDs and buttons.
+- Initialize the variables for the LED and the buttons.
 - Continuously poll Button A and Button B.
 - Update the LED display according to the button state with a clear indication of each state (left, right, or neutral).
 
