@@ -11,6 +11,7 @@ microbit-v2 = "0.15"
 panic-rtt-target = "0.1"
 rtt-target = "0.5"
 
+
 [dependencies.cortex-m]
 version = "0.7"
 features = ["critical-section-single-core"]
