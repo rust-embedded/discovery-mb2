@@ -5,13 +5,6 @@ game that you can play on an MB2 using its 5×5 LED matrix as a display and its 
 controls. In doing so, we will build on some of the concepts covered in the earlier chapters of this
 book, and also learn about some new peripherals and concepts.
 
-In particular, we will be using the concept of hardware interrupts to allow our program to interact
-with multiple peripherals at once. Interrupts are a common way to implement concurrency in embedded
-contexts. There is a good introduction to concurrency in an embedded context [here] that
-you might read through before proceeding.
-
-[here]: https://docs.rust-embedded.org/book/concurrency/index.html
-
 ## Modularity
 
 The source code here is more modular than it probably should be. This fine-grained modularity allows
