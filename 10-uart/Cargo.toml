@@ -1,0 +1,21 @@
+[package]
+name = "uart"
+version = "0.1.0"
+authors = ["Henrik Böving <hargonix@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+cortex-m-rt = "0.7.3"
+embedded-io = "0.6.1"
+heapless = "0.8.0"
+microbit-v2 = "0.15.0"
+panic-rtt-target = "0.1.3"
+rtt-target = "0.5.0"
+
+[dependencies.cortex-m]
+version = "0.7.7"
+features = ["inline-asm", "critical-section-single-core"]
+
+[dependencies.serial-setup]
+version = "0.1.0"
+path = "../serial-setup"

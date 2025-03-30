@@ -1,0 +1,9 @@
+[package]
+name = "serial-setup"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-io = "0.6.1"
+microbit-v2 = "0.15.0"
+cortex-m = "0.7.7"
