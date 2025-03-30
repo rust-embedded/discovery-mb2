@@ -29,12 +29,17 @@ fn main() -> ! {
         .into_push_pull_output(gpio::Level::Low);
 
     loop {
-        if button_a.is_low().unwrap() {
-            // Button A pressed: LED on
-            row1.set_high().unwrap();
-        } else if button_b.is_low().unwrap() {
-            // Button B pressed: LED off
-            row1.set_low().unwrap();
+        let on_pressed = button_a.is_low();
+        let off_pressed = button_b.is_low();
+        match (on_pressed, off_pressed) {
+            // Stay in current state until something is pressed.
+            (false, false) => (),
+            // Change to on state.
+            (false, true) => row1.set_high().unwrap(),
+            // Change to off state.
+            (true, false) => row1.set_low().unwrap(),
+            // Stay in current state until something is released.
+            (true, true) => (),
         }
         timer.delay_ms(10_u32);
     }
