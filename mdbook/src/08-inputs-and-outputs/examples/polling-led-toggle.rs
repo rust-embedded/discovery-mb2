@@ -2,11 +2,12 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-use embedded_hal::digital::OutputPin;
+use embedded_hal::delay::DelayNs;
+use embedded_hal::digital::{InputPin, OutputPin};
 use microbit::hal::timer::Timer;
 use microbit::{hal::gpio, Board};
-use panic_halt as _;
-use rtt_target::{rprintln, rtt_init_print};
+use panic_rtt_target as _;
+use rtt_target::rtt_init_print;
 
 #[entry]
 fn main() -> ! {
@@ -15,8 +16,8 @@ fn main() -> ! {
     let mut timer = Timer::new(board.TIMER0);
 
     // Configure buttons
-    let button_a = board.buttons.button_a;
-    let button_b = board.buttons.button_b;
+    let mut button_a = board.buttons.button_a;
+    let mut button_b = board.buttons.button_b;
 
     // Configure LED (top-left LED at row1, col1)
     let mut row1 = board
@@ -29,8 +30,8 @@ fn main() -> ! {
         .into_push_pull_output(gpio::Level::Low);
 
     loop {
-        let on_pressed = button_a.is_low();
-        let off_pressed = button_b.is_low();
+        let on_pressed = button_a.is_low().unwrap();
+        let off_pressed = button_b.is_low().unwrap();
         match (on_pressed, off_pressed) {
             // Stay in current state until something is pressed.
             (false, false) => (),
