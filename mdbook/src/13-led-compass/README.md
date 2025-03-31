@@ -20,7 +20,7 @@ field strengths are components of the magnetic field vector.
 </p>
 
 You should already be able to write a program that continuously prints the magnetometer data on the
-RTT console from the [I2C chapter](../11-i2c/index.md). After you write that program
+RTT console from the [I2C chapter](../12-i2c/index.md). After you write that program
 (`examples/show-mag.rs`), locate where north is at your current location. Then line up your
 micro:bit with that direction and observe how the sensor's X and Y measurements look.
 
@@ -35,7 +35,7 @@ you see this time? Then rotate it 90 degrees again. What values do you see?
 > a lot for an introductory guide to embedded systems. If you have only one MB2 and it doesn't seem
 > to be working, you may just want to skip to the [next chapter]. Cheap hardware: whatcha gonna do?
 
-[next chapter]: ../13-punch-o-meter/index.html
+[next chapter]: ../14-punch-o-meter/index.html
 
 The Earth's magnetic north is a fickle thing: it differs from true north in most places on Earth,
 sometimes substantially. It can point down into the ground quite a bit. It changes over time.
