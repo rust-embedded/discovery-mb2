@@ -25,8 +25,6 @@ pub struct Game {
 impl Game {
     pub fn new(rng: &mut Rng) -> Self {
         let mut rng = Prng::seeded(rng);
-        let mut tail: FnvIndexSet<Coords, 32> = FnvIndexSet::new();
-        tail.insert(Coords { row: 2, col: 1 }).unwrap();
         let snake = Snake::make_snake();
         let food_coords = Coords::random(&mut rng, Some(&snake.coord_set));
         Self {
