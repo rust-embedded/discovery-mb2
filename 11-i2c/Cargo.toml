@@ -1,0 +1,23 @@
+[package]
+authors = ["Henrik Böving <hargonix@gmail.com>"]
+edition = "2021"
+name = "i2c"
+version = "0.1.0"
+
+[dependencies]
+microbit-v2 = "0.15.0"
+cortex-m-rt = "0.7.3"
+rtt-target = "0.5.0"
+panic-rtt-target = "0.1.3"
+nb = "1.1.0"
+heapless = "0.8.0"
+lsm303agr = "1.1.0"
+embedded-hal = "1.0.0"
+
+[dependencies.cortex-m]
+version = "0.7.7"
+features = ["inline-asm", "critical-section-single-core"]
+
+[dependencies.serial-setup]
+version = "0.1.0"
+path = "../serial-setup"
