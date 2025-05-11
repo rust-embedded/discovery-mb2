@@ -32,7 +32,7 @@ The way the user does the calibration is shown in this video from the C++ versio
 initial printing — the calibration starts about halfway through.)
 
 <p align="center">
-<video src="https://video.microbit.org/support/compass+calibration.mp4" loop autoplay>
+<video src="https://video.microbit.org/support/compass+calibration.mp4" loop="true" autoplay="true" />
 </p>
 
 You have to tilt the micro:bit until all the LEDs on the LED matrix light up. The blinking cursor

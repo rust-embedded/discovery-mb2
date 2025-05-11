@@ -20,7 +20,7 @@ Also, to follow this material you'll need:
   [0]: https://microbit.org/buy/
 
   <p align="center">
-  <img title="micro:bit" src="../assets/microbit-v2.jpg" width="500"/>
+  <img title="micro:bit" src="../assets/microbit-v2.jpg" width="500" />
   </p>
 
   There are several versions of the `V2` board
@@ -32,7 +32,7 @@ Also, to follow this material you'll need:
   that the cable supports data transfer, as some cables only support charging devices.
 
   <p align="center">
-  <img title="micro-B USB cable" src="../assets/usb-cable.jpg" width="500">
+  <img title="micro-B USB cable" src="../assets/usb-cable.jpg" width="500" />
   </p>
 
   > **NOTE** Some micro:bit kits ship with such cables.  USB cables used with other mobile
