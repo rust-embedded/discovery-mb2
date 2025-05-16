@@ -6,5 +6,3 @@ language = "en"
 
 [output.html]
 git-repository-url = "https://github.com/rust-embedded/discovery-mb2/"
-
-[output.epub]
