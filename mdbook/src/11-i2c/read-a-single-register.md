@@ -21,7 +21,7 @@ that just happens to have the same address.  As you can read in the LSM303AGR's 
 `0x0f` and `WHO_AM_I_M` at address `0x4f` — which contain some bit patterns that are unique to the
 device. (The "A" is for "Accelerometer" and the "M" is for "Magnetometer".)
 
-The only thing missing now is the software part: we need to determin which API of the `microbit` or
+The only thing missing now is the software part: we need to determine which API of the `microbit` or
 a HAL crate we should use for this. If you read through the datasheet of the nRF chip you are using
 you will soon find out that it doesn't actually have an I2C-specific peripheral.  Instead, it has
 more general-purpose I2C-compatible peripherals called TWI ("Two-Wire Interface"), TWIM ("Two-Wire

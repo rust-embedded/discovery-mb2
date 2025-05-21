@@ -60,7 +60,7 @@ GDB will refuse to read memory that isn't specified. You can disable this behavi
 set mem inaccessible-by-default off
 ```
 
-So here we go. Furst turn off the `inaccessible-by-default` flag, then set a couple of breakpoints, reset the device and halt.
+So here we go. First turn off the `inaccessible-by-default` flag, then set a couple of breakpoints, reset the device and halt.
 
 ```
 (gdb) set mem inaccessible-by-default off

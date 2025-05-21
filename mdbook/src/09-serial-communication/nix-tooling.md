@@ -1,6 +1,6 @@
 # Linux USB←→serial tooling
 
-The micro:bit's USB emulated serial device shows up in Linux when youconnect the MB2 to a Linux USB
+The micro:bit's USB emulated serial device shows up in Linux when you connect the MB2 to a Linux USB
 port.
 
 ## Connecting the micro:bit board
