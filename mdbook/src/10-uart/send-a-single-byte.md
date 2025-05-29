@@ -29,7 +29,7 @@ uarte::Uarte::new(
 This function takes ownership of the UARTE peripheral representation in Rust (`board.UARTE0`) and
 the TX/RX pins on the board (`board.uart.into()`) so nobody else can mess with either the UARTE
 peripheral or our pins while we are using them. After that we pass two configuration options to the
-constructor: the baudrate (that one should be familiar) as well as an option called "parity". Parity
+constructor: the baud rate (that one should be familiar) as well as an option called "parity". Parity
 is a way to allow serial communication lines to check whether the data they received was corrupted
 during transmission. We don't want to use that here so we simply exclude it.  Then we wrap it up in
 the `UartePort` type so we can use it.
