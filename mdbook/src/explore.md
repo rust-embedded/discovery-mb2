@@ -255,7 +255,7 @@ There are many other options:
 
 [Awesome Rust Embedded]: https://github.com/rust-embedded/awesome-embedded-rust/
 
-- You could check out [Embassy]. This is a modern efficient preemptive multitasking framework that
+- You could check out [Embassy]. This is a modern efficient cooperative multitasking framework that
   supports concurrent execution using Rust `async/await`.
 
 [Embassy]: https://embassy.dev
