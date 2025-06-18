@@ -44,7 +44,7 @@ direction. Hook an LED up "forwards" and light comes out. Hook it up "backwards"
 happens.
 
 <p align="center">
-<img class="white_bg" height=180 title="LED circuit" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/LED_circuit.svg">
+<img class="white_bg" height="180" title="LED circuit" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/LED_circuit.svg" />
 </p>
 
 Luckily for us, the microcontroller's pins are connected such that we can drive the LEDs the right

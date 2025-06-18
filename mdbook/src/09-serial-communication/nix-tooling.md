@@ -75,7 +75,7 @@ This tells `minicom` to open the serial device at `/dev/ttyACM0` and set its
 baud rate to 115200. A text-based user interface (TUI) will pop out.
 
 <p align="center">
-<img title="minicom" src="../assets/minicom.png">
+<img title="minicom" src="../assets/minicom.png" />
 </p>
 
 You can now send data using the keyboard! Go ahead and type something. Note that
