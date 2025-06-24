@@ -3,7 +3,7 @@
 Alright, let's build a "real" application. The goal is to get to this display of spinning lights:
 
 <p align="center">
-<video src="../assets/roulette_fast.mp4" width="500" loop autoplay/>
+<video src="../assets/roulette_fast.mp4" width="500" loop="true" autoplay="true"/>
 </p>
 
 Since working with the LED pins separately is quite annoying (especially if you have to use
