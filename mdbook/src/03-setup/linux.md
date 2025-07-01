@@ -19,7 +19,7 @@ $ sudo dnf install gdb minicom libunwind-devel
 
 ## Arch Linux
 
-> **NOTE** `arm-none-eabi-gdb` is the GDB command you'll use to debug your ARM
+> **NOTE** `gdb` is the GDB command you'll use to debug your ARM
 > Cortex-M programs.
 ``` console
 $ sudo pacman -S arm-none-eabi-gdb minicom libunwind
