@@ -2,7 +2,7 @@
 #![no_main]
 #![no_std]
 
-use cortex_m::asm::wfi;
+use cortex_m::asm;
 use cortex_m_rt::entry;
 use microbit as _;
 use panic_halt as _;
@@ -16,6 +16,6 @@ fn main() -> ! {
 
     // infinite loop; just so we don't leave this stack frame
     loop {
-        wfi();
+        asm::nop();
     }
 }
