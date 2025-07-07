@@ -61,9 +61,10 @@ cargo-size 0.3.6
 
 ### `probe-rs-tools`
 
-**NOTE** If you already have old versions of `probe-run`, `probe-rs` or `cargo-embed` installed on
-your system, remove them before starting this step, as they could conceivably cause problems for you
-down the line. In particular, `probe-run` no longer officially exists. Try these as needed:
+**NOTE** If you already have old versions of `probe-run`, `probe-rs` or `cargo-embed` installed
+on your system, remove them before starting this step, as they could conceivably cause problems
+for you down the line. In particular, `probe-run` no longer officially exists. Try these as
+needed:
 
 ```console
 $ cargo uninstall cargo-embed
@@ -72,17 +73,25 @@ $ cargo uninstall probe-rs
 $ cargo uninstall probe-rs-cli
 ```
 
-In order to install `probe-rs-tools`, first install its
-[prerequisites](https://probe.rs/docs/getting-started/installation/) (note: these instructions are
-part of the more general [`probe-rs`](https://probe.rs/) embedded debugging toolkit). Then install
-`probe-rs-tools` with Cargo.
+In order to install `probe-rs-tools`, go to <https://probe.rs> and follow the current installation
+instructions there.
 
-```console
-$ cargo install --locked probe-rs-tools
-```
+* **NOTE** If you prefer to install `probe-rs-tools` using `cargo install`, you can try the
+  following steps.  Folks have experienced frequent failures with this approach, but you are
+  welcome to give it a go.
 
-**NOTE** This may fail due to frequent changes in `probe-rs`. If so, go to <https://probe.rs> and
-follow the current installation instructions there.
+  1. Upgrade to the most recent stable Rust.
+
+  2. Install the `probe-rs-tools` binary
+     [prerequisites](https://probe.rs/docs/getting-started/installation/).  (The linked
+     instructions are part of the more general [`probe-rs`](https://probe.rs/) embedded debugging
+     toolkit documentation.)
+
+  3. Try the install
+
+     ```console
+     $ cargo install --locked probe-rs-tools
+     ```
 
 Installing `probe-rs-tools` will install several useful tools, including `probe-rs` and
 `cargo-embed` (which is normally run as a Cargo command). Check that things are working before
