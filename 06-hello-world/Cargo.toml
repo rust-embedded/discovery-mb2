@@ -1,0 +1,16 @@
+[package]
+authors = ["Bart Massey"]
+edition = "2021"
+name = "hello-world"
+version = "0.1.0"
+
+[dependencies]
+cortex-m-rt = "0.7.3"
+embedded-hal = "1.0.0"
+microbit-v2 = "0.15.0"
+nrf52833-hal = "0.18.0"
+panic-halt = "0.2.0"
+
+[dependencies.cortex-m]
+version = "0.7.7"
+features = ["inline-asm"]
