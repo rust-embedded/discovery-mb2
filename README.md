@@ -65,22 +65,15 @@ Have fun and enjoy!
 
 This project is developed and maintained by the [Resources team][team].
 
-## License
+## Licenses and Attribution
 
-The documentation is licensed under
+The documentation is licensed under "Creative Commons
+CC-BY-4.0" and the source code is licensed under licensee's
+choice of the "Apache License" or the "MIT License".
 
-- Creative Commons Attribution 4.0 License ([LICENSE-CC-BY](LICENSE-CC-BY)
-  or https://creativecommons.org/licenses/by/4.0/legalcode)
-
-And the source code is licensed under either of
-
-- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
-  http://www.apache.org/licenses/LICENSE-2.0)
-
-- MIT License ([LICENSE-MIT](LICENSE-MIT) or
-  https://opensource.org/licenses/MIT)
-
-at your option.
+See the book's [Licenses and
+Attribution](mdbook/src/appendix/4-licenses-and-attribution)
+section for license details.
 
 ### Contribution
 
