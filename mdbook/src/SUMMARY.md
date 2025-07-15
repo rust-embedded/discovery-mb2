@@ -68,7 +68,8 @@
 
 [General troubleshooting](appendix/1-general-troubleshooting/README.md)
 [How to use GDB](appendix/2-how-to-use-gdb/README.md)
-[Magnetometer Calibration](appendix/3-mag-calibration/README.md)
+[Magnetometer calibration](appendix/3-mag-calibration/README.md)
+[Licenses and attribution](appendix/4-licenses-and-attribution/README.md)
 
 <!-- - [Async IO: The future](17-async-io-the-future/README.md) -->
 <!--     - [Timer](17-async-io-the-future/timer.md) -->
