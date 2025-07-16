@@ -4,14 +4,14 @@ Here are the installation commands for a few Linux distributions.
 
 ## Ubuntu 20.04 or newer / Debian 10 or newer
 
-> **NOTE** `gdb-multiarch` is the GDB command you'll use to debug your ARM Cortex-M programs.
+> **NOTE** `gdb-multiarch` is the GDB command you'll use to debug your Arm Cortex-M programs.
 ``` console
 $ sudo apt install gdb-multiarch minicom libunwind-dev
 ```
 
 ## Fedora 32 or newer
 
-> **NOTE** `gdb` is the GDB command you'll use to debug your ARM
+> **NOTE** `gdb` is the GDB command you'll use to debug your Arm
 > Cortex-M programs.
 ``` console
 $ sudo dnf install gdb minicom libunwind-devel
@@ -19,7 +19,7 @@ $ sudo dnf install gdb minicom libunwind-devel
 
 ## Arch Linux
 
-> **NOTE** `gdb` is the GDB command you'll use to debug your ARM
+> **NOTE** `gdb` is the GDB command you'll use to debug your Arm
 > Cortex-M programs.
 ``` console
 $ sudo pacman -S arm-none-eabi-gdb minicom libunwind
@@ -27,9 +27,9 @@ $ sudo pacman -S arm-none-eabi-gdb minicom libunwind
 
 ## Other distros
 
-> **NOTE** `arm-none-eabi-gdb` is the GDB command you'll use to debug your ARM Cortex-M programs.
+> **NOTE** `arm-none-eabi-gdb` is the GDB command you'll use to debug your Arm Cortex-M programs.
 
-For distros that don't have packages for [ARM's pre-built
+For distros that don't have packages for [Arm's pre-built
 toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads), download the "Linux
 64-bit" file and put its `bin` directory on your path.  Here's one way to do it:
 
@@ -84,8 +84,8 @@ The micro:bit should now appear as a USB device (file) in `/dev/bus/usb`. Let's 
 enumerated:
 
 ``` console
-$ lsusb | grep -i "NXP ARM mbed"
-Bus 001 Device 065: ID 0d28:0204 NXP ARM mbed
+$ lsusb | grep -i "NXP Arm mbed"
+Bus 001 Device 065: ID 0d28:0204 NXP Arm mbed
 $ # ^^^        ^^^
 ```
 

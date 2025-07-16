@@ -30,13 +30,13 @@ Error identifying target using protocol JTAG: The probe does not support the JTA
 
 Probing target via SWD
 
-ARM Chip with debug port Default:
-Debug Port: DPv1, DP Designer: ARM Ltd
+Arm Chip with debug port Default:
+Debug Port: DPv1, DP Designer: Arm Ltd
 ├── 0 MemoryAP
 │   └── ROM Table (Class 1), Designer: Nordic VLSI ASA
 │       ├── Cortex-M4 SCS   (Generic IP component)
 │       │   └── CPUID
-│       │       ├── IMPLEMENTER: ARM Ltd
+│       │       ├── IMPLEMENTER: Arm Ltd
 │       │       ├── VARIANT: 0
 │       │       ├── PARTNO: Cortex-M4
 │       │       └── REVISION: 1

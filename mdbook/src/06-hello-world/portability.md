@@ -13,7 +13,7 @@ setup may be different, but the actual blinky loop is identical!
 
 Let's take a look at a blinky for the Sipeed Longan Nano. This is a little $5 board that, like the
 MB2, is an embedded board with an MCU. Otherwise, it is completely different: different processor
-(the GD32VF103, with a RISC-V instruction set entirely unlike the ARM instruction set we're using),
+(the GD32VF103, with a RISC-V instruction set entirely unlike the Arm instruction set we're using),
 different peripherals, different board. But it has an LED attached to a GPIO pin, so we can blinky
 it.
 

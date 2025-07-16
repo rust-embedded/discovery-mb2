@@ -62,7 +62,7 @@ through [Awesome Embedded Rust] or just search the web to find supported crates.
 With a different development board, this text loses most if not all its beginner friendliness and
 "easy to follow"-ness, in my opinion: you have been warned.
 
-If you have a different ARM-based development board and you don't consider yourself a total
+If you have a different Arm-based development board and you don't consider yourself a total
 beginner, you might consider starting with the [quickstart] project template.
 
 [quickstart]: https://rust-embedded.github.io/cortex-m-quickstart/cortex_m_quickstart/

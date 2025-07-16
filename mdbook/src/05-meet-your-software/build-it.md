@@ -57,7 +57,7 @@ $ cargo build --example init
 
 OK, now we have produced an executable. This executable won't blink any LEDs: it's just a simplified
 version that we will build upon later in the chapter.  As a sanity check, let's verify that the
-produced executable is actually an ARM binary. (The command below is equivalent to
+produced executable is actually an Arm binary. (The command below is equivalent to
 
     readelf -h ../../../target/thumbv7em-none-eabihf/debug/examples/init
 
@@ -74,7 +74,7 @@ ELF Header:
   OS/ABI:                            UNIX - System V
   ABI Version:                       0
   Type:                              EXEC (Executable file)
-  Machine:                           ARM
+  Machine:                           Arm
   Version:                           0x1
   Entry point address:               0x117
   Start of program headers:          52 (bytes into file)

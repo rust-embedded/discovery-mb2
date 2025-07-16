@@ -47,7 +47,7 @@ section              size        addr
 .debug_str          71325         0x0
 .debug_pubnames     32316         0x0
 .debug_pubtypes     29294         0x0
-.ARM.attributes        58         0x0
+.Arm.attributes        58         0x0
 .debug_frame         2108         0x0
 .debug_line         19303         0x0
 .comment              109         0x0

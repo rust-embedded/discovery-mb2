@@ -2,7 +2,7 @@
 
 ## `arm-none-eabi-gdb`
 
-ARM provides `.exe` installers for Windows. Grab one from [here][gcc], and follow the instructions.
+Arm provides `.exe` installers for Windows. Grab one from [here][gcc], and follow the instructions.
 Just before the installation process finishes tick/select the "Add path to environment variable"
 option. Then verify that the tools are in your `%PATH%`:
 
