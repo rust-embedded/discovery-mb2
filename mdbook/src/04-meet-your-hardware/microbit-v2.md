@@ -34,7 +34,7 @@ short for radio frequency.  If we search through the documentation of the chip l
 - The `2024AL` is a tracking code, hence it might differ on your chip
 
 The product specification does of course contain a lot more useful information about the chip: for
-example, that the chip is an ARM® Cortex™-M4 32-bit processor.
+example, that the chip is an Arm® Cortex™-M4 32-bit processor.
 
 
 ## Arm? Cortex-M4?

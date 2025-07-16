@@ -47,7 +47,7 @@ be done. However, sometimes there's nothing to be done!  At those times, the mic
 When the processor sleeps, it stops executing instructions and this saves power.  It's almost always
 a good idea to save power so your microcontroller should be sleeping as much as possible. But, how
 does it know when it has to wake up to perform some action? Interrupts are one of the events that
-wake up the microcontroller but there are others. The ARM machine instructions `wfi` and `wfe` are
+wake up the microcontroller but there are others. The Arm machine instructions `wfi` and `wfe` are
 the instructions that make the processor "sleep" waiting for an interrupt or event.
 
 ## Topics related to microcontroller capabilities

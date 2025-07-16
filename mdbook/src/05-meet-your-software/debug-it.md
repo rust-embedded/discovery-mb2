@@ -83,7 +83,7 @@ mode, on the GDB shell enter the following command:
 (gdb) layout src
 ```
 
-> **NOTE**: Apologies Windows users. The GDB shipped with the GNU ARM Embedded Toolchain doesn't
+> **NOTE**: Apologies Windows users. The GDB shipped with the GNU Arm Embedded Toolchain doesn't
 > support this TUI mode `:-(`.
 
 ![GDB session](../assets/gdb-layout-src.png "GDB TUI")

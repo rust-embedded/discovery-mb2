@@ -1,6 +1,6 @@
 # Board support crate
 
-Working directly with the PAC and HAL is pretty neat. Most ARM MCUs and many other MCUs that Rust
+Working directly with the PAC and HAL is pretty neat. Most Arm MCUs and many other MCUs that Rust
 can compile for have a PAC crate. If you are working with one that does not, writing a PAC crate can
 be tedious but is pretty straightforward. Many MCUs that have a PAC crate also have a HAL crate —
 again, it's mostly just tedious work to build one if it is absent. Code written at the PAC and HAL
