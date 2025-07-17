@@ -69,7 +69,7 @@ jobs:
           crate: mdbook
           version: 0.4.51
       - name: Install mdbook-epub
-        run: cargo install mdbook-epub
+        run: cargo install --locked mdbook-epub --version 0.4.48
 
       - name: Copy mdbook to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
