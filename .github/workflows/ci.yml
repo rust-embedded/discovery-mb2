@@ -82,7 +82,7 @@ jobs:
 
       - name: Build EPUB
         working-directory: mdbook
-        run: mdbook build -d ./build epub
+        run: mdbook-epub mdbook/
 
       - name: Copy EPUB to static directory
         working-directory: mdbook
