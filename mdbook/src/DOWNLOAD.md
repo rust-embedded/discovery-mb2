@@ -1,12 +1,4 @@
-# 📥 Download
-
-You can download the EPUB version of this book here:
-
-👉 [Download EPUB](static/Discovery.epub)
-
-<!-- 👉 [Download EPUB]({{ book.url }}static/Discovery.epub)
-
-👉 [Download EPUB]({{ book.url }}static/Discovery.epub) -->
+# 📥 download ePUB version of the book
 
 
-
+You can download the EPUB version of this book here:  [Download](/static/Discovery.epub)
