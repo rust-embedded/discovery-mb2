@@ -67,7 +67,7 @@ jobs:
         uses: actions-rs/install@v0.1
         with:
           crate: mdbook
-          version: latest
+          version: 0.4.51
       - name: Install mdbook-epub
         run: cargo install mdbook-epub
 
