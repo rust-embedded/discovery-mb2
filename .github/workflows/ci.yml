@@ -89,7 +89,7 @@ jobs:
         working-directory: mdbook
         run: |
           mkdir -p src/static
-          cp book/Discovery.epub src/static/Discovery.epub
+          cp book/epub/*.epub src/static/
 
       - name: Build book
         working-directory: mdbook
