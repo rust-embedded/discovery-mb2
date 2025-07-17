@@ -1,5 +1,5 @@
 [book]
-title = "Discovery"
+title = "Rust Embedded MB2 Discovery Book"
 description = "Discover the world of microcontrollers through Rust with the BB2 micro:bit v2"
 authors = ["Rust Embedded Resources Team"]
 language = "en"
@@ -12,7 +12,7 @@ additional-js = ["epub-link.js"]
 
 [output.epub]
 # Optional settings
-title = "Discovery"
+title = "Rust Embedded MB2 Discovery Book"
 author = "Rust Embedded Resources Team"
 
 [output.html.site]
