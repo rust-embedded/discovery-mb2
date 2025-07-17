@@ -14,3 +14,10 @@ additional-js = ["epub-link.js"]
 # Optional settings
 title = "Discovery"
 author = "Rust Embedded Resources Team"
+
+[output.html.site]
+url = "/"
+# Optional settings
+# base-url = "/discovery-mb2/"
+# git-repository-url = "
+

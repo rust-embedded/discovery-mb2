@@ -68,6 +68,8 @@ jobs:
         with:
           crate: mdbook
           version: latest
+      - name: Install mdbook-epub
+        run: cargo install mdbook-epub --locked
 
       - name: Copy mdbook to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
@@ -77,6 +79,16 @@ jobs:
 
       - name: Put new cargo binary directory into path
         run: echo "~/cargo-bin" >> $GITHUB_PATH
+
+      - name: Build EPUB
+        working-directory: mdbook
+        run: mdbook epub
+
+      - name: Copy EPUB to static directory
+        working-directory: mdbook
+        run: |
+          mkdir -p src/static
+          cp book/Discovery.epub src/static/Discovery.epub
 
       - name: Build book
         working-directory: mdbook

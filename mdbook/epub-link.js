@@ -1,5 +1,3 @@
-console.log("📘 epub-link.js loaded and running");
-
 // Wait for the full DOM to ensure .right-buttons exists
 window.addEventListener('DOMContentLoaded', () => {
   const rightButtons = document.querySelector(".right-buttons");
