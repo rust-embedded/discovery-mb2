@@ -6,3 +6,18 @@ language = "en"
 
 [output.html]
 git-repository-url = "https://github.com/rust-embedded/discovery-mb2/"
+additional-js = ["epub-link.js"]
+# additional-css = ["custom.css"]
+
+
+[output.epub]
+# Optional settings
+title = "Discovery"
+author = "Rust Embedded Resources Team"
+
+[output.html.site]
+url = "/"
+# Optional settings
+# base-url = "/discovery-mb2/"
+# git-repository-url = "
+
