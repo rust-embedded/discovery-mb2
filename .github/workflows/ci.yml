@@ -68,8 +68,16 @@ jobs:
         with:
           crate: mdbook
           version: 0.4.51
+
       - name: Install mdbook-epub
+        # if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: cargo install --locked mdbook-epub --version 0.4.48
+
+      - name: Copy mdbook-epub to cache directory
+        if: steps.cache-cargo.outputs.cache-hit != 'true'
+        run: |
+          mkdir ~/cargo-bin
+          cp ~/.cargo/bin/mdbook-epub ~/cargo-bin
 
       - name: Copy mdbook to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
@@ -80,11 +88,9 @@ jobs:
       - name: Put new cargo binary directory into path
         run: echo "~/cargo-bin" >> $GITHUB_PATH
 
-        
       - name: Build EPUB
         working-directory: mdbook
-        run: mdbook-epub -s 
-
+        run: mdbook-epub -s
 
       - name: Copy EPUB to static directory
         working-directory: mdbook
@@ -105,5 +111,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: mdbook/book
+          publish_dir: mdbook/book/html
           force_orphan: true
