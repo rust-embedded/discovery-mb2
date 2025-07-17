@@ -2,7 +2,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const rightButtons = document.querySelector(".right-buttons");
   const epubLink = document.createElement("a");
-  epubLink.href = "Discovery.epub";
+  epubLink.href = "static/Discovery.epub";
   epubLink.textContent = "📘EPUB";
   epubLink.target = "_blank";
 
