@@ -65,7 +65,7 @@
 - [What's left for you to explore](explore.md)
 
 ---
-[download epub version of the book](DOWNLOAD.md)
+[Download epub version of the book](DOWNLOAD.md)
 [General troubleshooting](appendix/1-general-troubleshooting/README.md)
 [How to use GDB](appendix/2-how-to-use-gdb/README.md)
 [Magnetometer calibration](appendix/3-mag-calibration/README.md)
