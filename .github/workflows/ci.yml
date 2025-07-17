@@ -81,8 +81,9 @@ jobs:
         run: echo "~/cargo-bin" >> $GITHUB_PATH
 
       - name: Build EPUB
-        working-directory: mdbook
-        run: mdbook-epub mdbook/
+        # working-directory: mdbook
+        run: mdbook-epub -s 
+        # working-directory: ./mdbook
 
       - name: Copy EPUB to static directory
         working-directory: mdbook
