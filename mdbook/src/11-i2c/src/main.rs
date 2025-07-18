@@ -6,7 +6,7 @@ use core::str;
 use cortex_m_rt::entry;
 use embedded_hal::delay::DelayNs;
 use panic_rtt_target as _;
-use rtt_target::rtt_init_print;
+use rtt_target::{rtt_init_print, rprintln};
 
 use microbit::{
     hal::uarte::{self, Baudrate, Parity},
@@ -54,14 +54,17 @@ fn main() -> ! {
         .unwrap();
     let mut sensor = sensor.into_mag_continuous().ok().unwrap();
     let mut buffer: Vec<u8, 32> = Vec::new();
+    rprintln!("setup complete");
 
     loop {
         buffer.clear();
 
         loop {
             let byte = serial.read().unwrap();
+            serial.write(byte).unwrap();
 
             if byte == b'\r' {
+                serial.write(b'\n').unwrap();
                 break;
             }
 
