@@ -3,11 +3,10 @@ window.addEventListener('DOMContentLoaded', () => {
   if (!rightButtons) return;
 
   const epubLink = document.createElement("a");
-  epubLink.href = "/static/Discovery.epub";
+  epubLink.href = "/discovery-mb2/Rust Embedded MB2 Discovery Book.epub";
   epubLink.textContent = "📘ePUB";
-  epubLink.download = "Discovery.epub"; // force download
+  epubLink.download = "Rust Embedded MB2 Discovery Book.epub"; // force download
   epubLink.classList.add("epub-download");
 
   rightButtons.appendChild(epubLink);
 });
-

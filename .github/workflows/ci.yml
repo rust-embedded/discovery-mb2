@@ -92,12 +92,6 @@ jobs:
         working-directory: mdbook
         run: mdbook-epub -s
 
-      - name: Copy EPUB to static directory
-        working-directory: mdbook
-        run: |
-          mkdir -p src/static
-          cp book/epub/*.epub src/static/
-
       - name: Build book
         working-directory: mdbook
         run: mdbook build
@@ -105,6 +99,10 @@ jobs:
       - name: Check book links
         working-directory: mdbook
         run: linkchecker --ignore-url "print.html" book
+
+      - name: Copy EPUB to html directory
+        working-directory: mdbook
+        run: cp book/epub/*.epub book/html/
 
       - name: Deploy book
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
