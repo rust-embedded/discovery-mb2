@@ -13,11 +13,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          target: thumbv7em-none-eabihf
+          targets: thumbv7em-none-eabihf
       - name: Build book code
         working-directory: .
         run: cargo build
@@ -27,11 +25,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          target: thumbv7em-none-eabihf
+          targets: thumbv7em-none-eabihf
       - name: Build docs for micro:bit v2
         working-directory: .
         run: cargo doc
@@ -41,11 +37,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          target: thumbv7em-none-eabihf
+          targets: thumbv7em-none-eabihf
 
       - name: Install Python dependencies
         run: |
@@ -62,35 +56,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
+      - name: Put mdbook-epub where mdbook expects it
+        if: steps.cache-cargo.outputs.cache-hit == 'true'
+        run: |
+          ls ~/cargo-bin
+          mkdir -p ~/.cargo/bin
+          cp ~/cargo-bin/mdbook-epub ~/.cargo/bin
+
       - name: Install mdbook
         if: steps.cache-cargo.outputs.cache-hit != 'true'
-        uses: actions-rs/install@v0.1
-        with:
-          crate: mdbook
-          version: 0.4.51
+        run: cargo install --locked mdbook --version 0.4.51
 
       - name: Install mdbook-epub
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: cargo install --locked mdbook-epub --version 0.4.48
 
-      - name: Copy mdbook-epub to cache directory
+      - name: Copy mdbook and mdbook-epub to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/cargo-bin
-          cp ~/.cargo/bin/mdbook-epub ~/cargo-bin
-
-      - name: Copy mdbook to cache directory
-        if: steps.cache-cargo.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p ~/cargo-bin
+          mkdir ~/cargo-bin
           cp ~/.cargo/bin/mdbook ~/cargo-bin
+          cp ~/.cargo/bin/mdbook-epub ~/cargo-bin
+          ls ~/cargo-bin
 
       - name: Put new cargo binary directory into path
         run: echo "~/cargo-bin" >> $GITHUB_PATH
-
-      - name: Build EPUB
-        working-directory: mdbook
-        run: mdbook-epub -s
 
       - name: Build book
         working-directory: mdbook
@@ -106,7 +96,7 @@ jobs:
 
       - name: Deploy book
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: mdbook/book/html
