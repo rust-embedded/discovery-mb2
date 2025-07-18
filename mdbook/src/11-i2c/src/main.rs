@@ -74,14 +74,14 @@ fn main() -> ! {
             }
         }
 
-        if str::from_utf8(&buffer).unwrap().trim() == "accelerometer" {
+        if str::from_utf8(&buffer).unwrap().trim() == "acc" {
             while !sensor.accel_status().unwrap().xyz_new_data() {
                 timer0.delay_ms(1u32);
             }
 
             let (x, y, z) = sensor.acceleration().unwrap().xyz_mg();
             write!(serial, "Accelerometer: x {} y {} z {}\r\n", x, y, z).unwrap();
-        } else if str::from_utf8(&buffer).unwrap().trim() == "magnetometer" {
+        } else if str::from_utf8(&buffer).unwrap().trim() == "mag" {
             while !sensor.mag_status().unwrap().xyz_new_data() {
                 timer0.delay_ms(1u32);
             }
