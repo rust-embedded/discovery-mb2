@@ -33,7 +33,7 @@ The `../../..` in this command is needed, since each example project is in a "wo
 contains the entire book. Workspaces have a single shared `target` directory. Check out [Workspaces
 chapter in Rust Book] for more.
 
-> **NOTE** If `cargo-embed` prints a lot of warnings here don't worry about it. As of now it does
+> **NOTE**: If `cargo-embed` prints a lot of warnings here don't worry about it. As of now it does
 > not fully implement the GDB protocol, and thus might not recognize all the commands your GDB is
 > sending to it. As long as GDB does not crash, you are fine.
 
@@ -49,9 +49,19 @@ Remote debugging using :1337
 157     #[derive(Copy, Clone, Debug)]
 ```
 
-**NOTE**: The example in the repository for this chapter may
-change over time. Line numbers and other source details may
-thus be different from what is shown here and below.
+> **NOTE**: The example in the repository for this chapter may change over time. Line numbers and
+> other source details may thus be different from what is shown here and below.
+>
+> If the program fails to halt after starting, and you end up somewhere deeper in the program like
+> the following, then try running `monitor reset halt` to reset. This is due to [a bug](https://github.com/probe-rs/probe-rs/issues/3438)
+> in `probe-rs`, see [issue #27](https://github.com/rust-embedded/discovery-mb2/issues/27) for
+> more details.
+> ```shell
+> (gdb) target remote :1337
+> Remote debugging using :1337
+> init::__cortex_m_rt_main () at mdbook/src/05-meet-your-software/examples/init.rs:19
+> 19              asm::nop();
+> ```
 
 Next what we want to do is get to the `main` function of our program.  We will do this by first
 setting a breakpoint there and then continuing program execution until we hit the breakpoint:
