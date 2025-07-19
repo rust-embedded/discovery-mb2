@@ -4,7 +4,7 @@ The challenge for this chapter is, to build a small application that communicate
 world via the serial interface introduced in the last chapter. It should be able to receive the
 commands "mag" for magnetometer as well as "acc" for accelerometer. It should then print the
 corresponding sensor data to the serial port in response. This time no template code will be
-provided since all you need is already provided in the [UART](../10-uart/index.md) and this
+provided since all you need is already provided in the [UART](../10-uart/index.html) and this
 chapter. However, here are a few clues:
 
 -   You might be interested in `core::str::from_utf8` to convert the bytes in the buffer to a `&str`, since we need to compare with `"mag"` and `"acc"`.
