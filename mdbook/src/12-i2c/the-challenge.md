@@ -6,7 +6,7 @@ commands "mag" for magnetometer as well as "acc" for accelerometer from the seri
 then be able to send the corresponding sensor data to the serial port in response.
 
 This time no template code will be provided since all you need is already provided in the
-[UART](../10-uart/index.html) and this chapter. However, here are a few clues:
+[UART](../11-uart/index.html) and this chapter. However, here are a few clues:
 
 -   You might be interested in `core::str::from_utf8` to convert the bytes in the buffer to a `&str`, since we need to compare with `"mag"` and `"acc"`.
 
