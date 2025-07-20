@@ -68,6 +68,8 @@
   - [Debouncing](15-interrupts/debouncing.md)
   - [Waiting to be interrupted](15-interrupts/waiting-to-be-interrupted.md)
   - [The MB2 speaker](15-interrupts/the-mb2-speaker.md)
+  - [The challenge](15-interrupts/the-challenge.md)
+  - [My solution](15-interrupts/my-solution.md)
 - [Snake game](16-snake-game/README.md)
   - [Game logic](16-snake-game/game-logic.md)
   - [Controls](16-snake-game/controls.md)
