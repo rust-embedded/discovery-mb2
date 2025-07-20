@@ -24,7 +24,7 @@ directory. Once we are there we first have to open the binary in gdb like this:
 $ gdb ../../../target/thumbv7em-none-eabihf/debug/examples/init
 ```
 
-> **NOTE**: Depending on which GDB you installed you will have to use a different command to launch
+> **NOTE** Depending on which GDB you installed you will have to use a different command to launch
 > it. Check out [chapter 3] if you forgot which one it was.
 
 [chapter 3]: ../03-setup/index.md#tools
@@ -49,9 +49,22 @@ Remote debugging using :1337
 157     #[derive(Copy, Clone, Debug)]
 ```
 
-**NOTE**: The example in the repository for this chapter may
-change over time. Line numbers and other source details may
-thus be different from what is shown here and below.
+> **NOTE** The example in the repository for this chapter may change over time. Line numbers and
+> other source details may thus be different from what is shown here and below.
+>
+> If the program fails to halt after starting, and you end up somewhere deeper in the program like
+> the following, then try running `monitor reset halt` to reset. This is due to [a bug](https://github.com/probe-rs/probe-rs/issues/3438)
+> in `probe-rs`, see [issue #27](https://github.com/rust-embedded/discovery-mb2/issues/27) for
+> more details.
+> ```shell
+> (gdb) target remote :1337
+> Remote debugging using :1337
+> init::__cortex_m_rt_main () at mdbook/src/05-meet-your-software/examples/init.rs:19
+> 19              asm::nop();
+> (gdb) monitor reset halt
+> Resetting and halting target
+> Target halted
+> ```
 
 Next what we want to do is get to the `main` function of our program.  We will do this by first
 setting a breakpoint there and then continuing program execution until we hit the breakpoint:
@@ -83,7 +96,7 @@ mode, on the GDB shell enter the following command:
 (gdb) layout src
 ```
 
-> **NOTE**: Apologies Windows users. The GDB shipped with the GNU Arm Embedded Toolchain doesn't
+> **NOTE** Apologies Windows users. The GDB shipped with the GNU Arm Embedded Toolchain doesn't
 > support this TUI mode `:-(`.
 
 ![GDB session](../assets/gdb-layout-src.png "GDB TUI")
@@ -151,7 +164,7 @@ never pass that statement. Instead, we'll switch to the disassemble view with th
 command and advance one instruction at a time using `stepi`. You can always switch back into Rust
 source code view later by issuing the `layout src` command again.
 
-> **NOTE**: If you used the `next` or `continue` command by mistake and GDB got stuck, you can get
+> **NOTE** If you used the `next` or `continue` command by mistake and GDB got stuck, you can get
 > unstuck by hitting `Ctrl+C`.
 
 ```
@@ -239,7 +252,7 @@ Ending remote debugging.
 [Inferior 1 (Remote target) detached]
 ```
 
-> **NOTE**: If the default GDB CLI is not to your liking check out [gdb-dashboard]. It uses Python
+> **NOTE** If the default GDB CLI is not to your liking check out [gdb-dashboard]. It uses Python
 > to turn the default GDB CLI into a dashboard that shows registers, the source view, the assembly
 > view and other things.
 
