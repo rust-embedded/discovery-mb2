@@ -54,7 +54,7 @@ decorated with `#[interrupt]` so that it returns using a return-from-interrupt i
 than the normal way. The function may not take arguments and must return `()`.
 
 There are two steps to configure the interrupt. First, the GPIOTE must be set up to generate an
-interrupt when the wire connect to Button A goes from high to low voltage. Second, the NVIC must be
+interrupt when the pin connected to Button A goes from high to low voltage. Second, the NVIC must be
 configured to allow the interrupt. Order matters a bit: doing things in the "wrong" order may
 generate a bogus interrupt before you are ready to handle it.
 
