@@ -7,7 +7,7 @@ our final game.
 {{#include src/main.rs}}
 ```
 
-After initialising the board and its timer and RNG peripherals, we initialise a `Game` struct and a
+After initializing the board and its timer and RNG peripherals, we initialize a `Game` struct and a
 `Display` from the `microbit::display::blocking` module.
 
 In our "game loop" (which runs inside of the "main loop" we place in our `main` function), we

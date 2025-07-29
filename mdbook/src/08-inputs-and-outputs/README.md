@@ -8,7 +8,7 @@ The micro:bit v2 has two physical buttons, Button A and Button B, connected to G
 
 [pinmap table]: https://tech.microbit.org/hardware/schematic/#v2-pinmap
 
-Reading the state of a GPIO input involves checking whether the voltage level at the pin is high (1) or low (0). The buttons on the micro:bit are connected to pins; when the buttons are pressed, they pull the voltage at the pin low (to 0V ground).
+Reading the state of a GPIO input involves checking whether the voltage level at the pin is high (3.3V, logic level 1) or low (0V, logic level 0). Each button on the micro:bit is connected to a pin. When the button is *not* pressed, that pin is held high; when the button is pressed, the pin is held low.
 
 Let's now apply this knowledge to reading the state of Button A by checking if the button is "low" (pressed).
 

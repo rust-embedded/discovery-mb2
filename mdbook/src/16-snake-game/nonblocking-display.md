@@ -30,7 +30,7 @@ at the top level.
 {{#include src/display.rs}}
 ```
 
-First, we initialise a `microbit::display::nonblocking::Display` struct representing the LED
+First, we initialize a `microbit::display::nonblocking::Display` struct representing the LED
 display, passing it the board's `TIMER1` and `DisplayPins` peripherals. Then we store the display in
 a Mutex. Finally, we unmask the `TIMER1` interrupt.
 

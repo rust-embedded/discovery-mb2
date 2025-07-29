@@ -1,5 +1,4 @@
-
-## Under The Hood
+## NVIC and Interrupt Priority
 
 We've seen that interrupts make our processor immediately jump to another function in the code, but
 what's going on behind the scenes to allow this to happen? In this section we'll cover some
@@ -20,16 +19,16 @@ Controller.
 The NVIC can receive requests to trigger an interrupt from many peripherals. It's even common for a
 peripheral to have multiple possible interrupts, for example a GPIO port having an interrupt for
 each pin, or a UART having both a "data received" and "data finished transmission" interrupt. The
-job of the NVIC is to prioritise these interrupts, remember which ones still need to be procesed,
+job of the NVIC is to prioritize these interrupts, remember which ones still need to be processed,
 and then cause the processor to run the relevant interrupt handler code.
 
 Depending on its configuration, the NVIC can ensure the current interrupt is fully processed before
 a new one is executed, or it can stop the processor in the middle of one interrupt in order to
 handle another that's higher priority.  This is called "preemption" and allows processors to respond
 very quickly to critical events.  For example, a robot controller might use low-priority interrupts
-to keep track sending status information to the operator, but also have a high-priority interrupt to
-detect an emergency stop button being pushed so it can immediately stop moving the motors. You
-wouldn't want it to wait until it had finished sending a data packet to get around to stopping!
+to manage sending status information to the operator, but also have a high-priority interrupt when a
+sensor detects an imminent collision so that it can immediately stop moving the motors. You wouldn't
+want it to wait until it had finished sending a data packet to get around to stopping!
 
 In embedded Rust, we can program the NVIC using the [`cortex-m`] crate, which provides methods to
 enable and disable (called `unmask` and `mask`) interrupts, set interrupt priorities, and trigger
@@ -66,10 +65,16 @@ handler. We do this using the `#[interrupt]` macro, which requires that our func
 specific name related to the interrupt it handles. Then the `cortex-m-rt` crate uses its linker
 script to arrange for the address of that function to be placed in the right part of memory.
 
-For more details on how these interrupt handlers are managed in Rust, see the [Exceptions] and
-[Interrupts] chapters in the Embedded Rust Book.
+For more details on how these interrupt handlers are managed in Rust, see the Exceptions and
+Interrupts chapters in the [Embedded Rust Book].
+
+### Intertupt Priorities
+
+The NVIC has a settable "priority" for each interrupt. If a higher-priority interrupt happens during the execution of an ISR, that ISR will be paused just as the main program was, and the higher-priority ISR will be run.
+
+If an equal-priority or lower-priority interrupt occurs during an ISR, it will be "pended": the NVIC will remember the new interrupt and run its ISR sometime after the current ISR completes.  Thus, when an ISR function returns, the NVIC looks to see if, while the ISR was running, other interrupts have happened that need to be handled. If so, the NVIC checks the interrupt table and calls one of the highest-priority ISRs vectored there. Otherwise, the CPU returns to the running program.
+
 
 [Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0403/latest
 [`cortex-m-rt`]: https://docs.rs/cortex-m-rt
-[Exceptions]: https://docs.rust-embedded.org/book/start/exceptions.html
-[Interrupts]: https://docs.rust-embedded.org/book/start/interrupts.html
+[Embedded Rust Book]: https://docs.rust-embedded.org/book/
