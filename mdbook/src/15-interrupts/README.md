@@ -1,10 +1,10 @@
 ## Interrupts
 
-So far, we've gone though a fair bunch of topics about embedded software.  We've read out buttons, waited for timers, done serial communication, and talked to other things on the Microbit board using I2C.  Each of these things involved waiting for one or more peripherals to become ready. So far, our waiting was by "polling": repeatedly asking the peripheral if it's done yet, until it is.
+So far, we've touched a bunch of hardware on the MB2. We've read out buttons, waited for timers, done serial communication, and talked to devices using I2C.  Each of these things involved waiting for one or more peripherals to become ready. So far, our waiting was by "polling": repeatedly asking the peripheral if it's done yet, until it is.
 
 Seeing as our microcontroller only has a single CPU core, it cannot do anything else while it waits. On top of that, a CPU core continuously polling a peripheral wastes power, and in a lot of applications, we can't have that. Can we do better?
 
-Luckily, we can. While our little microcontroller can't compute things in parallel, it can easily switch between different tasks during execution, responding to events from the outside world. This switching is done using a feature called "interrupts"!
+Luckily, we can! While our little microcontroller can't compute things in parallel, it can easily switch between different tasks during execution, responding to events from the outside world. This switching is done using a feature called "interrupts".
 
 Interrupts are aptly named: they allow peripherals to actually interrupt the core program execution at any point in time. On our MB2's nRF52833, peripherals are connected to the core's Nested Vectored Interrupt Controller (NVIC). The NVIC can stop the CPU in its tracks, instruct it to go do something else, and once that's done, get the CPU back to what it was doing before it was interrupted. We'll cover the Nested and Vectored parts of the interrupt controller later: let's first focus on how the core switches tasks.
 
@@ -12,9 +12,9 @@ Interrupts are aptly named: they allow peripherals to actually interrupt the cor
 
 The model of computation used by our NRF52833 is the one used by almost every modern CPU. Inside the CPU are "scratch-pad" storage locations known as "CPU registers". (Confusingly, these CPU registers are different from the "device registers" we discussed earlier in the [Registers] chapter.)  To carry out a computation, the CPU typically loads values from memory to CPU registers, performs the computation using the register values, then stores the result back to memory.  (This is known as a "load-store architecture".)
 
-All context about the computation the CPU is currently running is stored in the CPU registers. If the core is going to switch tasks, it must store the contents of the CPU registers somewhere so that the new task can use the registers as its own scratch-pad. When the new task is complete the CPU can then restore the register values and restart the old computation.  Sure enough, that is exactly the first thing the core does in response to an interrupt request: it stops what it's doing immediately and stores the contents of the CPU registers on the stack.
+Everything about the computation the CPU is currently running is stored in the CPU registers. If the core is going to switch tasks, it must store the contents of the CPU registers somewhere so that the new task can use the registers as its own scratch-pad. When the new task is complete the CPU can then restore the register values and restart the old computation.  Sure enough, that is exactly the first thing the core does in response to an interrupt request: it stops what it's doing immediately and stores the contents of the CPU registers on the stack.
 
-The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routines (ISR), often referred to as an interrupt "handler", is a special functions in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
+The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routines (ISR), often referred to as an interrupt "handler", is a special function in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
 
 An ISR function "returns" using a special return-from-interrupt machine instruction that causes the CPU to restore the CPU registers and jump back to where it was before the ISR was called.
 
@@ -63,4 +63,4 @@ keep the interrupt handlers short and quick.
 Normally, once an ISR is complete the main program continues running just as it would have if the interrupt had not happened. This is a bit of a problem, though: how does your application notice that the ISR has run and done things? Seeing as an ISR doesn't have any input parameters or result, how can ISR code interact with application code?
 
 [NVIC and Interrupt Priority]: nvic-and-interrupt-priority.html
-[Registers]: ../09-registers/
+[Registers]: ../09-registers/index.html

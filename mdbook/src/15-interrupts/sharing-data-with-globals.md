@@ -1,13 +1,13 @@
 ## Sharing Data With Globals
 
-> **NOTE** This content is partially taken with permission from the blog post
+> **NOTE** This content is partially taken (with permission) from the blog post
 > *[Interrupts Is Threads]* by James Munns, which contains more discussion about this
 > topic.
 
 As I mentioned in the last section, when an interrupt occurs we aren't passed any arguments and
 cannot return any result. This makes it hard for our program interact with peripherals and other
-main program state. Before worrying about this
-bare-metal embedded problem, it is likely worth thinking about threads in "std" Rust.
+main program state. Before worrying about this bare-metal embedded problem, it is likely worth
+thinking about threads in "std" Rust.
 
 ### "std" Rust: Sharing Data With A Thread
 
@@ -174,15 +174,15 @@ data could end up corrupted.
 In embedded Rust we care about the same things when it comes to sharing data with interrupt
 handlers! Similar to threads, interrupts can occur at any time, sort of like a thread waking up and
 accessing some shared data. This means that the data we share with an interrupt must live long
-enough, and we must be careful to ensure that our main code isn't in the middle of accessing some
-data shared with the interrupt, just to have the interrupt run and ALSO access that data!
+enough, and we must be careful to ensure that our main code isn't in the middle of working with some
+data shared with an ISR when that ISR gets run and *also* tries to work with the data!
 
 In fact, in embedded Rust, we model interrupts in a similar way that we model threads in Rust: the
 same rules apply, for the same reasons. However, in embedded Rust, we have some crucial differences:
 
 * Interrupts don't work exactly like threads: we set them up ahead of time, and they wait until some
   event happens (like a button being pressed, or a timer expiring). At that point they run, but
-  without access to any context.
+  without access to any passed-in context.
 
 * Interrupts can be triggered multiple times, once for each time that the event occurs.
 
@@ -275,8 +275,8 @@ main loop, just after the `wfi()` "wait for interrupt". The count will then be r
 an interrupt handler finishes (`examples/count-bounce.rs`). Again, the count is bumped up 1 on every
 push of the MB2 A button.
 
-Maybe. Especially if your MB2 is old, you may see a single press bump the counter by several. *This
-is not a software bug.* Mostly. In the next section, I'll talk about what might be going on and how
-we should deal with it.
+Maybe. Especially if your MB2 is old (!), you may see a single press bump the counter by
+several. *This is not a software bug.* Mostly. In the next section, I'll talk about what might be
+going on and how we should deal with it.
 
 [Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads

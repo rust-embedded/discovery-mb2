@@ -22,13 +22,13 @@ each pin, or a UART having both a "data received" and "data finished transmissio
 job of the NVIC is to prioritize these interrupts, remember which ones still need to be processed,
 and then cause the processor to run the relevant interrupt handler code.
 
-Depending on its configuration, the NVIC can ensure the current interrupt is fully processed before
-a new one is executed, or it can stop the processor in the middle of one interrupt in order to
-handle another that's higher priority.  This is called "preemption" and allows processors to respond
-very quickly to critical events.  For example, a robot controller might use low-priority interrupts
-to manage sending status information to the operator, but also have a high-priority interrupt when a
-sensor detects an imminent collision so that it can immediately stop moving the motors. You wouldn't
-want it to wait until it had finished sending a data packet to get around to stopping!
+### Interrupt Priorities
+
+The NVIC has a settable "priority" for each interrupt. Depending on its configuration, the NVIC can ensure the current interrupt is fully processed before a new one is executed, or it can "preempt" the processor in the middle of one interrupt in order to handle another that's higher priority.
+
+Preemption allows processors to respond very quickly to critical events.  For example, a robot controller might use low-priority interrupts to manage sending status information to the operator, but also take a high-priority interrupt when a sensor detects an imminent collision so that it can immediately stop moving the motors. You wouldn't want the robot to wait until it had finished sending a data packet to get around to stopping!
+
+If an equal-priority or lower-priority interrupt occurs during an ISR, it will be "pended": the NVIC will remember the new interrupt and run its ISR sometime after the current ISR completes.  When an ISR function returns the NVIC looks to see if, while the ISR was running, other interrupts have happened that need to be handled. If so, the NVIC checks the interrupt table and calls the highest-priority ISR vectored there. Otherwise, the CPU returns to the running program.
 
 In embedded Rust, we can program the NVIC using the [`cortex-m`] crate, which provides methods to
 enable and disable (called `unmask` and `mask`) interrupts, set interrupt priorities, and trigger
@@ -67,13 +67,6 @@ script to arrange for the address of that function to be placed in the right par
 
 For more details on how these interrupt handlers are managed in Rust, see the Exceptions and
 Interrupts chapters in the [Embedded Rust Book].
-
-### Intertupt Priorities
-
-The NVIC has a settable "priority" for each interrupt. If a higher-priority interrupt happens during the execution of an ISR, that ISR will be paused just as the main program was, and the higher-priority ISR will be run.
-
-If an equal-priority or lower-priority interrupt occurs during an ISR, it will be "pended": the NVIC will remember the new interrupt and run its ISR sometime after the current ISR completes.  Thus, when an ISR function returns, the NVIC looks to see if, while the ISR was running, other interrupts have happened that need to be handled. If so, the NVIC checks the interrupt table and calls one of the highest-priority ISRs vectored there. Otherwise, the CPU returns to the running program.
-
 
 [Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0403/latest
 [`cortex-m-rt`]: https://docs.rs/cortex-m-rt

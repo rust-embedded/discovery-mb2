@@ -15,10 +15,10 @@ the main program.
 
 The solution comes through another form of hardware concurrency: the `TIMER` peripheral we have used
 a bunch already. You can set the timer when a "good" button interrupt is received, and not respond
-to further interrupts until the timer peripheral has counted enough time off. The timers in
-`nrf-hal` come configured with a 32-bit count value and a "tick rate" of 1 MHz: a million ticks per
-second. For a 100ms debounce, just let the timer count off 100,000 ticks. Anytime the button
-interrupt handler sees that the timer is running, it can just do nothing.
+to further interrupts for that button until the timer peripheral has counted enough time off. The
+timers in `nrf-hal` come configured with a 32-bit count value and a "tick rate" of 1 MHz: a million
+ticks per second. For a 100ms debounce, just let the timer count off 100,000 ticks. Anytime the
+button interrupt handler sees that the timer is running, it can just do nothing.
 
 The implementation of all this can be seen in the next example (`examples/count-debounce.rs`). When
 you run the example you should see one count per button press.
@@ -27,6 +27,6 @@ you run the example you should see one count per button press.
 {{#include examples/count-debounce.rs}}
 ```
 
-> **NOTE** The buttons on the MB2 are a little fiddly: it's pretty easy to push one down enough to
+**NOTE** The buttons on the MB2 are a little fiddly: it's pretty easy to push one down enough to
 feel a "click" but not enough to actually make contact with the switch. I recommend using a
 fingernail to press the button when testing.

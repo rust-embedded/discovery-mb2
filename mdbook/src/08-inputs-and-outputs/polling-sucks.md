@@ -28,9 +28,9 @@ Can you see the problem?  We're trying to do two things at once here:
 1. Check for button presses
 2. Blink the LED
 
-But the processor can only do one thing at a time.  If we press a button during the blink delay, the processor won't be able to respond until the delay is over and the loop starts again.  As a result, we get a much less responsive program (try for yourself and see how much worse the interrupt latency is).
+But the processor can only do one thing at a time.  If we press a button during the blink delay, the processor won't be able to respond until the delay is over and the loop starts again.  As a result, we get a barely-responsive program (try for yourself and see how slow the button is).
 
-A "smarter" program would know that the processor isn't actually doing anything while the blink delay is running, so it could very well do other things while waiting for the delay to finish, namely checking for button presses.
+A "smarter" program would know that the processor isn't actually doing anything while the blink delay is running. The program could very well do other things while waiting for the delay to finish — namely, checking for button presses.
 
 ## Superloops
 
@@ -58,11 +58,9 @@ Since we need to ensure responsiveness, we have to combine these different state
 
 When either button is first pressed, and we transition from state (1) to either state (2) or (4), we will initialize a timer counter that counts up starting from the moment a button is pressed.  When the timer reaches some threshold amount (like half a second) and the buttons are still pressed, we will then transition to state (3) or (5), respectively, and reinitialize the timer counter.  When the timer again reaches some threshold amount, we will transition back to state (2) or (4), respectively.  If at any time during states (2), (3), (4), or (5) we see that the button is no longer pressed, we transition back to state (1).
 
-Our main superloop control flow will repeatedly poll the buttons, and compare our current timer counter (if we have one) to a threshold, and transition states if any of the above conditions are met.
+Our main superloop control flow will repeatedly poll the buttons, compare our current timer counter (if we have one) to a threshold, and change states if any of the above conditions are met.
 
-We have implemented this superloop as a demonstration
-(`examples/blink-held.rs`), but with the state machine
-simplified only to blink an LED when button A is held.
+We have implemented this superloop as a demonstration (`examples/blink-held.rs`), but with the state machine simplified only to blink an LED when button A is held.
 
 ```rust
 {{#include examples/blink-held.rs}}
@@ -75,7 +73,7 @@ Superloops work and are often used in embedded systems, but the programmer has t
 
 ## Concurrency
 
-Doing multiple things at once is called *concurrent* programming, and shows up in many places in programming, but especially in embedded systems.  There's a whole host of techniques for implementing systems that concurrently interact with peripherals while maintaining a high degree of responsiveness (e.g. interrupt handling, cooperative multitasking, event queues, etc.).  We'll explore some of these in later chapters.
+Doing multiple things at once is called *concurrent* programming. Concurrency shows up in many places in programming, but especially in embedded systems.  There's a whole host of techniques for implementing systems that interact with peripherals while maintaining a high degree of responsiveness (e.g. interrupt handling, cooperative multitasking, event queues, etc.).  We'll explore some of these in later chapters.
 
 There is a good introduction to concurrency in an embedded context [here] that
 you might read through before proceeding.

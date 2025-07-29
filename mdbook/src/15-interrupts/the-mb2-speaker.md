@@ -20,9 +20,9 @@ Let's push the speaker cone out and then in 220 times per second. This will prod
 220-cycles-per-second pressure wave. The unit "cycles-per-second" is Hertz; we will be producing a
 220Hz tone (a musical "A3"), which is not unpleasant on this shrill speaker.
 
-We'll make our tone for five seconds and then stop. It is important to remember that our program
-lives in flash on the MB2 — if we let the tone run forever then it will start up again each time we
-reset or even power on the MB2. This can rapidly become quite annoying.
+We'll make our tone play for five seconds and then stop. It is important to remember that our
+program lives in flash on the MB2 — the tone will start up again each time we reset or even power on
+the MB2. If we let the tone run forever, this behavior can rapidly become quite annoying.
 
 Here's the code (`examples/square-wave.rs`).
 

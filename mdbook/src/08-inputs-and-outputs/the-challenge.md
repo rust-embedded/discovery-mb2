@@ -12,4 +12,4 @@ You'll need to:
 - Continuously poll Button A and Button B.
 - Update the LED display according to the button state with a clear indication of each state (left, right, or neutral).
 
-I hope you don't mess up, it's so hard to share the road with people who don't use their turn signals properly. 
+I hope you don't mess up! It's *so* hard to share the road with people who don't use their turn signals properly.
