@@ -54,7 +54,15 @@ generate an interrupt before you are ready to handle it.
 
 **Note** As with most microcontrollers, there is a lot of flexibility in when the GPIOTE can generate an interrupt. Interrupts can be generated on low-to-high pin transition, high-to-low (as here), any change ("edge"), when low, or when high. On the nRF52833, interrupts generate an event that must be manually cleared in the ISR to ensure that the ISR is not called a second time for the same interrupt. Other microcontrollers may work a little differently — you should read Rust crate and microcontroller documentation to understand the details on a different board.
 
-When you push the A Button, you will see an "ouch" message and then a panic. Why does the interrupt handler call `panic!()`? Try commenting the `panic!()` call out and see what happens when you push the button. You will see "ouch" messages scroll off the screen. The NVIC records when an interrupt has been issued: that "event" is kept until it is explicitly cleared by the running program. Without the `panic!()`, when the interrupt handler returns the NVIC will (in this case) re-enable the interrupt, notice that there is still an interrupt event pending, and run the handler again. This will continue forever: each time the interrupt handler returns it will be called again. In the next section we will see how to clear the interrupt indication from within the interrupt handler.
+When you push the A Button, you will see an "ouch" message and then a panic. Why does the interrupt
+handler call `panic!()`? Try commenting the `panic!()` call out and see what happens when you push
+the button. You will see "ouch" messages scroll off the screen. The NVIC records when an interrupt
+has been issued: that "event" is kept until it is explicitly cleared by the running program. Without
+the `panic!()`, when the interrupt handler returns the NVIC will (in this case) re-enable the
+interrupt, notice that there is still an interrupt event pending, and run the handler again. This
+will continue forever: each time the interrupt handler returns it will be called again. As we will
+see in a bit, the interrupt indication can be cleared from within the interrupt handler using the
+`reset_event()` peripheral method.
 
 You may define ISRs for many different interrupt sources: when I2C is ready, when a timer expires,
 and on and on. Inside an ISR you can do pretty much anything you want, but it's good practice to

@@ -266,17 +266,25 @@ and the rest of the program.
 Give this example (`examples/count.rs`) a run and note that the count is bumped up 1 on every push
 of the MB2 A button.
 
+```rust
+{{#include examples/count.rs}}
+```
+
 > **NOTE** It is always a good idea to compile examples involving interrupt handling with
 > `--release`. Long interrupt handlers can lead to a lot of confusion.
 
 Really, though, that `rprintln!()` in the interrupt handler is bad practice: while the interrupt
 handler is running the printing code, nothing else can move forward. Let's move the reporting to the
 main loop, just after the `wfi()` "wait for interrupt". The count will then be reported every time
-an interrupt handler finishes (`examples/count-bounce.rs`). Again, the count is bumped up 1 on every
-push of the MB2 A button.
+an interrupt handler finishes (`examples/count-bounce.rs`). 
 
-Maybe. Especially if your MB2 is old (!), you may see a single press bump the counter by
-several. *This is not a software bug.* Mostly. In the next section, I'll talk about what might be
-going on and how we should deal with it.
+```rust
+{{#include examples/count-bounce.rs}}
+```
+
+In this example the count is bumped up 1 on every push of the MB2 A button. Maybe. Especially if
+your MB2 is old (!), you may see a single press bump the counter by several. *This is not a software
+bug.* Mostly. In the next section, I'll talk about what might be going on and how we should deal
+with it.
 
 [Interrupts Is Threads]: https://onevariable.com/blog/interrupts-is-threads
