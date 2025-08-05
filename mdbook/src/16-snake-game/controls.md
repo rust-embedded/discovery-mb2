@@ -26,7 +26,7 @@ code in the function or closure cannot itself be interrupted.
 
 ### Initialization
 
-First, we will initialise the buttons (`src/controls/init.rs`).
+First, we will initialize the buttons (`src/controls/init.rs`).
 
 ```rust
 {{#include src/controls/init.rs}}
