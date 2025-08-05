@@ -1,0 +1,44 @@
+<svg x="0in" y="0in" width="5in" height="2.4in" viewBox="0 0 2500 1200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <circle cx="1060" cy="700" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1200" cy="200" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1200" cy="600" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1300" cy="200" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1300" cy="700" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1460" cy="600" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1560" cy="700" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="1960" cy="600" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="2060" cy="700" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="350" cy="600" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="450" cy="700" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <circle cx="960" cy="600" r="15" stroke="#000000" stroke-width="10" fill="#000000" />
+    <line x1="100" y1="200" x2="2200" y2="200" stroke="#000000" stroke-width="10" />
+    <line x1="100" y1="600" x2="2200" y2="600" stroke="#000000" stroke-width="10" />
+    <line x1="100" y1="700" x2="2200" y2="700" stroke="#000000" stroke-width="10" />
+    <line x1="1060" y1="700" x2="1060" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="1200" y1="200" x2="1200" y2="300" stroke="#000000" stroke-width="10" />
+    <line x1="1200" y1="500" x2="1200" y2="600" stroke="#000000" stroke-width="10" />
+    <line x1="1300" y1="200" x2="1300" y2="300" stroke="#000000" stroke-width="10" />
+    <line x1="1300" y1="500" x2="1300" y2="600" stroke="#000000" stroke-width="10" />
+    <line x1="1300" y1="600" x2="1300" y2="700" stroke="#000000" stroke-width="10" />
+    <line x1="1460" y1="600" x2="1460" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="1560" y1="700" x2="1560" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="1960" y1="600" x2="1960" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="2060" y1="700" x2="2060" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="350" y1="600" x2="350" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="450" y1="700" x2="450" y2="800" stroke="#000000" stroke-width="10" />
+    <line x1="960" y1="600" x2="960" y2="800" stroke="#000000" stroke-width="10" />
+    <rect x="100" y="800" width="600" height="300" stroke="#000000" stroke-width="10" fill="#e6c370" />
+    <rect x="1175" y="300" width="50" height="200" stroke="#000000" stroke-width="10" fill="none" />
+    <rect x="1275" y="300" width="50" height="200" stroke="#000000" stroke-width="10" fill="none" />
+    <rect x="1300" y="800" width="400" height="300" stroke="#000000" stroke-width="10" fill="#ccffff" />
+    <rect x="1800" y="800" width="400" height="300" stroke="#000000" stroke-width="10" fill="#ccffff" />
+    <rect x="800" y="800" width="400" height="300" stroke="#000000" stroke-width="10" fill="#ccffff" />
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="1000" y="920" text-anchor="middle">&#65;&#68;&#67;</tspan><tspan x="1000" y="1042" text-anchor="middle">&#84;&#97;&#114;&#103;&#101;&#116;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="1350" y="430" text-anchor="start">&#82;&#112;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="1500" y="920" text-anchor="middle">&#68;&#65;&#67;</tspan><tspan x="1500" y="1042" text-anchor="middle">&#84;&#97;&#114;&#103;&#101;&#116;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="2000" y="920" text-anchor="middle">&#181;&#67;</tspan><tspan x="2000" y="1042" text-anchor="middle">&#84;&#97;&#114;&#103;&#101;&#116;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="2220" y="230" text-anchor="start">&#86;&#100;&#100;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="2220" y="630" text-anchor="start">&#83;&#68;&#65;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="2220" y="730" text-anchor="start">&#83;&#67;&#76;</tspan></text>
+    <text font-family="Tahoma,sans-serif" font-size="100" font-weight="400"><tspan x="400" y="920" text-anchor="middle">&#181;&#67;</tspan><tspan x="400" y="1042" text-anchor="middle">&#67;&#111;&#110;&#116;&#114;&#111;&#108;&#108;&#101;&#114;</tspan></text>
+</svg>
