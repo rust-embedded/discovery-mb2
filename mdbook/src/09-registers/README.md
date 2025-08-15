@@ -9,7 +9,7 @@ you like. That said, there's a lot of good stuff in here, so I'd recommend you d
 
 It's time to explore what calling `display_pins.row1.set_high()` or `button_a_pin.is_high()` does under the hood.
 
-In a nutshell, calling `display_pins.row1.set_high()` just writes to some special memory regions. Go into the `07-registers` directory
+In a nutshell, calling `display_pins.row1.set_high()` just writes to some special memory regions. Go into the `09-registers` directory
 and let's run the starter code statement by statement (`src/main.rs`).
 
 ``` rust
