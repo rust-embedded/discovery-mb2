@@ -38,17 +38,13 @@ you could view the macro's definition. You can also expand any particular macro 
 
 Marking a function with `#[interrupt]` implies several special things about the function:
 
-* The compiler will check that the function takes no arguments and returns no value. The CPU has no
-  arguments to provide to an ISR, and no place to put a return value from the ISR.
+* The compiler will check that the function takes no arguments and returns no value (or never returns). The CPU has no
+  arguments to provide to an ISR, and no place to put a return value from the ISR. This is because interrupt handlers have their own call stack (at least *conceptually* if not always in practice).
 
-* The compiler will place a vector to this function at the location in the interrupt table
-  implied by the function's name.
+* A vector to this function (that is a function pointer) will be placed at the location in the interrupt table
+  which corresponds to the function's name.
 
-* The function will be compiled to finishing by using a return-from-interrupt instruction rather
-  than the normal function return instruction.
-
-* Since the function finishes in a non-standard way, the compiler will understand not to allow
-  directly calling the ISR from normal code.
+* The compiler will prevent directly calling the ISR from normal code.
 
 There are two steps to configure the interrupt. First, the GPIOTE must be set up to generate an
 interrupt when the pin connected to Button A goes from high to low voltage. Second, the NVIC must be
