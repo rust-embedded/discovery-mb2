@@ -30,6 +30,10 @@ Preemption allows processors to respond very quickly to critical events.  For ex
 
 If an equal-priority or lower-priority interrupt occurs during an ISR, it will be "pended": the NVIC will remember the new interrupt and run its ISR sometime after the current ISR completes.  When an ISR function returns the NVIC looks to see if, while the ISR was running, other interrupts have happened that need to be handled. If so, the NVIC checks the interrupt table and calls the highest-priority ISR vectored there. Otherwise, the CPU returns to the running program.
 
+Note that in most Cortex-M-based systems, *higher-priority* interrupts will be pended by the NVIC 
+*even* if all interrupts are disabled by a critical section (discussed later in this chapter), 
+though their execution will be delayed until the critical section ends.
+
 In embedded Rust, we can program the NVIC using the [`cortex-m`] crate, which provides methods to
 enable and disable (called `unmask` and `mask`) interrupts, set interrupt priorities, and trigger
 interrupts from software. Frameworks such as [RTIC] can handle NVIC configuration for you, taking
