@@ -14,7 +14,7 @@ The model of computation used by our NRF52833 is the one used by almost every mo
 
 Everything about the computation the CPU is currently running is stored in the CPU registers. If the core is going to switch tasks, it must store the contents of the CPU registers somewhere so that the new task can use the registers as its own scratch-pad. When the new task is complete the CPU can then restore the register values and restart the old computation.  Sure enough, that is exactly the first thing the core does in response to an interrupt request: it stops what it's doing immediately and stores the contents of the CPU registers on the stack.
 
-The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routines (ISR), often referred to as an interrupt "handler", is a special function in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
+The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routine (ISR), often referred to as an interrupt "handler", is a special function in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
 
 An ISR function "returns" using a special return-from-interrupt machine instruction that causes the CPU to restore the CPU registers and jump back to where it was before the ISR was called.
 
@@ -32,6 +32,9 @@ that this ISR should be stored at the entry for the `GPIOTE` interrupt in the in
 
 The `#[interrupt]` decoration is used at compile time to mark a function to be treated specially as
 an ISR. (This is a "proc macro", in case you feel like exploring that concept.)
+
+Essentially, a "proc macro" translates source code into other source code. If you are curious as to exactly what happens,
+you could view the macro's definition. You can also expand any particular macro invocation using either the Tools in the [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024) or use the "rust-analyzer: Expand macro" command in your IDE.
 
 Marking a function with `#[interrupt]` implies several special things about the function:
 
