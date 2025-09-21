@@ -31,10 +31,10 @@ The ISR handler function is "special". The name `GPIOTE` is required here, indic
 that this ISR should be stored at the entry for the `GPIOTE` interrupt in the interrupt table.
 
 The `#[interrupt]` decoration is used at compile time to mark a function to be treated specially as
-an ISR. (This is a "proc macro", in case you feel like exploring that concept.)
+an ISR. (This is a "proc macro": you can read more about it in the [Rust book] if you wish.)
 
-Essentially, a "proc macro" translates source code into other source code. If you are curious as to exactly what happens,
-you could view the macro's definition. You can also expand any particular macro invocation using either the Tools in the [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024) or use the "rust-analyzer: Expand macro" command in your IDE.
+Essentially, a "proc macro" translates source code into other source code. If you are curious as to what any particular macro use translates into,
+you could expand that macro invocation. You can do this by using either the Tools in the [Rust Playground] or the "rust-analyzer: Expand macro" command in your IDE.
 
 Marking a function with `#[interrupt]` implies several special things about the function:
 
@@ -71,3 +71,5 @@ Normally, once an ISR is complete the main program continues running just as it 
 
 [NVIC and Interrupt Priority]: nvic-and-interrupt-priority.html
 [Registers]: ../09-registers/index.html
+[Rust Playground]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2024
+[Rust book]: https://doc.rust-lang.org/book/ch20-05-macros.html
