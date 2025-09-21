@@ -34,7 +34,7 @@ A "smarter" program would know that the processor isn't actually doing anything 
 
 ## Superloops
 
-The term *superloop* in embedded systems is used to refer to a main control loop that does a bunch of things in sequence.  It's the natural extension of the simple control flow we've been using so far.  To handle logic that could be perceived as mutliple things happening at once, we need to be a bit more clever in how we structure the program so that we can be reasonably responsive to events.
+The term *superloop* in embedded systems is used to refer to a main control loop that does a bunch of things in sequence.  It's the natural extension of the simple control flow we've been using so far.  To handle logic that could be perceived as multiple things happening at once, we need to be a bit more clever in how we structure the program so that we can be reasonably responsive to events.
 
 In the case of our turn signal program, where we want to blink the LEDs when a button is pressed, and be quick to stop blinking when the button is released, we can create a "state machine" to represent the various states of the program.  We have three states for the buttons:
 
