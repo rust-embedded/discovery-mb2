@@ -15,3 +15,5 @@ Let's now apply this knowledge to reading the state of Button A by checking if t
 ```rust
 {{#include examples/button-a-bsp.rs}}
 ```
+
+We spin looking at the button state, and report anytime that state changes.

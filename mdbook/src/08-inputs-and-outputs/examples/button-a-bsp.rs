@@ -13,12 +13,19 @@ fn main() -> ! {
     let board = Board::take().unwrap();
 
     let mut button_a = board.buttons.button_a;
+    let mut button_state = false;
 
     loop {
         if button_a.is_low().unwrap() {
-            rprintln!("Button A pressed");
+            if button_state == false {
+                button_state = true;
+                rprintln!("Button A pressed");
+            }
         } else {
-            rprintln!("Button A not pressed");
+            if button_state == true {
+                button_state = false;
+                rprintln!("Button A not pressed");
+            }
         }
     }
 }
