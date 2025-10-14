@@ -45,7 +45,7 @@ microcontroller).
 Today's computers don't usually support the serial communication protocol, and even if they do the
 voltage they use, ±5..12V, may be higher than the micro:bit will accept and may result in damaging
 it. You can't directly connect your computer to the microcontroller. You *can* buy very inexpensive
-USB←→serial converters that will support the 0..3V most modern microntroller boards need. While a
+USB←→serial converters that will support the 0..3V most modern microcontroller boards need. While a
 serial converter is not necessary for the MB2, as shown below, it can be handy for inexpensive
 boards that have few communications options other than serial.)
 

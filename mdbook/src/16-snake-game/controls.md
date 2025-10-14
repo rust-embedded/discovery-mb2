@@ -17,7 +17,7 @@ about `RefCell` by reading the [RefCell documentation] and the [interior mutabil
 Rust Book].  The `RefCell` is, in turn, wrapped in a `cortex_m::interrupt::Mutex` to allow safe
 access.  The Mutex provided by the `cortex_m` crate uses the concept of a [critical section].  Data
 in a Mutex can only be accessed from within a function or closure passed to
-`cortex_m::interrupt:free` (renamed here to `interrupt_free` for clarity), which ensures that the
+`cortex_m::interrupt::free` (renamed here to `interrupt_free` for clarity), which ensures that the
 code in the function or closure cannot itself be interrupted.
 
 [RefCell documentation]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
