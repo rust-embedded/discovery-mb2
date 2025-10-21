@@ -52,11 +52,11 @@ Trust me on this one.
 
 Maybe? It depends mainly on two things: your previous experience with microcontrollers and/or
 whether a high level crate already exists for your development board somewhere. You probably want at
-least a HAL crate, like [`nrf52-hal`] used here.  You may prefer a board with a Board Support crate,
+least a HAL crate, like [`nrf52833-hal`] used here.  You may prefer a board with a Board Support crate,
 like [`microbit-v2`] used here.  If you intend to use a different microcontroller, you can look
 through [Awesome Embedded Rust] or just search the web to find supported crates.
 
-[`nrf52-hal`]: https://docs.rs/nrf52-hal
+[`nrf52833-hal`]: https://docs.rs/nrf52833-hal
 [Awesome Embedded Rust]: https://github.com/rust-embedded/awesome-embedded-rust
 
 With a different development board, this text loses most if not all its beginner friendliness and
