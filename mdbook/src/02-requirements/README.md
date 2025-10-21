@@ -57,6 +57,7 @@ like [`microbit-v2`] used here.  If you intend to use a different microcontrolle
 through [Awesome Embedded Rust] or just search the web to find supported crates.
 
 [`nrf52-hal`]: https://docs.rs/nrf52-hal
+[`microbit-v2`]: https://github.com/nrf-rs/microbit/tree/main/microbit-v2
 [Awesome Embedded Rust]: https://github.com/rust-embedded/awesome-embedded-rust
 
 With a different development board, this text loses most if not all its beginner friendliness and
