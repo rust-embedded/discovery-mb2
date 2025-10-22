@@ -56,6 +56,7 @@ least a HAL crate, like [`nrf52833-hal`] used here.  You may prefer a board with
 like [`microbit-v2`] used here.  If you intend to use a different microcontroller, you can look
 through [Awesome Embedded Rust] or just search the web to find supported crates.
 
+[`microbit-v2`]: https://docs.rs/microbit-v2
 [`nrf52833-hal`]: https://docs.rs/nrf52833-hal
 [Awesome Embedded Rust]: https://github.com/rust-embedded/awesome-embedded-rust
 
