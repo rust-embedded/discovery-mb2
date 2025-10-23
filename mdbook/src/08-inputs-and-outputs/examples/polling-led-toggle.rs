@@ -36,9 +36,9 @@ fn main() -> ! {
             // Stay in current state until something is pressed.
             (false, false) => (),
             // Change to on state.
-            (false, true) => row1.set_high().unwrap(),
+            (true, false) => row1.set_high().unwrap(),
             // Change to off state.
-            (true, false) => row1.set_low().unwrap(),
+            (false, true) => row1.set_low().unwrap(),
             // Stay in current state until something is released.
             (true, true) => (),
         }
