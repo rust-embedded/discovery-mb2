@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sharing data with globals - Rust Embedded MB2 Discovery Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Discover the world of microcontrollers through Rust with the BB2 micro:bit v2">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Embedded MB2 Discovery Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-embedded/discovery-mb2/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="sharing-data-with-globals"><a class="header" href="#sharing-data-with-globals">Sharing Data With Globals</a></h2>
+<blockquote>
+<p><strong>NOTE</strong> This content is partially taken (with permission) from the blog post
+<em><a href="https://onevariable.com/blog/interrupts-is-threads">Interrupts Is Threads</a></em> by James Munns, which contains more discussion about this
+topic.</p>
+</blockquote>
+<p>As I mentioned in the last section, when an interrupt occurs we aren't passed any arguments and
+cannot return any result. This makes it hard for our program interact with peripherals and other
+main program state. Before worrying about this bare-metal embedded problem, it is likely worth
+thinking about threads in "std" Rust.</p>
+<h3 id="std-rust-sharing-data-with-a-thread"><a class="header" href="#std-rust-sharing-data-with-a-thread">"std" Rust: Sharing Data With A Thread</a></h3>
+<p>In "std" Rust, we also have to think about sharing data when we do things like
+spawn a thread.</p>
+<p>When you want to <em>give</em> something to a thread, you might pass it into a closure by ownership.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Create a string in our current thread
+let data = String::from("hello");
+
+// Now spawn a new thread, and GIVE it ownership of the string
+// that we just created
+std::thread::spawn(move || {
+    std::thread::sleep(std::time::Duration::from_millis(1000));
+    println!("{data}");
+});
+<span class="boring">}</span></code></pre></pre>
+<p>If you want to <em>share</em> something, and still have access to it in the original thread, you usually
+can't pass a reference to it. If you do this:</p>
+<pre><pre class="playground"><code class="language-rust">use std::{thread::{sleep, spawn}, time::Duration};
+
+fn main() {
+    // Create a string in our current thread
+    let data = String::from("hello");
+    
+    // make a reference to pass along
+    let data_ref = &amp;data;
+    
+    // Now spawn a new thread, and GIVE it ownership of the string
+    // that we just created
+    spawn(|| {
+        sleep(Duration::from_millis(1000));
+        println!("{data_ref}");
+    });
+    
+    println!("{data_ref}");
+}</code></pre></pre>
+<p>you'll get an error like this:</p>
+<pre><code class="language-text">error[E0597]: `data` does not live long enough
+  --&gt; src/main.rs:6:20
+   |
+3  |       let data = String::from("hello");
+   |           ---- binding `data` declared here
+...
+6  |       let data_ref = &amp;data;
+   |                      ^^^^^ borrowed value does not live long enough
+...
+10 | /     spawn(|| {
+11 | |         sleep(Duration::from_millis(1000));
+12 | |         println!("{data_ref}");
+13 | |     });
+   | |______- argument requires that `data` is borrowed for `'static`
+...
+16 |   }
+   |   - `data` dropped here while still borrowed
+</code></pre>
+<p>You need to <em>make sure the data lives long enough</em> for both the current thread and the new thread
+you are creating. You can do this by putting it in an <code>Arc</code> (Atomically Reference Counted heap
+allocation) like this:</p>
+<pre><pre class="playground"><code class="language-rust">use std::{sync::Arc, thread::{sleep, spawn}, time::Duration};
+
+fn main() {
+    // Create a string in our current thread
+    let data = Arc::new(String::from("hello"));
+    
+    let handle = spawn({
+        // Make a copy of the handle to GIVE to the new thread.
+        // Both `data` and `new_thread_data` are pointing at the
+        // same string!
+        let new_thread_data = data.clone();
+        move || {
+            sleep(Duration::from_millis(1000));
+            println!("{new_thread_data}");
+        }
+    });
+    
+    println!("{data}");
+    // wait for the thread to stop
+    let _ = handle.join();
+}</code></pre></pre>
+<p>This is great! You can now access the data in both the main thread as long as you'd
+like. But what if you want to <em>mutate</em> the data in both places?</p>
+<p>For this, you will usually need some kind of "inner mutability" — a type that doesn't require an
+<code>&amp;mut</code> to modify. On the desktop, you'd typically reach for a type like <code>Mutex</code>, <code>lock()</code>-ing it to
+gain mutable access to the data.</p>
+<p>That might look something like this:</p>
+<pre><pre class="playground"><code class="language-rust">use std::{sync::{Arc, Mutex}, thread::{sleep, spawn}, time::Duration};
+
+fn main() {
+    // Create a string in our current thread
+    let data = Arc::new(Mutex::new(String::from("hello")));
+    
+    // lock it from the original thread
+    {
+        let guard = data.lock().unwrap();
+        println!("{guard}");
+        // the guard is dropped here at the end of the scope!
+    }
+    
+    let handle = spawn({
+        // Make a copy of the handle, that you GIVE to the new thread.
+        // Both `data` and `new_thread_data` are pointing at the
+        // same `Mutex&lt;String&gt;`!
+        let new_thread_data = data.clone();
+        move || {
+            sleep(Duration::from_millis(1000));
+            {
+                let mut guard = new_thread_data.lock().unwrap();
+                // we can modify the data!
+                guard.push_str(" | thread was here! |");                
+                // the guard is dropped here at the end of the scope!
+            }
+        }
+    });
+    
+    // wait for the thread to stop
+    let _ = handle.join();
+    {
+        let guard = data.lock().unwrap();
+        println!("{guard}");
+        // the guard is dropped here at the end of the scope!
+    }
+}</code></pre></pre>
+<p>If you run this code, you will see:</p>
+<pre><code class="language-text">hello
+hello | thread was here! |
+</code></pre>
+<p>Why does "std" Rust make us do this? Rust is helping us out by making us think about two things:</p>
+<ol>
+<li>The data lives long enough (potentially "forever"!)</li>
+<li>Only one piece of code can mutably access the data at a time</li>
+</ol>
+<p>If Rust allowed us to access data that might not live long enough, like data borrowed from one
+thread into another, things might go wrong. We might get corrupted data if the original thread ends
+or panics and then the second thread tries to access the data that is now invalid. If Rust allowed
+two pieces of code to try to mutate the same data at the same, we could have a data race, or the
+data could end up corrupted.</p>
+<h3 id="embedded-rust-sharing-data-with-an-isr"><a class="header" href="#embedded-rust-sharing-data-with-an-isr">Embedded Rust: Sharing Data With An ISR</a></h3>
+<p>In embedded Rust we care about the same things when it comes to sharing data with interrupt
+handlers! Similar to threads, interrupts can occur at any time, sort of like a thread waking up and
+accessing some shared data. This means that the data we share with an interrupt must live long
+enough, and we must be careful to ensure that our main code isn't in the middle of working with some
+data shared with an ISR when that ISR gets run and <em>also</em> tries to work with the data!</p>
+<p>In fact, in embedded Rust, we model interrupts in a similar way that we model threads in Rust: the
+same rules apply, for the same reasons. However, in embedded Rust, we have some crucial differences:</p>
+<ul>
+<li>
+<p>Interrupts don't work exactly like threads: we set them up ahead of time, and they wait until some
+event happens (like a button being pressed, or a timer expiring). At that point they run, but
+without access to any passed-in context.</p>
+</li>
+<li>
+<p>Interrupts can be triggered multiple times, once for each time that the event occurs.</p>
+</li>
+</ul>
+<p>Since we can't pass context to interrupts as function arguments, we need to find another place to
+store that data. In "bare metal" embedded Rust we don't have access to heap allocations: thus <code>Arc</code>
+and similar are not possibilities for us.</p>
+<p>Without the ability to pass things by value, and without a heap to store data, that leaves us with
+one place to put our shared data that our ISR can access: <code>static</code> globals.</p>
+<h3 id="embedded-rust-isr-data-sharing-the-standard-method"><a class="header" href="#embedded-rust-isr-data-sharing-the-standard-method">Embedded Rust ISR Data Sharing: The "Standard Method"</a></h3>
+<p>Global variables are very much second-class citizens in Rust, with many limitations compared to
+local variables. You can declare a global state variable like this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>static COUNTER: usize = 0;
+<span class="boring">}</span></code></pre></pre>
+<p>Of course, this isn't super-useful: you want to be able to mutate the <code>COUNTER</code>. You can
+say</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>static mut COUNTER: usize = 0;
+<span class="boring">}</span></code></pre></pre>
+<p>but now all accesses will be unsafe.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>unsafe { COUNTER += 1 };
+<span class="boring">}</span></code></pre></pre>
+<p>The unsafety here is for a reason: imagine that in the middle of updating <code>COUNTER</code> an interrupt
+handler runs and also tries to update <code>COUNTER</code>. The usual chaos will ensue. Clearly some kind of
+locking is in order.</p>
+<p>The <code>critical-section</code> crate provides a sort of <code>Mutex</code> type, but with an unusual API and unusual
+operations. Examining the <code>Cargo.toml</code> for this chapter, you will see the feature
+<code>critical-section-single-core</code> on the <code>cortex-m</code> crate enabled. This feature asserts that there is
+only one processor core in this system, and that thus synchronization can be performed by simply
+<em>disabling interrupts</em> across the critical section. If not in an interrupt, this will ensure that
+only the main program has access to the global. If in an interrupt, this will ensure that the main
+program cannot be accessing the global (program control is in the interrupt handler) and that no
+other higher-priority interrupt handler can fire.</p>
+<p><code>critical_section::Mutex</code> is a bit weird in that it gives mutual exclusion but does not itself give
+mutability. To make the data mutable, you will need to protect an interior-mutable type — usually
+<code>RefCell</code> — with the mutex. This <code>Mutex</code> is also a bit weird in that you don't <code>.lock()</code>
+it. Instead, you initiate a critical section with a closure that receives a "critical section token"
+certifying that other program execution is prevented. This token can be passed to the <code>Mutex</code>'s
+<code>borrow()</code> method to allow access.</p>
+<p>Putting it all together gives you the ability to share state between ISRs and the main program
+(<code>examples/count-once.rs</code>).</p>
+<pre><pre class="playground"><code class="language-rust">#![no_main]
+#![no_std]
+
+use core::cell::RefCell;
+
+use cortex_m::asm;
+use cortex_m_rt::entry;
+use critical_section::Mutex;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+
+use microbit::{
+    Board,
+    hal::{
+        gpiote,
+        pac::{self, interrupt},
+    },
+};
+
+static COUNTER: Mutex&lt;RefCell&lt;usize&gt;&gt; = Mutex::new(RefCell::new(0));
+
+/// This "function" will be called when an interrupt is received. For now, just
+/// report and panic.
+#[interrupt]
+fn GPIOTE() {
+    critical_section::with(|cs| {
+        let mut count = COUNTER.borrow(cs).borrow_mut();
+        *count += 1;
+        rprintln!("count: {}", count);
+    });
+    panic!();
+}
+
+#[entry]
+fn main() -&gt; ! {
+    rtt_init_print!();
+    let board = Board::take().unwrap();
+    let button_a = board.buttons.button_a.into_floating_input();
+
+    // Set up the GPIOTE to generate an interrupt when Button A is pressed (GPIO
+    // wire goes low).
+    let gpiote = gpiote::Gpiote::new(board.GPIOTE);
+    let channel = gpiote.channel0();
+    channel
+        .input_pin(&amp;button_a.degrade())
+        .hi_to_lo()
+        .enable_interrupt();
+    channel.reset_events();
+
+    // Set up the NVIC to handle GPIO interrupts.
+    unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
+    pac::NVIC::unpend(pac::Interrupt::GPIOTE);
+
+    loop {
+        // "wait for interrupt": CPU goes to sleep until an interrupt.
+        asm::wfi();
+    }
+}</code></pre></pre>
+<p>You still cannot safely return from your ISR, but now you are in a position to do something about
+that: share the <code>GPIOTE</code> with the ISR so that the ISR can clear the interrupt.</p>
+<h3 id="sharing-peripherals-etc-with-globals"><a class="header" href="#sharing-peripherals-etc-with-globals">Sharing Peripherals (etc) With Globals</a></h3>
+<p>There's one more problem yet to solve: Rust globals must be initialized statically — before the
+program starts. For the counter that was easy — just initialize it to 0. If you want to share the
+<code>GPIOTE</code> peripheral, though, that won't work. The peripheral must be retrieved from the <code>Board</code>
+struct and set up once the program has started: there is no <code>const</code> initializer for this (nor can
+there reasonably be).</p>
+<p>Let's rewrite the button counter a bit. First, move the actual count to be an <code>AtomicUsize</code>. This is
+a more natural type for this global anyhow. Next, add a global <code>GPIOTE_PERIPHERAL</code> variable using
+the <code>LockMut</code> type from the <code>critical-section-lock-mut</code> crate. This crate is a convenient wrapper
+for the pattern of the last section.</p>
+<p>Now that the main program can set up the GPIOTE peripheral and then make it available to the
+interrupt handler, you can quit panicking and let the counter bump up on every button press. Move
+the count display into the main loop, to show that the count is shared between the interrupt handler
+and the rest of the program.</p>
+<p>Give this example (<code>examples/count.rs</code>) a run and note that the count is bumped up 1 on every push
+of the MB2 A button.</p>
+<pre><pre class="playground"><code class="language-rust">#![no_main]
+#![no_std]
+
+use core::sync::atomic::{AtomicUsize, Ordering::AcqRel};
+
+use cortex_m::asm;
+use cortex_m_rt::entry;
+use critical_section_lock_mut::LockMut;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+
+use microbit::{
+    Board,
+    hal::{
+        gpiote,
+        pac::{self, interrupt},
+    },
+};
+
+static COUNTER: AtomicUsize = AtomicUsize::new(0);
+static GPIOTE_PERIPHERAL: LockMut&lt;gpiote::Gpiote&gt; = LockMut::new();
+
+#[interrupt]
+fn GPIOTE() {
+    let count = COUNTER.fetch_add(1, AcqRel);
+    rprintln!("ouch {}", count + 1);
+    GPIOTE_PERIPHERAL.with_lock(|gpiote| {
+        gpiote.channel0().reset_events();
+    });
+}
+
+#[entry]
+fn main() -&gt; ! {
+    rtt_init_print!();
+    let board = Board::take().unwrap();
+    let button_a = board.buttons.button_a.into_floating_input();
+
+    // Set up the GPIOTE to generate an interrupt when Button A is pressed (GPIO
+    // wire goes low).
+    let gpiote = gpiote::Gpiote::new(board.GPIOTE);
+    let channel = gpiote.channel0();
+    channel
+        .input_pin(&amp;button_a.degrade())
+        .hi_to_lo()
+        .enable_interrupt();
+    channel.reset_events();
+    GPIOTE_PERIPHERAL.init(gpiote);
+
+    // Set up the NVIC to handle GPIO interrupts.
+    unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
+    pac::NVIC::unpend(pac::Interrupt::GPIOTE);
+
+    loop {
+        // "wait for interrupt": CPU goes to sleep until an interrupt.
+        asm::wfi();
+    }
+}</code></pre></pre>
+<blockquote>
+<p><strong>NOTE</strong> It is always a good idea to compile examples involving interrupt handling with
+<code>--release</code>. Long interrupt handlers can lead to a lot of confusion.</p>
+</blockquote>
+<p>Really, though, that <code>rprintln!()</code> in the interrupt handler is bad practice: while the interrupt
+handler is running the printing code, nothing else can move forward. Let's move the reporting to the
+main loop, just after the <code>wfi()</code> "wait for interrupt". The count will then be reported every time
+an interrupt handler finishes (<code>examples/count-bounce.rs</code>).</p>
+<pre><pre class="playground"><code class="language-rust">#![no_main]
+#![no_std]
+
+use core::sync::atomic::{AtomicUsize, Ordering::{Acquire, AcqRel}};
+
+use cortex_m::asm;
+use cortex_m_rt::entry;
+use critical_section_lock_mut::LockMut;
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
+
+use microbit::{
+    Board,
+    hal::{
+        gpiote,
+        pac::{self, interrupt},
+    },
+};
+
+static COUNTER: AtomicUsize = AtomicUsize::new(0);
+static GPIOTE_PERIPHERAL: LockMut&lt;gpiote::Gpiote&gt; = LockMut::new();
+
+#[interrupt]
+fn GPIOTE() {
+    let _ = COUNTER.fetch_add(1, AcqRel);
+    GPIOTE_PERIPHERAL.with_lock(|gpiote| {
+        gpiote.channel0().reset_events();
+    });
+}
+
+#[entry]
+fn main() -&gt; ! {
+    rtt_init_print!();
+    let board = Board::take().unwrap();
+    let button_a = board.buttons.button_a.into_floating_input();
+
+    // Set up the GPIOTE to generate an interrupt when Button A is pressed (GPIO
+    // wire goes low).
+    let gpiote = gpiote::Gpiote::new(board.GPIOTE);
+    let channel = gpiote.channel0();
+    channel
+        .input_pin(&amp;button_a.degrade())
+        .hi_to_lo()
+        .enable_interrupt();
+    channel.reset_events();
+    GPIOTE_PERIPHERAL.init(gpiote);
+
+    // Set up the NVIC to handle GPIO interrupts.
+    unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
+    pac::NVIC::unpend(pac::Interrupt::GPIOTE);
+
+    loop {
+        // "wait for interrupt": CPU goes to sleep until an interrupt.
+        asm::wfi();
+        let count = COUNTER.load(Acquire);
+        rprintln!("ouch {}", count);
+    }
+}</code></pre></pre>
+<p>In this example the count is bumped up 1 on every push of the MB2 A button. Maybe. Especially if
+your MB2 is old (!), you may see a single press bump the counter by several. <em>This is not a software
+bug.</em> Mostly. In the next section, I'll talk about what might be going on and how we should deal
+with it.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../15-interrupts/nvic-and-interrupt-priority.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../15-interrupts/debouncing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../15-interrupts/nvic-and-interrupt-priority.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../15-interrupts/debouncing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../epub-link.js"></script>
+
+
+    </div>
+    </body>
+</html>
