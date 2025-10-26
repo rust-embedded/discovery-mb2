@@ -14,7 +14,7 @@ The model of computation used by our NRF52833 is the one used by almost every mo
 
 Everything about the computation the CPU is currently running is stored in the CPU registers. If the core is going to switch tasks, it must store the contents of the CPU registers somewhere so that the new task can use the registers as its own scratch-pad. When the new task is complete the CPU can then restore the register values and restart the old computation.  Sure enough, that is exactly the first thing the core does in response to an interrupt request: it stops what it's doing immediately and stores the contents of the CPU registers on the stack.
 
-The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routines (ISR), often referred to as an interrupt "handler", is a special function in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
+The next step is actually jumping to the code that should be run in response to an interrupt.  An Interrupt Service Routine (ISR), often referred to as an interrupt "handler", is a special function in your application code that gets called by the core in response to interrupts. An "interrupt table" in memory contains an "interrupt vector" for every possible interrupt: the interrupt vector indicates what ISR to call when a specific interrupt is received. We describe the details of ISR vectoring in the [NVIC and Interrupt Priority] section.
 
 An ISR function "returns" using a special return-from-interrupt machine instruction that causes the CPU to restore the CPU registers and jump back to where it was before the ISR was called.
 
@@ -31,21 +31,20 @@ The ISR handler function is "special". The name `GPIOTE` is required here, indic
 that this ISR should be stored at the entry for the `GPIOTE` interrupt in the interrupt table.
 
 The `#[interrupt]` decoration is used at compile time to mark a function to be treated specially as
-an ISR. (This is a "proc macro", in case you feel like exploring that concept.)
+an ISR. (This is a "proc macro": you can read more about it in the [Rust book] if you wish.)
+
+Essentially, a "proc macro" translates source code into other source code. If you are curious as to what any particular macro use translates into,
+you could expand that macro invocation. You can do this by using either the Tools in the [Rust Playground] or the "rust-analyzer: Expand macro" command in your IDE.
 
 Marking a function with `#[interrupt]` implies several special things about the function:
 
-* The compiler will check that the function takes no arguments and returns no value. The CPU has no
-  arguments to provide to an ISR, and no place to put a return value from the ISR.
+* The compiler will check that the function takes no arguments and returns no value (or never returns). The CPU has no
+  arguments to provide to an ISR, and no place to put a return value from the ISR. This is because interrupt handlers have their own call stack (at least *conceptually* if not always in practice).
 
-* The compiler will place a vector to this function at the location in the interrupt table
-  implied by the function's name.
+* A vector to this function (that is a function pointer) will be placed at the location in the interrupt table
+  which corresponds to the function's name.
 
-* The function will be compiled to finishing by using a return-from-interrupt instruction rather
-  than the normal function return instruction.
-
-* Since the function finishes in a non-standard way, the compiler will understand not to allow
-  directly calling the ISR from normal code.
+* The compiler will prevent directly calling the ISR from normal code.
 
 There are two steps to configure the interrupt. First, the GPIOTE must be set up to generate an
 interrupt when the pin connected to Button A goes from high to low voltage. Second, the NVIC must be
@@ -72,3 +71,5 @@ Normally, once an ISR is complete the main program continues running just as it 
 
 [NVIC and Interrupt Priority]: nvic-and-interrupt-priority.html
 [Registers]: ../09-registers/index.html
+[Rust Playground]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2024
+[Rust book]: https://doc.rust-lang.org/book/ch20-05-macros.html

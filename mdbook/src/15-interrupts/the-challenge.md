@@ -4,7 +4,7 @@ Let's make the MB2 into a siren! But not just any siren — an
 interrupt-driven siren. That way we can turn the siren on
 and the rest of our program can run on, ignoring it.
 
-Make your siren sweep the pitch from 220Hz to 440Hz and back
+Make your siren sweep the pitch from 440Hz to 660Hz and back
 over a one-second period. The main program should start the
 siren, then print a ten-second countdown from 10 to 1, then
 stop the siren and print "launch!". The main program should
