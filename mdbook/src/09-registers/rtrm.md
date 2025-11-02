@@ -150,7 +150,7 @@ Breakpoint 3, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:2
 0x50000504:     0x00280000
 ```
 
-On line 19, we've set bit 21 of `OUT` to 1, keeping bit 19 as is. The result is `0x00280000`, which
+On line 19, we've set bit 19 of `OUT` to 1, keeping bit 21 as is. The result is `0x00280000`, which
 is `2621440` in decimal, or `2^19 + 2^21`, meaning that both bit 19 and bit 21 is set to 1.
 
 Writing `1 << 19` (`OUT[19]= 1`) to `OUT` sets `P0.19` *high*. That turns the bottom LED row
