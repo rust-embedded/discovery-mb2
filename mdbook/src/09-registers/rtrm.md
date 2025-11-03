@@ -122,7 +122,7 @@ a look at the `OUT` register's contents again:
 ```
 
 The value of the `OUT` register is `0x00200000` at this point, which is `2097152` in decimal, or
-`2^21`. That means that bit 21 is set to 1, and the rest of the bits is set to 0. That corresponds
+`2^21`. That means that bit 21 is set to 1, and the rest of the bits are set to 0. That corresponds
 to the code on line 16, which writes `1 << 21`, or a 1 shifted left 21 positions, bitwise ORed with
 `OUT`s current value (which was 0), to the `OUT` register.
 
@@ -150,8 +150,8 @@ Breakpoint 3, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:2
 0x50000504:     0x00280000
 ```
 
-On line 19, we've set bit 21 of `OUT` to 1, keeping bit 19 as is. The result is `0x00280000`, which
-is `2621440` in decimal, or `2^19 + 2^21`, meaning that both bit 19 and bit 21 is set to 1.
+On line 19, we've set bit 19 of `OUT` to 1, keeping bit 21 as is. The result is `0x00280000`, which
+is `2621440` in decimal, or `2^19 + 2^21`, meaning that both bit 19 and bit 21 are set to 1.
 
 Writing `1 << 19` (`OUT[19]= 1`) to `OUT` sets `P0.19` *high*. That turns the bottom LED row
 *on*. As such, the bottom row should now be lit up.
