@@ -11,6 +11,7 @@
   - [micro:bit v2](04-meet-your-hardware/microbit-v2.md)
   - [Rust Embedded terminology](04-meet-your-hardware/terminology.md)
 - [Meet your software](05-meet-your-software/README.md)
+  - [Embedded Setup](05-meet-your-software/embedded-setup.md)
   - [Build it](05-meet-your-software/build-it.md)
   - [Flash it](05-meet-your-software/flash-it.md)
   - [Debug it](05-meet-your-software/debug-it.md)
