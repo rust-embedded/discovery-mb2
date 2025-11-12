@@ -46,11 +46,11 @@ fn main() -> ! {
     let mut last_led = (0, 0);
 
     loop {
-        for current_led in PIXELS.iter() {
+        for current_led in PIXELS {
             leds[last_led.0][last_led.1] = 0;
             leds[current_led.0][current_led.1] = 1;
-            display.show(&mut timer, leds, 30);
-            last_led = *current_led;
+            display.show(&mut timer, leds, 200);
+            last_led = current_led;
         }
     }
 }

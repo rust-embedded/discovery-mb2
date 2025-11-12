@@ -5,8 +5,8 @@ All the tools can be installed using [Homebrew]:
 [Homebrew]: http://brew.sh/
 
 ``` console
-$ # Arm GCC debugger
-$ brew install arm-none-eabi-gdb
+$ # GDB debugger - The version in brew is built for all architectures including all of the ARM embedded cores
+$ brew install gdb
 
 $ # Minicom
 $ brew install minicom

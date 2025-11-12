@@ -99,7 +99,7 @@ Go kit).
   ways to I2C. SPI is abstracted within the [`embedded-hal` `spi` module] and implemented by
   [`nrf52-hal`].
 - I2S: The "Inter-IC Sound" protocol is a variant of I2C customized for audio transmission.
-  I2C is currently not abstracted within `embedded-hal`, but is implemented by [`nrf52-hal`].
+  I2S is currently not abstracted within `embedded-hal`, but is implemented by [`nrf52-hal`].
 - Ethernet: there does exist a small TCP/IP stack named [`smoltcp`] which is implemented for some
   chips. The MB2 does not have an Ethernet peripheral
 - USB: there is some experimental work on this, for example with the [`usb-device`] crate. For
