@@ -4,8 +4,8 @@
 > *[Interrupts Is Threads]* by James Munns, which contains more discussion about this
 > topic.
 
-As I mentioned in the last section, when an interrupt occurs we aren't passed any arguments and
-cannot return any result. This makes it hard for our program interact with peripherals and other
+As I mentioned previously, when an interrupt occurs we aren't passed any arguments and
+cannot return any result. This makes it hard for our program to interact with peripherals and other
 main program state. Before worrying about this bare-metal embedded problem, it is likely worth
 thinking about threads in "std" Rust.
 
