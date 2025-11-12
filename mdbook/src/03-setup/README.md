@@ -16,7 +16,7 @@ should work but we have listed the version we have tested.
 
 - Rust 1.79.0 or a newer toolchain.
 
-- `gdb-multiarch`. This is a debugging tool. The oldest tested version is10.2, but other versions
+- `gdb-multiarch`. This is a debugging tool. The oldest tested version is 10.2, but other versions
   will most likely work as well.  If your distribution/platform does not have `gdb-multiarch`
   available `arm-none-eabi-gdb` will do the trick as well. Furthermore, some normal `gdb` binaries
   are built with multiarch capabilities as well: you can find further information about this in the
