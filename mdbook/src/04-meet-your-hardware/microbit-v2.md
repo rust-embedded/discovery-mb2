@@ -11,7 +11,7 @@ Each manufacturer uses a different part numbering scheme, but many will allow yo
 determine information about a component simply by looking at the part number. Looking at our
 MCU's part number we find `N52833 QIAAA0 2024AL`: you probably cannot see it with your bare
 eye, but it is on the chip. (If you have a later revision of MB2, your number may vary
-somewhat. This not an issue. The `N52833` part should be there, though.) The `N` at the
+somewhat. This is not an issue. The `N52833` part should be there, though.) The `N` at the
 front hints to us that this is a part manufactured by [Nordic Semiconductor].  Looking up
 the part number on their website we quickly find the [product page].  There we learn that
 our chip's main marketing point is that it is a "Bluetooth Low Energy and 2.4 GHz SoC" (SoC
