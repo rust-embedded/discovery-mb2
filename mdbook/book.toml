@@ -1,14 +1,15 @@
 [book]
 title = "Rust Embedded MB2 Discovery Book"
-description = "Discover the world of microcontrollers through Rust with the BB2 micro:bit v2"
+description = "Discover the world of microcontrollers through Rust with the micro:bit v2 (MB2)"
 authors = ["Rust Embedded Resources Team"]
 language = "en"
 
 [output.html]
 git-repository-url = "https://github.com/rust-embedded/discovery-mb2/"
 additional-js = ["epub-link.js"]
-# additional-css = ["custom.css"]
 
+# ensures visibility of transparent svg or png images
+additional-css = ["theme/css/custom.css"]
 
 [output.epub]
 # Optional settings

@@ -26,7 +26,7 @@ implementation allows sending bytes to a particular device, with other devices c
 wires ignoring this communication.
 
 <p align="center">
-<img class="white_bg" height="360" title="I2C bus" src="../assets/i2c-bus.svg" />
+<img class="white-bg" height="360" title="I2C bus" src="../assets/i2c-bus.svg" />
 </p>
 
 I2C uses a *controller*/*target* model: the controller is the device that *starts* and drives the

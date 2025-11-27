@@ -22,13 +22,9 @@ If the Controller wants to send data to the Target:
 > **NOTE** The target address could have been 10 bits instead of 7 bits long. Nothing else would have
 > changed.
 
-## Controller ← Target
+## Example 2: Controller ← Target
 
 If the controller wants to read data from the target:
-
-<p align="center">
-  <img class="white_bg" height="360" title="I2C bus" src="../assets/i2c-controller-target.svg" />
-</p>
 
 1. C: Broadcast START
 2. C: Broadcast target address (7 bits) + the R/W (8th) bit set to READ
