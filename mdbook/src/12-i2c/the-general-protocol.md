@@ -1,15 +1,18 @@
 # General protocol
 
-The I2C protocol is more elaborate than the serial communication protocol because it has to support
-communication between several devices. Let's see how it works using examples:
+The I2C protocol is more elaborate than the serial communication protocol because it has to support communication between several devices.
 
-## Controller → Target
+The schematic shows controller (a microcontroller), three target nodes (an ADC, a DAC, and a microcontroller), and pull-up resistors Rp.
+
+The devices are all connected to a serial bus.
+<p align="center">
+  <img class="white_bg" height="360" title="I2C bus" alt="The schematic shows controller (a microcontroller), three target nodes (an ADC, a DAC, and a microcontroller), and pull-up resistors Rp." src="../assets/i2c-controller-target.svg" />
+  <small>Author: Tim Mathias. Taken unmodified from <a href="https://en.wikipedia.org/wiki/I2C#/media/File:I2C_controller-target.svg">Wikipedia</a>. <a href=https://creativecommons.org/licenses/by-sa/4.0>CC-BY-SA4.0</a>.</small>
+</p>
+
+## Example 1: Controller → Target
 
 If the Controller wants to send data to the Target:
-
-<p align="center">
-  <img class="white_bg" height="360" title="I2C bus" src="../assets/i2c-controller-target.svg" />
-</p>
 
 1. Controller: Broadcast START
 2. C: Broadcast target address (7 bits) + the R/W (8th) bit set to WRITE
