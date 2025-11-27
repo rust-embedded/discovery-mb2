@@ -1,9 +1,9 @@
 # UART
 
-Our microcontroller (like most) has a peripheral called a UART (for "Universal Asynchronous
-Receiver/Transmitter). This peripheral can be configured to work with several serial communication
-protocols. The peripheral we will be working with is named UARTE (for "UART with Easy DMA", a topic
-outside the scope of this chapter).
+Our microcontroller (like most) has UART ("Universal Asynchronous Receiver/Transmitter)
+peripherals. There are two kinds of UART peripheral on the MB2: the older `UART` and the newer
+`UARTE` ("UART with Easy DMA").  We will use a `UARTE` peripheral to talk to our hardware serial
+port.
 
 Throughout this chapter, we'll use serial communication to exchange information between the
 microcontroller and your computer.

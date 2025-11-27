@@ -3,7 +3,7 @@
 This chapter is a technical deep-dive. You can safely [skip it] for now and come back to it later if
 you like. That said, there's a lot of good stuff in here, so I'd recommend you dive in.
 
-[skip it]: ../10-serial-communication/index.html
+[skip it]: ../10-serial-port/index.html
 
 -----
 

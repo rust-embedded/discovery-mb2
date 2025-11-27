@@ -1,8 +1,8 @@
 # Windows tooling
 
-Start by unplugging your micro:bit.
+Start by unplugging your MB2.
 
-Before plugging the micro:bit back in, run the following command on the terminal:
+Before plugging the MB2 back in, run the following command on the terminal:
 
 ``` console
 $ mode
@@ -12,9 +12,9 @@ It will print a list of devices that are connected to your computer. The ones th
 in their names are serial devices. This is the kind of device we'll be working with. Take note of
 all the `COM` ports' `mode` outputs *before* plugging the serial module.
 
-Now, plug in the micro:bit and run the `mode` command again. If you see a new
+Now, plug in the MB2 and run the `mode` command again. If you see a new
 `COM` port appear on the list, then that's the COM port assigned to the
-serial functionality on the micro:bit.
+serial functionality on the MB2.
 
 Now launch `putty`. A GUI will pop out.
 
@@ -41,6 +41,6 @@ Finally, click the Open button. A console will show up now:
 <img title="PuTTY console" src="../assets/putty-console.png" width="500" />
 </p>
 
-If you type on this console, the yellow LED on top of the micro:bit will blink. Each keystroke
+If you type on this console, the yellow LED on top of the MB2 will blink. Each keystroke
 should make the LED blink once. Note that the console won't echo back what you type so the screen
 will remain blank.
