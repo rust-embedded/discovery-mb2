@@ -16,7 +16,7 @@ about… but what purpose does the remaining one serve? This chip is *another* M
 as powerful as the NRF52833 we will be programming! This chip has three main purposes:
 
 1. Enable power and reset control of our NRF52833 MCU from the USB connector.
-2. Provide a serial to USB bridge for our MCU (we will look into that in a later chapter).
+2. Provide a [serial to USB bridge] for our MCU.
 3. Provide an interface for programming and debugging our NRF52833 (this is the relevant purpose for
    now).
 
@@ -41,3 +41,5 @@ Furthermore, you will have noticed that `cargo build` and `cargo embed` are actu
 flags. This is because `cargo embed` actually executes the build and then flashes the resulting
 binary on to the chip. This means you can leave out the `cargo build` step in the future if you want
 to flash your code right away.
+
+[serial to USB bridge]: ../10-serial-port/index.html

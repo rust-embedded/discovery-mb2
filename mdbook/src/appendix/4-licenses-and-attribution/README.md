@@ -19,6 +19,6 @@ at your option.
 
 ## Attribution
 
-The diagrams in the I2C chapter are by Tim Mathias. They are
-taken from Wikimedia Commons and used under the CC-BY-4.0
-license.
+Diagrams from Wikimedia Commons are used by reference under
+their Creative Commons licenses. See the linked source for
+proper attribution.

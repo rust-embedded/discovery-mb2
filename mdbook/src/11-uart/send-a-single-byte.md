@@ -29,15 +29,16 @@ uarte::Uarte::new(
 This function takes ownership of the UARTE peripheral representation in Rust (`board.UARTE0`) and
 the TX/RX pins on the board (`board.uart.into()`) so nobody else can mess with either the UARTE
 peripheral or our pins while we are using them. After that we pass two configuration options to the
-constructor: the baud rate (that one should be familiar) as well as an option called "parity". Parity
-is a way to allow serial communication lines to check whether the data they received was corrupted
-during transmission. We don't want to use that here so we simply exclude it.  Then we wrap it up in
-the `UartePort` type so we can use it.
+constructor: the baud rate (that one should be familiar) as well as an option called
+"parity". Parity is a way to allow serial communication lines to check whether the data they
+received was corrupted during transmission. We don't want to use that here so we simply exclude it.
+Then we wrap it up in the `UartePort` type so we can use it.
 
-After the initialization, we send our `X` via the newly created uart instance. These serial
-functions are "blocking": they wait for the data to be sent before returning. This is not always
-what is wanted: the microcontroller can do a lot of work while waiting for the byte to go out on the
-wire. However, in our case it is convenient and we didn't have other work to do anyway.
+After the initialization, we send our `X` (as ASCII byte value 88) via the newly created uart
+instance. These serial functions are "blocking": they wait for the data to be sent before
+returning. This is not always what is wanted: the microcontroller can do a lot of work while
+waiting for the byte to go out on the wire. However, in our case it is convenient and we didn't
+have other work to do anyway.
 
 Last but not least, we `flush()` the serial port. This is because the UARTE may decide to buffer
 output until it has received a certain number of bytes to send.  Calling `flush()` forces it to
@@ -45,9 +46,9 @@ write the bytes it currently has right now instead of waiting for more.
 
 ## Testing it
 
-Before flashing this you should make sure to start your minicom/PuTTY as the data we receive via our
-serial communication is not backed up or anything: we have to view it live. Once your serial monitor
-is up you can flash the program just like in chapter 5:
+Before flashing this you should make sure to start your minicom/PuTTY as the data we receive via
+our serial communication is not backed up or anything: we have to view it live. Once your serial
+monitor is up you can flash the program just like in chapter 5:
 
 ```
 $ cargo embed --example send-byte
