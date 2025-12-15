@@ -1,0 +1,29 @@
+# mdbook-lint configuration for discovery-mb2
+# This configuration focuses on catching important issues while being practical
+
+# Disable rules that are less relevant for this educational book
+disabled-rules = [
+  "MD013",  # Line length - educational content often has long lines
+  "MD033",  # HTML allowed - mdBook supports it
+  "MD036",  # Emphasis as heading - common in educational content
+]
+
+# Configure specific rules
+[MD007]
+indent = 4  # Allow 4-space indentation for nested lists
+
+[MD009]
+br_spaces = 2  # Allow 2 trailing spaces for line breaks
+
+[MD010]
+code_blocks = true  # Don't flag hard tabs inside code blocks
+
+[MD041]
+level = 2  # Don't require h1 to be first line in every chapter
+
+# Content rules configuration
+[CONTENT001]
+enabled = false  # Don't flag TODOs (they might be legitimate placeholders)
+
+[CONTENT003]
+enabled = false  # Don't flag placeholder text like "XXX"

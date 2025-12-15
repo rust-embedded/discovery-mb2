@@ -56,12 +56,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
-      - name: Put mdbook-epub where mdbook expects it
+      - name: Put mdbook tools where mdbook expects it
         if: steps.cache-cargo.outputs.cache-hit == 'true'
         run: |
           ls ~/cargo-bin
           mkdir -p ~/.cargo/bin
-          cp ~/cargo-bin/mdbook-epub ~/.cargo/bin
+          cp ~/cargo-bin/mdbook ~/.cargo/bin || true
+          cp ~/cargo-bin/mdbook-epub ~/.cargo/bin || true
+          cp ~/cargo-bin/mdbook-lint ~/.cargo/bin || true
 
       - name: Install mdbook
         if: steps.cache-cargo.outputs.cache-hit != 'true'
@@ -71,12 +73,17 @@ jobs:
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: cargo install --locked mdbook-epub --version 0.4.48
 
-      - name: Copy mdbook and mdbook-epub to cache directory
+      - name: Install mdbook-lint
+        if: steps.cache-cargo.outputs.cache-hit != 'true'
+        run: cargo install --locked mdbook-lint
+
+      - name: Copy mdbook tools to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: |
           mkdir ~/cargo-bin
           cp ~/.cargo/bin/mdbook ~/cargo-bin
           cp ~/.cargo/bin/mdbook-epub ~/cargo-bin
+          cp ~/.cargo/bin/mdbook-lint ~/cargo-bin
           ls ~/cargo-bin
 
       - name: Put new cargo binary directory into path
@@ -85,6 +92,11 @@ jobs:
       - name: Build book
         working-directory: mdbook
         run: mdbook build
+
+      - name: Lint book with mdbook-lint
+        working-directory: mdbook
+        continue-on-error: true  # Don't fail the build for now, just report issues
+        run: mdbook-lint lint src/ || echo "mdbook-lint found issues - see log above"
 
       - name: Check book links
         working-directory: mdbook
