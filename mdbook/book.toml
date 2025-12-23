@@ -14,8 +14,8 @@ additional-css = ["src/assets/custom.css"]
 title = "Rust Embedded MB2 Discovery Book"
 author = "Rust Embedded Resources Team"
 
-[output.html.site]
-url = "/"
+# [output.html.site]
+# url = "/"
 # Optional settings
 # base-url = "/discovery-mb2/"
 # git-repository-url = "
