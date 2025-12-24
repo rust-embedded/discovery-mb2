@@ -25,9 +25,11 @@ run faster and more reliably than async serial. I2C devices have *bus addresses*
 implementation allows sending bytes to a particular device, with other devices connected to the same
 wires ignoring this communication.
 
+<a href="https://commons.wikimedia.org/wiki/File:I2C_controller-target.svg">
 <p align="center">
-<img class="white_bg" height="360" title="I2C bus" src="../assets/i2c-bus.svg" />
+<img height="360" title="I2C Controller and Targets" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg?20211029013948" />
 </p>
+</a>
 
 I2C uses a *controller*/*target* model: the controller is the device that *starts* and drives the
 communication with a target device. Several devices can be connected to the same bus at the same

@@ -65,11 +65,11 @@ jobs:
 
       - name: Install mdbook
         if: steps.cache-cargo.outputs.cache-hit != 'true'
-        run: cargo install --locked mdbook --version 0.4.51
+        run: cargo install --locked --version 0.5.2 mdbook
 
       - name: Install mdbook-epub
         if: steps.cache-cargo.outputs.cache-hit != 'true'
-        run: cargo install --locked mdbook-epub --version 0.4.48
+        run: cargo install --git=https://github.com/BartMassey-upstream/mdbook-epub --branch=update-infer --version=0.5.2 --locked mdbook-epub
 
       - name: Copy mdbook and mdbook-epub to cache directory
         if: steps.cache-cargo.outputs.cache-hit != 'true'
@@ -88,7 +88,7 @@ jobs:
 
       - name: Check book links
         working-directory: mdbook
-        run: linkchecker --ignore-url "print.html" book
+        run: linkchecker --ignore-url "print.html" book/html
 
       - name: Copy EPUB to html directory
         working-directory: mdbook

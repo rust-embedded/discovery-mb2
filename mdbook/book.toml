@@ -1,22 +1,21 @@
 [book]
 title = "Rust Embedded MB2 Discovery Book"
-description = "Discover the world of microcontrollers through Rust with the BB2 micro:bit v2"
+description = "Discover the world of microcontrollers through Rust with the BBC micro:bit v2"
 authors = ["Rust Embedded Resources Team"]
 language = "en"
 
 [output.html]
 git-repository-url = "https://github.com/rust-embedded/discovery-mb2/"
-additional-js = ["epub-link.js"]
-# additional-css = ["custom.css"]
-
+additional-js = ["src/assets/epub-link.js"]
+additional-css = ["src/assets/custom.css"]
 
 [output.epub]
 # Optional settings
 title = "Rust Embedded MB2 Discovery Book"
 author = "Rust Embedded Resources Team"
 
-[output.html.site]
-url = "/"
+# [output.html.site]
+# url = "/"
 # Optional settings
 # base-url = "/discovery-mb2/"
 # git-repository-url = "
