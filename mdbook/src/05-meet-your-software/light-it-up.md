@@ -21,10 +21,10 @@ go in detail through all of the options available.
 ## Actually lighting it up!
 
 The code required to light up an LED in the matrix is actually quite simple but it requires a bit of
-setup. First take a look at `examples/light-it-up.rs`; then we can go through it step by step.
+setup. First take a look at `src/bin/light-it-up.rs`; then we can go through it step by step.
 
 ```rust
-{{#include examples/light-it-up.rs}}
+{{#include src/bin/light-it-up.rs}}
 ```
 
 The first few lines until the `main` function just do some basic imports and setup we mostly looked
@@ -57,12 +57,12 @@ case, we can just `unwrap()` the result.
 
 ## Testing it
 
-Testing our little program is quite simple. First put it into `src/main.rs`. Afterwards we simply
-have to run the `cargo embed` command from the last section again, and let it flash just like
-before. Then open our GDB and connect to the GDB stub:
+Testing our little program is quite simple. We run `cargo embed`
+and let it flash just like before. Then open our GDB and
+connect to the GDB stub. 
 
 ```
-$ # Your GDB debug command from the last section
+$ gdb ../../../target/thumbv7em-none-eabihf/debug/meet-your-software
 (gdb) target remote :1337
 Remote debugging using :1337
 cortex_m_rt::Reset () at /home/nix/.cargo/registry/src/github.com-1ecc6299db9ec823/cortex-m-rt-0.6.12/src/lib.rs:489
@@ -70,5 +70,6 @@ cortex_m_rt::Reset () at /home/nix/.cargo/registry/src/github.com-1ecc6299db9ec8
 (gdb)
 ```
 
-We now let the program run via the GDB `continue` command: one of the LEDs on the front of the
-micro:bit should light up.
+We now let the program run via the GDB `continue` command:
+one of the LEDs on the front of the micro:bit should light
+up.
