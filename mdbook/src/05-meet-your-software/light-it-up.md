@@ -21,10 +21,10 @@ go in detail through all of the options available.
 ## Actually lighting it up!
 
 The code required to light up an LED in the matrix is actually quite simple but it requires a bit of
-setup. First take a look at `src/bin/light-it-up.rs`; then we can go through it step by step.
+setup. First take a look at `src/main.rs`; then we can go through it step by step.
 
 ```rust
-{{#include src/bin/light-it-up.rs}}
+{{#include src/main.rs}}
 ```
 
 The first few lines until the `main` function just do some basic imports and setup we mostly looked
