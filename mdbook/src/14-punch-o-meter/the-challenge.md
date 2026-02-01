@@ -1,9 +1,14 @@
 # The challenge
 
-To keep things simple, we'll measure the acceleration only in the X axis while the board remains
-horizontal. That way we won't have to deal with subtracting that *fictitious* `1g` we observed
-before which would be hard because that `1g` could have X Y Z components depending on how the board
-is oriented.
+To keep the software simple, we will assume that you punch with the board parallel to the ground. To
+measure the magnitude of your punch, you'd need to take into account both X and Y acceleration
+(while ignoring Z since it just reflects gravity). To make things even easier, we will assume that
+you hold the board with the B button close to you and the A button farther away, then punch away
+from yourself. This means that you are punching in the positive X direction.
+
+<p align="center">
+<img class="white_bg" title="Punch Direction" src="../assets/mb2-punch-axis.svg" width="500" />
+</p>
 
 Here's what the punch-o-meter must do:
 

@@ -16,7 +16,7 @@ the back. This is a "right-handed" coordinate system. It's all a bit confusing, 
 field strengths are components of the magnetic field vector.
 
 <p align="center">
-<img title="MB2 Axes" src="../assets/mb2-axes.jpg" width="500" />
+<img class="white_bg" title="MB2 Axes" src="../assets/mb2-axes.svg" width="500" />
 </p>
 
 You should already be able to write a program that continuously prints the magnetometer data on the
