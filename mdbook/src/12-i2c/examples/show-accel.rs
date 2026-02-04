@@ -18,7 +18,11 @@ fn main() -> ! {
     rtt_init_print!();
     let board = microbit::Board::take().unwrap();
 
-    let i2c = { twim::Twim::new(board.TWIM0, board.i2c_internal.into(), FREQUENCY_A::K100) };
+    let i2c = twim::Twim::new(
+        board.TWIM0,
+        board.i2c_internal.into(),
+        FREQUENCY_A::K100,
+    );
     let mut timer0 = Timer::new(board.TIMER0);
 
     // Code from documentation
