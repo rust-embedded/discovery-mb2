@@ -6,7 +6,7 @@ use core::str;
 use cortex_m_rt::entry;
 use embedded_hal::delay::DelayNs;
 use panic_rtt_target as _;
-use rtt_target::{rtt_init_print, rprintln};
+use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
     hal::uarte::{self, Baudrate, Parity},

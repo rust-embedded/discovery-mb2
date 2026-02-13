@@ -7,11 +7,11 @@ use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
-    Board,
     hal::{
         gpiote,
         pac::{self, interrupt},
     },
+    Board,
 };
 
 /// This "function" will be called when an interrupt is received. For now, just

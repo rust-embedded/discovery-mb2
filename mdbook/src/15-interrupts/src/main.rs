@@ -6,11 +6,15 @@ use cortex_m_rt::entry;
 use critical_section_lock_mut::LockMut;
 use embedded_hal::{delay::DelayNs, digital::OutputPin};
 use panic_rtt_target as _;
-use rtt_target::{rtt_init_print, rprintln};
+use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
+    hal::{
+        gpio,
+        pac::{self, interrupt},
+        timer,
+    },
     Board,
-    hal::{gpio, timer, pac::{self, interrupt}},
 };
 
 /// Base siren frequency in Hz.
@@ -127,7 +131,8 @@ fn main() -> ! {
     //
     // This does lose type safety, but that is unlikely
     // to matter after this point.
-    let speaker_pin = board.speaker_pin
+    let speaker_pin = board
+        .speaker_pin
         .into_push_pull_output(gpio::Level::Low)
         .degrade();
     let timer0 = timer::Timer::new(board.TIMER0);
@@ -149,7 +154,7 @@ fn main() -> ! {
     }
     rprintln!("launch!");
     SIREN.with_lock(|siren| siren.stop());
-    
+
     loop {
         asm::wfi();
     }
