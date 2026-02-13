@@ -25,5 +25,7 @@ fn main() -> ! {
         *(PORT_P0_OUT as *mut u32) &= !(1 << 19);
     }
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

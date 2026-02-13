@@ -5,10 +5,10 @@ What's the first thing we'll do?
 Perform a sanity check!
 
 You should already be able to write a program that continuously prints the accelerometer data on the
-RTT console from the [I2C chapter](../12-i2c/index.md). Mine is in `examples/show-accel.rs`. Do you
-observe something interesting even when holding the board parallel to the floor with the back side
-facing up?  (Remember that the accelerometer is mounted on the back of the board, so holding it
-upside-down like this makes the Z axis point up.)
+RTT console from the [I2C chapter](../12-i2c/index.md). Mine is in `examples/show-accel.rs` in that
+chapter. Do you observe something interesting even when holding the board parallel to the floor with
+the back side facing up?  (Remember that the accelerometer is mounted on the back of the board, so
+holding it upside-down like this makes the Z axis point up.)
 
 What you should see when holding the board like this is that both the X and Y values are rather
 close to 0, while the Z value is at around 1000. Which is weird: the board is not moving, yet its

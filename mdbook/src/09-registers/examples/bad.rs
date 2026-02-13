@@ -14,5 +14,7 @@ fn main() -> ! {
         ptr::read_volatile(0x5000_A784 as *const u32);
     }
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

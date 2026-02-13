@@ -14,5 +14,7 @@ fn main() -> ! {
     board.display_pins.col1.set_low().unwrap();
     board.display_pins.row1.set_high().unwrap();
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

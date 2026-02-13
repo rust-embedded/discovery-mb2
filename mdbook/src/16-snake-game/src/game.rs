@@ -10,7 +10,7 @@ pub use movement::{Direction, GameStatus, StepOutcome, Turn};
 pub use rng::Prng;
 pub use snake::Snake;
 
-use heapless::FnvIndexSet;
+use heapless::index_set::FnvIndexSet;
 
 /// Struct to hold game state and associated behaviour
 pub struct Game {
@@ -130,7 +130,7 @@ impl Game {
                 self.snake.move_snake(c, true);
                 self.place_food();
                 self.score += 1;
-                if self.score % 5 == 0 {
+                if self.score.is_multiple_of(5) {
                     self.speed += 1
                 }
                 GameStatus::Ongoing
@@ -188,6 +188,7 @@ impl Game {
         for r in 0..full_rows {
             values[r] = [1; 5];
         }
+        #[allow(clippy::needless_range_loop)]
         for c in 0..(self.score as usize) % 5 {
             values[full_rows][c] = 1;
         }

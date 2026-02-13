@@ -1,6 +1,6 @@
 use super::Prng;
 
-use heapless::FnvIndexSet;
+use heapless::index_set::FnvIndexSet;
 
 /// A single point on the grid.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]

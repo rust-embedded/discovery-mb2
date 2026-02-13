@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 cortex-m-rt = "0.7.5"
 panic-rtt-target = "0.2.0"
-rtt-target = "0.6.1"
+rtt-target = "0.6.2"
 
 [dependencies.nrf52833-pac]
 version = "0.12.2"

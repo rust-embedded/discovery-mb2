@@ -5,9 +5,9 @@ authors = ["Henrik Böving <hargonix@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-microbit-v2 = "0.15.1"
+microbit-v2 = "0.16.0"
 cortex-m-rt = "0.7.5"
-rtt-target = "0.6.1"
+rtt-target = "0.6.2"
 panic-rtt-target = "0.2.0"
 lsm303agr = "1.1.0"
 

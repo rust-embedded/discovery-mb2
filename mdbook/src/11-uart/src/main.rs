@@ -40,7 +40,7 @@ fn main() -> ! {
             }
 
             if byte == b'\r' {
-                for byte in buffer.iter().rev().chain(&[b'\r', b'\n']) {
+                for byte in buffer.iter().rev().chain(b"\r\n") {
                     serial.write(*byte).unwrap();
                 }
                 break;
