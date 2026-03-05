@@ -1,8 +1,8 @@
 # Spooky action at a distance
 
-`OUT` is not the only register that can control the pins of Port E. The `OUTSET` register also lets
-you change the value of the pins, as can `OUTCLR`. However, `ODRSET` and `OUTCLR` don't let you
-retrieve the current output status of Port E.
+`OUT` is not the only register that can control the pins of port `P0`. The `OUTSET` register also lets
+you change the value of the pins, as can `OUTCLR`. However, `OUTSET` and `OUTCLR` don't let you
+retrieve the current output status of port `P0`.
 
 `OUTSET` is documented in:
 
