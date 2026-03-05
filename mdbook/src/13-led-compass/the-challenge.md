@@ -6,9 +6,11 @@ axes of the magnetometer. This will allow us to figure out which LED is pointing
 We'll use the `atan2` function. This function returns an angle in the `-PI` to `PI` range. The
 graphic below shows how this angle is measured:
 
+<a href="https://commons.wikimedia.org/wiki/File:Atan2_60.svg">
 <p align="center">
-<img class="white_bg" title="atan2" src="https://upload.wikimedia.org/wikipedia/commons/0/03/Atan2_60.svg" />
+<img class="white_bg" title="atan2" src="../assets/Atan2_60.svg" />
 </p>
+</a>
 
 Although not explicitly shown, in this graph the X axis points to the right and the Y axis points
 up. Note that our coordinate system is rotated 180° from this.

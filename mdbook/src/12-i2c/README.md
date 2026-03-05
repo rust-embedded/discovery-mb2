@@ -27,7 +27,7 @@ wires ignoring this communication.
 
 <a href="https://commons.wikimedia.org/wiki/File:I2C_controller-target.svg">
 <p align="center">
-<img height="360" title="I2C Controller and Targets" src="https://upload.wikimedia.org/wikipedia/commons/0/04/I2C_controller-target.svg?20211029013948" />
+<img height="360" title="I2C Controller and Targets" src="../assets/I2C_controller-target.svg" />
 </p>
 </a>
 

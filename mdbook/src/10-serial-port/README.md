@@ -30,7 +30,7 @@ Today's computers don't usually have a serial port, and even if they do the volt
 
 <a href="https://en.wikipedia.org/wiki/File:UART_to_USB_adapter.jpg">
 <p align="center">
-<img height="240" title="UART To USB Adapter" src="https://upload.wikimedia.org/wikipedia/commons/2/24/UART_to_USB_adapter.jpg" />
+<img height="240" title="UART To USB Adapter" src="../assets/UART_to_USB_adapter.jpg" />
 </p>
 </a>
 
