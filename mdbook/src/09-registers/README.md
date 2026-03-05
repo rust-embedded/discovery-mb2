@@ -43,9 +43,11 @@ the name implies, an LED also acts as a "diode". A diode will only let electrici
 direction. Hook an LED up "forwards" and light comes out. Hook it up "backwards" and nothing
 happens.
 
+<a href="https://commons.wikimedia.org/wiki/File:LED_circuit.svg">
 <p align="center">
-<img class="white_bg" height="180" title="LED circuit" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/LED_circuit.svg" />
+<img class="white_bg" height="180" title="LED circuit" src="../assets/LED_circuit.svg" />
 </p>
+</a>
 
 Luckily for us, the microcontroller's pins are connected such that we can drive the LEDs the right
 way round. All that we have to do is apply enough voltage across the pins to turn the LED on. The
