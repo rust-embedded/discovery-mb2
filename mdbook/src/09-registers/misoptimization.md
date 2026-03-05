@@ -98,7 +98,7 @@ reads/writes (`examples/volatile.rs`):
 Let's run cargo objdump once again, with optimizations enabled.
 
 ```
-cargo objdump -q --release --bin volatile -- --disassemble --no-show-raw-insn  > release.volatile.dump
+cargo objdump -q --release --example volatile -- --disassemble --no-show-raw-insn  > release.volatile.dump
 ```
 
 All right, now have a look at what's inside:
