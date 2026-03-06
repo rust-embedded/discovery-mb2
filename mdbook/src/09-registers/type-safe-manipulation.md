@@ -337,7 +337,7 @@ instructions that the "unsafe" version that used `write_volatile` and hexadecima
 
 Use `cargo objdump` to grab the assembler code to `release.type-safe.dump`:
 ``` console
-cargo objdump -q --release --bin type-safe -- --disassemble --no-show-raw-insn  > release.type-safe.dump
+cargo objdump -q --release --example type-safe -- --disassemble --no-show-raw-insn  > release.type-safe.dump
 ```
 
 Then search for `main` in `release.type-safe.dump`
