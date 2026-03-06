@@ -1,7 +1,10 @@
 #![no_main]
 #![no_std]
 
-use core::sync::atomic::{AtomicUsize, Ordering::{Acquire, AcqRel}};
+use core::sync::atomic::{
+    AtomicUsize,
+    Ordering::{AcqRel, Acquire},
+};
 
 use cortex_m::asm;
 use cortex_m_rt::entry;
@@ -10,11 +13,11 @@ use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
 use microbit::{
-    Board,
     hal::{
         gpiote,
         pac::{self, interrupt},
     },
+    Board,
 };
 
 static COUNTER: AtomicUsize = AtomicUsize::new(0);

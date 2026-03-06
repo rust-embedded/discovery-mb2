@@ -8,8 +8,8 @@ use panic_rtt_target as _;
 use rtt_target::rtt_init_print;
 
 use microbit::{
-    Board,
     hal::{gpio, timer},
+    Board,
 };
 
 /// The "period" is the time per cycle. It is
@@ -33,7 +33,7 @@ fn main() -> ! {
         speaker_pin.set_low().unwrap();
         timer.delay_ms(PERIOD / 2);
     }
-    
+
     loop {
         asm::wfi();
     }

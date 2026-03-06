@@ -20,5 +20,7 @@ fn main() -> ! {
     // Turn off the bottom row
     p0.out.modify(|_, w| w.pin19().clear_bit());
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

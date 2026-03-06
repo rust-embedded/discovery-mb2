@@ -68,26 +68,24 @@ fn main() -> ! {
                 row1.set_low().unwrap();
                 state = Indicator::Off;
             }
-            // 
+            //
             (true, Indicator::Off) => {
                 row1.set_high().unwrap();
                 state = Indicator::Blinking(Light::Lit(ON_TICKS));
             }
-            (true, Indicator::Blinking(light)) => {
-                match light {
-                    Light::Lit(0) | Light::Unlit(0) => {
-                        let light = light.flip();
-                        match light {
-                            Light::Lit(_) => row1.set_high().unwrap(),
-                            Light::Unlit(_) => row1.set_low().unwrap(),
-                        }
-                        state = Indicator::Blinking(light);
+            (true, Indicator::Blinking(light)) => match light {
+                Light::Lit(0) | Light::Unlit(0) => {
+                    let light = light.flip();
+                    match light {
+                        Light::Lit(_) => row1.set_high().unwrap(),
+                        Light::Unlit(_) => row1.set_low().unwrap(),
                     }
-                    Light::Lit(_) | Light::Unlit(_) => {
-                        state = Indicator::Blinking(light.tick_down());
-                    }
+                    state = Indicator::Blinking(light);
                 }
-            }
+                Light::Lit(_) | Light::Unlit(_) => {
+                    state = Indicator::Blinking(light.tick_down());
+                }
+            },
         }
         timer.delay_ms(10_u32);
     }

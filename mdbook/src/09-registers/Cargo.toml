@@ -10,14 +10,14 @@ version = "0.2.0"
 
 [dependencies]
 cortex-m-rt = "0.7.5"
-microbit-v2 = "0.15.1"
+microbit-v2 = "0.16.0"
 panic-rtt-target = "0.2.0"
-rtt-target = "0.6.1"
+rtt-target = "0.6.2"
 
 [dependencies.cortex-m]
 version = "0.7.7"
 features = ["inline-asm", "critical-section-single-core"]
 
 [dependencies.nrf52833-hal]
-version = "0.18.0"
+version = "0.19.0"
 features = ["rt"]

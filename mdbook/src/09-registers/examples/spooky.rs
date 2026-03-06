@@ -44,5 +44,7 @@ fn main() -> ! {
         print_out();
     }
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

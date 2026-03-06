@@ -31,5 +31,7 @@ fn main() -> ! {
         ptr::write_volatile(PORT_P0_OUT as *mut u32, out & !(1 << 19));
     }
 
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }

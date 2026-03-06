@@ -17,15 +17,13 @@ fn main() -> ! {
 
     loop {
         if button_a.is_low().unwrap() {
-            if button_state == false {
+            if !button_state {
                 button_state = true;
                 rprintln!("Button A pressed");
             }
-        } else {
-            if button_state == true {
-                button_state = false;
-                rprintln!("Button A not pressed");
-            }
+        } else if button_state {
+            button_state = false;
+            rprintln!("Button A not pressed");
         }
     }
 }

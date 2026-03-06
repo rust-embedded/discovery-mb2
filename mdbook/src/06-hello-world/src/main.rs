@@ -10,8 +10,14 @@ use panic_halt as _;
 fn main() -> ! {
     let board = microbit::Board::take().unwrap();
 
-    let mut row1 = board.display_pins.row1.into_push_pull_output(gpio::Level::High);
-    let _col1 = board.display_pins.col1.into_push_pull_output(gpio::Level::Low);
+    let mut row1 = board
+        .display_pins
+        .row1
+        .into_push_pull_output(gpio::Level::High);
+    let _col1 = board
+        .display_pins
+        .col1
+        .into_push_pull_output(gpio::Level::Low);
 
     let mut timer0 = timer::Timer::new(board.TIMER0);
 

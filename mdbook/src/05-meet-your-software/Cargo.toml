@@ -8,8 +8,8 @@ edition = "2021"
 cortex-m-rt = "0.7.5"
 panic-halt = "1.0.0"
 panic-rtt-target = "0.2.0"
-rtt-target = "0.6.1"
-microbit-v2 = "0.15.1"
+rtt-target = "0.6.2"
+microbit-v2 = "0.16.0"
 embedded-hal = "1.0.0"
 
 [dependencies.cortex-m]
