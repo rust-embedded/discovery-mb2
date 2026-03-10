@@ -3,7 +3,7 @@
 As we already discussed in chapter 5 `embedded-hal` provides abstractions
 which can be used to write platform independent code that can interact with
 hardware. In fact all the methods we have used to interact with hardware
-in chapter 7 and up until now in chapter 8 were from traits, defined by `embedded-hal`.
+in chapter [LED roulette](../07-led-roulette/index.html) and up until now in this chapter were from traits, defined by `embedded-hal`.
 Now we'll make actual use of the traits `embedded-hal` provides for the first time.
 
 It would be pointless to implement a driver for our LSM303AGR for every platform
