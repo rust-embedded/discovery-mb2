@@ -3,6 +3,7 @@
 
 use core::ptr;
 
+use cortex_m_rt::{exception, ExceptionFrame};
 #[allow(unused_imports)]
 use registers::entry;
 
@@ -17,4 +18,11 @@ fn main() -> ! {
     loop {
         core::hint::spin_loop();
     }
+}
+
+#[exception]
+#[allow(unused_variables)]
+unsafe fn HardFault(ef: &ExceptionFrame) -> ! {
+    #[allow(clippy::empty_loop)]
+    loop {}
 }

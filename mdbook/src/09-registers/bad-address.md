@@ -30,8 +30,10 @@ registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:10
 (gdb) continue
 Continuing.
 
-Breakpoint 3, cortex_m_rt::HardFault_ (ef=0x2001ffb8) at src/lib.rs:1046
-1046	    loop {}
+Breakpoint 3, 0x000054e4 in HardFault ()
+^C
+Program received signal SIGINT, Interrupt.
+0x00000184 in bad::__cortex_m_rt_HardFault (ef=0x2001ffb8) at mdbook/src/09-registers/examples/bad.rs:27
 (gdb) 
 ```
 
@@ -46,24 +48,19 @@ There are different kind of exceptions. Each kind of exception is raised by diff
 each one is handled by a different exception handler.
 
 The `registers` crate depends on the `cortex-m-rt` crate which defines a default *hard fault*
-handler, named `HardFault_`, that handles the "invalid memory address" exception. `embed.gdb` placed
-a breakpoint on `HardFault`; that's why the debugger halted your program while it was executing the
-exception handler.  We can get more information about the exception from the debugger. Let's see:
+handler, named `HardFault_`, that handles the "invalid memory address" exception. But, its implementation
+is a bit useless for us because it does not provide the exception frame (`ef`) parameter, which
+contains information about the exception. Therefore, we need to define our own:
 
 ```
-(gdb) list
-1040  #[allow(unused_variables)]
-1041	#[doc(hidden)]
-1042	#[cfg_attr(cortex_m, link_section = ".HardFault.default")]
-1043	#[no_mangle]
-1044	pub unsafe extern "C" fn HardFault_(ef: &ExceptionFrame) -> ! {
-1045	    #[allow(clippy::empty_loop)]
-1046	    loop {}
-1047	}
-1048	
-1049	#[doc(hidden)]
-1050	#[no_mangle]
+#[exception]
+#[allow(unused_variables)]
+unsafe fn HardFault(ef: &ExceptionFrame) -> ! {
+    loop {}
+}
 ```
+
+`embed.gdb` places a breakpoint on `HardFault`; that's why the debugger halted your program while it was executing the exception handler. (Pass the `embed.gdb` config file to `gdb` by using the `-x` option).
 
 `ef` is a snapshot of the program state right before the exception occurred. Let's inspect it:
 
