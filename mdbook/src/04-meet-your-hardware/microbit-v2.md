@@ -23,7 +23,7 @@ short for radio frequency.  If we search through the documentation of the chip l
 [aQFN73]: https://en.wikipedia.org/wiki/Flat_no-leads_package
 [Nordic Semiconductor]: https://www.nordicsemi.com/
 [product page]: https://www.nordicsemi.com/products/nrf52833
-[product specification]: https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.3.pdf
+[product specification]: https://docs.nordicsemi.com/bundle/nRF52833-PS/resource/nRF52833_PS_v1.3.pdf
 
 - The `N52` is the MCU's series, indicating that there are other `nRF52` MCUs
 - The `833` is the part code
