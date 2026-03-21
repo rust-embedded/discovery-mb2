@@ -4,7 +4,7 @@
 you change the value of the pins, as can `OUTCLR`. However, `OUTSET` and `OUTCLR` don't let you
 retrieve the current output status of port `P0`.
 
-`OUTSET` is documented in:
+`OUTSET` is documented in the [Product Specification]:
 
 > Subsection 6.8.2.2. OUTSET - Page 145
 
@@ -30,3 +30,5 @@ $ cargo embed
 
 Side effects! Although we are reading the same address multiple times without actually modifying it,
 we still see its value change every time `OUTSET` or `OUTCLR` is written to.
+
+[Product Specification]: https://docs-be.nordicsemi.com/bundle/ps_nrf52833/attach/nRF52833_PS_v1.7.pdf

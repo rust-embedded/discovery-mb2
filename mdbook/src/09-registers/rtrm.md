@@ -25,8 +25,6 @@ registers allocated in contiguous memory. The address at which the register bloc
 its base address. We need to figure out what's the base address of the `P0` peripheral. That
 information is in the following section of the microcontroller [Product Specification]:
 
-[Product Specification]: https://docs.nordicsemi.com/bundle/nRF52833_PS_v1.6/resource/nRF52833_PS_v1.6.pdf
-
 > Section 4.2.4 Instantiation - Page 22
 
 The table says that base address of the `P0` register block is `0x5000_0000`.
@@ -38,7 +36,7 @@ peripheral, that table is in:
 > Section 6.8.2 Registers - Page 144
 
 `OUT` is the register which we will be using to set/reset. Its offset value is `0x504` from the base
-address of the `P0`. We can look up `OUT` in the reference manual.
+address of the `P0`. We can look up `OUT` in the [Product Specification].
 
 That register is specified right under the `GPIO` registers table:
 
@@ -92,7 +90,7 @@ Breakpoint 1, registers::__cortex_m_rt_main () at src/07-registers/src/main.rs:1
 ```
 
 Ok, we see that the register's value is `0x00000000` or `0` at this point. This corresponds with the
-data in the product specification, which says that `0` is the 'reset value' of this register. That
+data in the [Product Specification], which says that `0` is the 'reset value' of this register. That
 means that once the MCU resets, the register will have `0` as its value.
 
 Let's go on. This line consists of multiple instructions (reading, bitwise ORing and writing), so we
@@ -196,3 +194,5 @@ Program received signal SIGINT, Interrupt.
 ```
 
 And at this points all LEDs should be turned off again!
+
+[Product Specification]: https://docs-be.nordicsemi.com/bundle/ps_nrf52833/attach/nRF52833_PS_v1.7.pdf
