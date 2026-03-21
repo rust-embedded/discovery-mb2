@@ -23,7 +23,7 @@ short for radio frequency.  If we search through the documentation of the chip l
 [aQFN73]: https://en.wikipedia.org/wiki/Flat_no-leads_package
 [Nordic Semiconductor]: https://www.nordicsemi.com/
 [product page]: https://www.nordicsemi.com/products/nrf52833
-[product specification]: https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.3.pdf
+[product specification]: https://docs-be.nordicsemi.com/bundle/ps_nrf52833/attach/nRF52833_PS_v1.7.pdf
 
 - The `N52` is the MCU's series, indicating that there are other `nRF52` MCUs
 - The `833` is the part code
@@ -33,7 +33,7 @@ short for radio frequency.  If we search through the documentation of the chip l
 - The `A0` is the build code, indicating the hardware version (`A`) as well as the product configuration (`0`)
 - The `2024AL` is a tracking code, hence it might differ on your chip
 
-The product specification does of course contain a lot more useful information about the chip: for
+The [product specification] does of course contain a lot more useful information about the chip: for
 example, that the chip is an Arm® Cortex™-M4 32-bit processor.
 
 

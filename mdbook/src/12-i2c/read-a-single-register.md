@@ -22,18 +22,17 @@ that just happens to have the same address.  As you can read in the LSM303AGR's 
 device. (The "A" is for "Accelerometer" and the "M" is for "Magnetometer".)
 
 The only thing missing now is the software part: we need to determine which API of the `microbit` or
-a HAL crate we should use for this. If you read through the datasheet of the nRF chip you are using
-you will soon find out that it doesn't actually have an I2C-specific peripheral.  Instead, it has
-more general-purpose I2C-compatible peripherals called TWI ("Two-Wire Interface"), TWIM ("Two-Wire
-Interface Master") and TWIS ("Two-Wire Interface Slave"). We will normally be operating in
-controller mode and will use the newer TWIM, which supports "Easy DMA" — the TWI is provided mostly
-for backward compatibility with older devices.
+a HAL crate we should use for this. If you read through the [nRF52833 Product Specification]
+you will soon find out that it doesn't actually have an I2C-specific peripheral.
+Instead, it has more general-purpose I2C-compatible peripherals called TWI ("Two-Wire
+Interface"), TWIM ("Two-Wire Interface Master") and TWIS ("Two-Wire Interface Slave").
+We will normally be operating in controller mode and will use the newer TWIM, which
+supports "Easy DMA" — the TWI is provided mostly for backward compatibility with older
+devices.
 
 Now if we put the documentation of the [`twi(m)` module] from the `microbit` crate
 together with all the other information we have gathered so far we'll end up with this
 piece of code to read out and print the two device IDs (`examples/chip-id.rs`):
-
-[`twi(m)` module]: https://docs.rs/microbit-v2/0.11.0/microbit/hal/twim/index.html
 
 ``` rust
 {{#include examples/chip-id.rs}}
@@ -44,6 +43,9 @@ I2C protocol as described before. The initialization here works similarly to the
 chapter.  We pass the peripheral as well as the pins that are used to communicate with the chip to
 the constructor; and then the frequency we wish the bus to operate on, in this case 100 kHz (`K100`,
 since identifiers can't start with a digit).
+
+[nRF52833 Product Specification]: https://docs-be.nordicsemi.com/bundle/ps_nrf52833/attach/nRF52833_PS_v1.7.pdf
+[`twi(m)` module]: https://docs.rs/microbit-v2/0.11.0/microbit/hal/twim/index.html
 
 ## Testing it
 As usual

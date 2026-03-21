@@ -44,7 +44,7 @@ cryptographically secure, but it is efficient, easy to implement and good enough
 snake game. Our `Prng` struct requires an initial seed value, which we do get from the RNG
 peripheral.
 
-[nRF52833 spec]: https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.3.pdf
+[nRF52833 spec]: https://docs-be.nordicsemi.com/bundle/ps_nrf52833/attach/nRF52833_PS_v1.7.pdf
 [pseudo-random]: https://en.wikipedia.org/wiki/Pseudorandom_number_generator
 [xorshift]: https://en.wikipedia.org/wiki/Xorshift
 
