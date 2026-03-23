@@ -254,7 +254,7 @@ struct and set up once the program has started: there is no `const` initializer 
 there reasonably be).
 
 Let's rewrite the button counter a bit. First, move the actual count to be an `AtomicUsize`. This is
-a more natural type for this global anyhow. Next, add a global `GPIOTE_PERIPHERAL` variable using
+a more natural type for this global anyway. Next, add a global `GPIOTE_PERIPHERAL` variable using
 the `LockMut` type from the `critical-section-lock-mut` crate. This crate is a convenient wrapper
 for the pattern of the last section.
 
