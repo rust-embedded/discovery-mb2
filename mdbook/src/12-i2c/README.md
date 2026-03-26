@@ -18,7 +18,7 @@ widely used in digital sensors.
 The micro:bit board we are using has two motion sensors in it: an accelerometer and a magnetometer.
 Both of these sensors are packaged into a single component and can be accessed via an I2C bus.
 
-I2C is pronounced "EYE-SQUARED-CEE" and stands for Inter-Integrated Circuit. I2C is a *synchronous*
+[I2C] is pronounced "EYE-SQUARED-CEE" and stands for Inter-Integrated Circuit. I2C is a *synchronous*
 serial *bus* communication protocol: it uses two lines to exchange data: a data line (SDA) and a
 clock line (SCL). The clock line is used to synchronize the communication. Synchronous serial can
 run faster and more reliably than async serial. I2C devices have *bus addresses*: the hardware
@@ -46,3 +46,5 @@ controller ends the communication.
 
 The clock line determines how fast data can be exchanged. The MB2 I2C interface can operate at
 speeds of 100, 250 or 400 Kbps. With other devices even faster modes are possible.
+
+[I2C]: https://en.wikipedia.org/wiki/I2C
