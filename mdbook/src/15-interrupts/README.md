@@ -33,8 +33,10 @@ that this ISR should be stored at the entry for the `GPIOTE` interrupt in the in
 The `#[interrupt]` decoration is used at compile time to mark a function to be treated specially as
 an ISR. (This is a "proc macro": you can read more about it in the [Rust book] if you wish.)
 
-Essentially, a "proc macro" translates source code into other source code. If you are curious as to what any particular macro use translates into,
-you could expand that macro invocation. You can do this by using either the Tools in the [Rust Playground] or the "rust-analyzer: Expand macro" command in your IDE.
+> **NOTE** Essentially, a "proc macro" translates source code into other source code. If you are curious as
+> to what any particular macro use translates into, you could expand that macro invocation. You can
+> do this by using either the Tools in the [Rust Playground] or the "rust-analyzer: Expand macro"
+> command in your IDE.
 
 Marking a function with `#[interrupt]` implies several special things about the function:
 
@@ -51,7 +53,12 @@ interrupt when the pin connected to Button A goes from high to low voltage. Seco
 configured to allow the interrupt. Order matters a bit: doing things in the "wrong" order may
 generate an interrupt before you are ready to handle it.
 
-**Note** As with most microcontrollers, there is a lot of flexibility in when the GPIOTE can generate an interrupt. Interrupts can be generated on low-to-high pin transition, high-to-low (as here), any change ("edge"), when low, or when high. On the nRF52833, interrupts generate an event that must be manually cleared in the ISR to ensure that the ISR is not called a second time for the same interrupt. Other microcontrollers may work a little differently — you should read Rust crate and microcontroller documentation to understand the details on a different board.
+> **Note** As with most microcontrollers, there is a lot of flexibility in when the GPIOTE can
+> generate an interrupt. Interrupts can be generated on low-to-high pin transition, high-to-low (as
+> here), any change ("edge"), when low, or when high. On the nRF52833, interrupts generate an event
+> that must be manually cleared in the ISR to ensure that the ISR is not called a second time for the
+> same interrupt. Other microcontrollers may work a little differently — you should read Rust crate
+> and microcontroller documentation to understand the details on a different board.
 
 When you push the A Button, you will see an "ouch" message and then a panic. Why does the interrupt
 handler call `panic!()`? Try commenting the `panic!()` call out and see what happens when you push
