@@ -67,6 +67,12 @@ fn main() -> ! {
     unsafe { pac::NVIC::unmask(pac::Interrupt::GPIOTE) };
     pac::NVIC::unpend(pac::Interrupt::GPIOTE);
 
+    // Because we're not disabling GPIOTE interrupts even during the debounce timer countdown,
+    // we can get extra button interrupts even during the debounce interval.
+    // It would be reasonable to disable button interrupts when the debounce timer is started
+    // and re-enable them when it expires, but this would require a debounce timer interrupt handler.
+    // To make a simple "fix" for this that doesn't hurt the readability,
+    //  we introduce the cur_count "guard" variable.
     let mut cur_count = 0;
     loop {
         // "wait for interrupt": CPU goes to sleep until an interrupt.
