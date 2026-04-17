@@ -27,7 +27,7 @@ Let's define an ISR and configure an interrupt to "poke" the MB2 when Button A i
 {{#include examples/poke.rs}}
 ```
 
-The ISR handler function is "special". The name `GPIOTE` is required here, indicating
+The ISR handler function is "special". The name `GPIOTE` (GPIO Tasks and Events) is required here, indicating
 that this ISR should be stored at the entry for the `GPIOTE` interrupt in the interrupt table.
 
 The `#[interrupt]` decoration is used at compile time to mark a function to be treated specially as
