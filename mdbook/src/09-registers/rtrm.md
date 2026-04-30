@@ -33,14 +33,14 @@ Each peripheral also has its own section in the documentation. Each of these sec
 table of the registers that the peripheral's register block contains. For the `GPIO` family of
 peripheral, that table is in:
 
-> Section 6.8.2 Registers - Page 144
+> Section 6.8.2 Registers - Page 231
 
 `OUT` is the register which we will be using to set/reset. Its offset value is `0x504` from the base
 address of the `P0`. We can look up `OUT` in the [Product Specification].
 
 That register is specified right under the `GPIO` registers table:
 
-> Subsection 6.8.2.1 OUT - Page 145
+> Subsection 6.8.2.1 OUT - Page 232
 
 Anyway, `0x5000_0000` + `0x504` = `0x50000504`. That looks familiar! Finally! 
 
