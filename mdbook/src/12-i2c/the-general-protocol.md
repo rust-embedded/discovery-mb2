@@ -39,14 +39,16 @@ Many I2C targets are organized internally as having "device registers", each wit
 and 8-bit contents. Typically, device registers are written with a two-byte write: the first byte is
 the register address and the second the new register value.
 
-A so-called "combined" or "split" transaction might consist of a write to the target followed by an
-immediate read back from the target, as shown in the diagram above. Typically, device registers are
-read in this way: the device register address is written and then the current device register value
-is immediately read back.
+A so-called "combined" or "split" transaction consists of a write to the target followed by an
+immediate read back from the target. The write and read-back can be done as a single thing without
+releasing the bus: instead of sending a STOP at the end of the write, the read is just started
+directly. Typically, device registers are read in this way: the device register address is written
+and then the current device register value is immediately read back.
 
 Some I2C targets can read and write multiple device registers with adjacent addresses through some
 form of "address auto-increment", which permits sending just the first device register address and
-then relying on the device to increment the address for subsequent reads or writes.
+then relying on the device to increment the address for subsequent reads or writes. This is common
+in the case where adjacent byte registers are to be treated as a 16-bit value.
 
 I2C is a complex protocol, and there are many variations and special features out there. Read the
 manual for your target carefully to see what needs to be done to talk to it.
